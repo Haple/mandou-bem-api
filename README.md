@@ -90,7 +90,7 @@
 
 # Módulo 2
 
-## Manter catálogo de prêmios
+## Catálogo de prêmios
 
 **RF**
 
@@ -102,7 +102,8 @@
 - Não pode ser possível adicionar um prêmio com o nome de um prêmio já cadastrado na empresa;
 - Não pode ser possível adicionar um prêmio com pontos negativos
 
-## Resgatar prêmio
+
+## Resgate de prêmio
 
 **RF**
 
@@ -113,7 +114,7 @@
 - O usuário só pode resgatar prêmios que tenha quantidade de pontos igual ou menor que a quantidade de pontos recebidos;
 - A quantidade de pontos do prêmio deve ser subtraída do total de pontos recebidos pelo usuário;
 
-## Entregar prêmio
+## Entrega de prêmio
 
 **RF**
 
@@ -128,17 +129,20 @@
 
 # Módulo 3
 
-## Criar postagem de reconhecimento
+## Postagens de reconhecimento
 
 **RF**
 
 - O usuário deve poder criar uma postagem de reconhecimento para um colega;
 - Para criar a postagem o usuário precisa informar o colaborador, a quantidade de pontos e uma mensagem;
+- Ao digitar o símbolo "@" deve aparecer um *autocomplete* com os colaboradores da empresa que deve ser interrompido com um síbolo de "espaço";
+- O usuário deve poder criar um comentário em uma postagem de reconhecimento;
 - (Pouco prioritário) O usuário deve ser capaz de enviar imagens e gifs na postagem;
 
 **RNF**
 
 - As postagens devem ser armazenadas no MongoDB;
+- A listagem das postagens deve ser armazenado em cache (Redis);
 
 **RN**
 
@@ -148,97 +152,32 @@
 - Os pontos enviados na postagem devem ser adicionados nos pontos recebidos pelo usuário reconhecido na postagem;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
--________________-
-
-# Recuperação de senha
-
-**RF - Requisito Funcional**
-
-- O usuário deve recuperar sua senha informando o seu e-mail/
-- O usuário deve receber um e-mail com instruções de recuperação de senha;
-- O usuário deve poder resetar sua senha;
-
-**RNF - Requisito Não Funcional**
-
-- Utilizar Mailtrap para testar envios em ambiente de dev;
-- O envio de e-mails deve acontecer em segundo plano (background job);
-
-**RN - Regra de Negócio**
-
-- O link enviado por e-mail para resetar senhas deve expirar em 2h;
-- O usuário precisa confirmar a nova senha ao resetar sua senha;
-
-# Atualização do perfil
+## Ranking dos ganhadores de pontos
 
 **RF**
 
-- O usuário deve poder atualizar seu nome, e-mail e senha;
-
-**RN**
-
-- O usuário não pode alterar seu e-mail para um e-mail já utilizado;
-- Para atualizar sua senha, o usuário deve informar a senha antiga;
-- Para atualizar sua senha, o usuário precisa confirmar sua senha;
-
-# Painel do prestador
-
-**RF**
-
-- O usuário deve poder listar seus agendamentos de um dia específico;
-- O prestador deve receber uma notificação sempre que houver um novo agendamento;
-- O prestador deve poder visualizar as notificações não lidas;
+- O usuário deve poder ver um ranking com os colaboradores de sua empresa que mais receberam pontos naquele mês;
 
 **RNF**
 
-- Os agendamentos do prestador no dia devem ser armazenados em cache;
-- As notificações do prestador devem ser armazenadas no MongoDB;
-- As notificações do prestador devem ser armazenadas em tempo-real utilizando Socket.io;
+- A listagem do ranking deve ser armazenada em cache (Redis);
 
-**RN**
 
-- A notificação deve ter um status de lida ou não-lida para que o prestador possa controlar;
-
-# Agendamento de serviços
+## Pontos restantes para enviar
 
 **RF**
 
-- O usuário deve poder listar todos prestadores de serviço cadastrados;
-- O usuário deve pode listar os dias de um mês com pelo menos um horário disponóvel de um prestador;
-- O usuário deve poder listar horários disponíveis em um dia especifíco do prestador;
-- O usuário deve poder realizar um novo agendamento com um prestador;
+- O usuário deve poder ver a quantidade de pontos restantes para ele enviar para seus colegas;
 
 **RNF**
 
-- A listagem de prestadores deve ser armazenada em cache;
-
+- A quantidade de pontos restantes para enviar deve ser armazenada em cache;
 
 **RN**
 
-- Cada agendamento deve durar 1h exatamente;
-- Os agendamentos deve estar disponíveis entre 8h às 18h (Primeiro às 8h, último às 17h);
-- O usuário não pode agendar em um horário já ocupado;
-- O usuário não pode agendar em um horário que já passou;
-- O usuário não pode agendar serviços consigo mesmo;
+- A quantidade de pontos restantes para enviar deve ser calculada subtraindo de 100 a quantidade de pontos já enviados no mês atual, ou seja
+todo mês o usuário terá mais 100 pontos disponíveis para serem enviados para seus colegas;
 
--->
+
+
 
