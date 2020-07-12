@@ -1,6 +1,7 @@
 # mandou-bem-api
 
-# Criar conta
+# Módulo 1
+## Criar conta
 
 **RF**
 
@@ -12,9 +13,10 @@
 - O usuário precisa confirmar a senha ao criar a conta;
 
 
-# Manter usuários
+## Manter usuários
 
 **RF**
+
 - O usuário admin deve poder criar, alterar, listar e excluir colaboradores;
 - Para adicionar um colaborador é preciso informar o nome completo e e-mail do mesmo;
 - Os colaboradores adicionados devem receber um e-mail com sua senha;
@@ -30,7 +32,7 @@
 - O usuário admin não pode adicionar um colaborador com o e-mail de um usuário já cadastrado;
 
 
-# Login
+## Login
 
 **RF**
 - O usuário deve acessar o sistema usando seu e-mail e senha válidos;
@@ -44,7 +46,7 @@
 - Caso o e-mail ou a senha sejam inválidos, informar um erro genérico para dificultar ataques;
 
 
-# Manter perfil
+## Manter perfil
 
 **RF**
 
@@ -62,7 +64,7 @@
 - Para atualizar sua senha, o usuário precisa confirmar sua senha;
 
 
-# Recuperar senha
+## Recuperar senha
 
 **RF**
 
@@ -86,17 +88,79 @@
 
 
 
+# Módulo 2
 
-
-# Manter catálogo de prêmios
+## Manter catálogo de prêmios
 
 **RF**
+
 - O usuário admin deve poder criar, alterar, listar e excluir prêmios do catálogo;
 - Para adicionar um prêmio é preciso informar o título, link da imagem e a quantidade de pontos;
 
 **RN**
 
-- O usuário admin não pode adicionar um prêmio com o nome de um prêmio já cadastrado na sua empresa;
+- Não pode ser possível adicionar um prêmio com o nome de um prêmio já cadastrado na empresa;
+- Não pode ser possível adicionar um prêmio com pontos negativos
+
+## Resgatar prêmio
+
+**RF**
+
+- O usuário deve poder resgatar um prêmio do catálogo de sua empresa;
+
+**RN**
+
+- O usuário só pode resgatar prêmios que tenha quantidade de pontos igual ou menor que a quantidade de pontos recebidos;
+- A quantidade de pontos do prêmio deve ser subtraída do total de pontos recebidos pelo usuário;
+
+## Entregar prêmio
+
+**RF**
+
+- O usuário admin deve listar os resgates de prêmio;
+- O usuário admin deve poder marcar um resgate de prêmio como entregue;
+
+**RN**
+
+- Resgates de prêmios marcados como entregues não devem aparecer na listagem do admin;
+
+
+
+# Módulo 3
+
+## Criar postagem de reconhecimento
+
+**RF**
+
+- O usuário deve poder criar uma postagem de reconhecimento para um colega;
+- Para criar a postagem o usuário precisa informar o colaborador, a quantidade de pontos e uma mensagem;
+- (Pouco prioritário) O usuário deve ser capaz de enviar imagens e gifs na postagem;
+
+**RNF**
+
+- As postagens devem ser armazenadas no MongoDB;
+
+**RN**
+
+- O usuário não pode criar uma postagem de reconhecimento para ele mesmo;
+- O usuário pode criar uma postagem de reconhecimento com uma quantidade de pontos igual ou menor ao seu total disponível;
+- Os pontos enviados na postagem devem ser subtraídos dos pontos disponíveis para enviar do usuário que criou a postagem;
+- Os pontos enviados na postagem devem ser adicionados nos pontos recebidos pelo usuário reconhecido na postagem;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
