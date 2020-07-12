@@ -26,7 +26,7 @@
 
 **RN**
 
-- As senha enviadas por e-mail devem ser randômicas;
+- As senhas enviadas por e-mail devem ser randômicas;
 - O usuário admin não pode adicionar um colaborador com o e-mail de um usuário já cadastrado;
 
 
@@ -82,6 +82,21 @@
 
 
 
+
+
+
+
+
+
+# Manter catálogo de prêmios
+
+**RF**
+- O usuário admin deve poder criar, alterar, listar e excluir prêmios do catálogo;
+- Para adicionar um prêmio é preciso informar o título, link da imagem e a quantidade de pontos;
+
+**RN**
+
+- O usuário admin não pode adicionar um prêmio com o nome de um prêmio já cadastrado na sua empresa;
 
 
 
