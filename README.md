@@ -1,7 +1,31 @@
 # mandou-bem-api
 
-# Módulo 1
-## Criar conta
+# Instruções
+## Requisitos
+
+- NodeJS
+- Yarn
+- Docker
+- Docker Compose
+
+## Instalar dependências
+
+`yarn`
+
+## Executar infraestrutura
+
+`docker-compose up`
+
+## Criar banco de dados
+
+`yarn typeorm migration:run`
+
+## Iniciar servidor
+
+`yarn dev:server`
+
+# Requisitos Módulo 1
+## [OK] Criar conta
 
 **RF**
 
@@ -32,7 +56,7 @@
 - O usuário admin não pode adicionar um colaborador com o e-mail de um usuário já cadastrado;
 
 
-## Login
+## [OK] Login
 
 **RF**
 - O usuário deve acessar o sistema usando seu e-mail e senha válidos;
@@ -55,7 +79,7 @@
 
 **RNF**
 
-- O avatar deve ser armazenado usando o [Cloudinary](https://medium.com/@joeokpus/uploading-images-to-cloudinary-using-multer-and-expressjs-f0b9a4e14c54); 
+- O avatar deve ser armazenado usando o [Cloudinary](https://medium.com/@joeokpus/uploading-images-to-cloudinary-using-multer-and-expressjs-f0b9a4e14c54);
 
 **RN**
 
@@ -88,7 +112,7 @@
 
 
 
-# Módulo 2
+# Requisitos Módulo 2
 
 ## Catálogo de prêmios
 
@@ -127,7 +151,7 @@
 
 
 
-# Módulo 3
+# Requisitos Módulo 3
 
 ## Postagens de reconhecimento
 

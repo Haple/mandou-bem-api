@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+
+  postgres:
+    image: postgres
+    container_name: mandoubem_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=mandoubem
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=docker
+
+  redis:
+    image: redis
+    container_name: mandoubem_redis
+    ports:
+      - "6379:6379"
+
+  mongo:
+    image: mongo
+    container_name: mandoubem_mongodb
+    ports:
+      - "27017:27017"
