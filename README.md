@@ -36,6 +36,8 @@
 - O usuário não pode cadastrar uma conta com o e-mail de um usuário já cadastrado;
 - O usuário precisa confirmar a senha ao criar a conta;
 
+![image info](./github/images/1-criar-conta.png)
+
 
 ## Manter usuários
 
@@ -74,7 +76,7 @@
 
 **RF**
 
-- O usuário deve poder atualizar seu nome, e-mail e senha;
+- [OK] O usuário deve poder atualizar seu nome, e-mail e senha;
 - O usuário deve poder atualizar seu avatar fazendo o upload de uma imagem;
 
 **RNF**

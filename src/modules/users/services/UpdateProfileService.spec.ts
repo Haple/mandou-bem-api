@@ -3,13 +3,16 @@ import AppError from '@shared/errors/AppError';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import UpdateProfileService from './UpdateProfileService';
+import FakeAccountsRepository from '../repositories/fakes/FakeAccountsRepository';
 
+let fakeAccountsRepository: FakeAccountsRepository;
 let fakeUsersRepository: FakeUsersRepository;
 let fakeHashProvider: FakeHashProvider;
 let updateProfile: UpdateProfileService;
 
 describe('UpdateProfile', () => {
   beforeEach(() => {
+    fakeAccountsRepository = new FakeAccountsRepository();
     fakeUsersRepository = new FakeUsersRepository();
     fakeHashProvider = new FakeHashProvider();
 
@@ -20,10 +23,13 @@ describe('UpdateProfile', () => {
   });
 
   it('should be able update the profile', async () => {
+    const account = await fakeAccountsRepository.create('Fake Labs');
+
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
+      account,
     });
 
     const updatedUser = await updateProfile.execute({
@@ -47,16 +53,20 @@ describe('UpdateProfile', () => {
   });
 
   it('should be able to change to another user email', async () => {
+    const account = await fakeAccountsRepository.create('Fake Labs');
+
     await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
+      account,
     });
 
     const user = await fakeUsersRepository.create({
       name: 'Test',
       email: 'test@example.com',
       password: '123456',
+      account,
     });
 
     await expect(
@@ -69,10 +79,13 @@ describe('UpdateProfile', () => {
   });
 
   it('should be able to update the password', async () => {
+    const account = await fakeAccountsRepository.create('Fake Labs');
+
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
+      account,
     });
 
     const updatedUser = await updateProfile.execute({
@@ -87,10 +100,13 @@ describe('UpdateProfile', () => {
   });
 
   it('should not be able to update the password without old password', async () => {
+    const account = await fakeAccountsRepository.create('Fake Labs');
+
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
+      account,
     });
 
     await expect(
@@ -104,10 +120,13 @@ describe('UpdateProfile', () => {
   });
 
   it('should not be able to update the password with wrong old password', async () => {
+    const account = await fakeAccountsRepository.create('Fake Labs');
+
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
+      account,
     });
 
     await expect(

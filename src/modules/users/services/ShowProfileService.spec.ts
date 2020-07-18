@@ -2,22 +2,28 @@ import AppError from '@shared/errors/AppError';
 
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import ShowProfileService from './ShowProfileService';
+import FakeAccountsRepository from '../repositories/fakes/FakeAccountsRepository';
 
+let fakeAccountsRepository: FakeAccountsRepository;
 let fakeUsersRepository: FakeUsersRepository;
 let showProfile: ShowProfileService;
 
 describe('UpdateProfile', () => {
   beforeEach(() => {
+    fakeAccountsRepository = new FakeAccountsRepository();
     fakeUsersRepository = new FakeUsersRepository();
 
     showProfile = new ShowProfileService(fakeUsersRepository);
   });
 
   it('should be able to show the profile', async () => {
+    const account = await fakeAccountsRepository.create('Fake Labs');
+
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
+      account,
     });
 
     const profile = await showProfile.execute({
