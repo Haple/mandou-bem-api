@@ -3,13 +3,16 @@ import AppError from '@shared/errors/AppError';
 import FakeStorageProvider from '@shared/container/providers/StorageProvider/fakes/FakeStorageProvider';
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import UpdateUserAvatarService from './UpdateUserAvatarService';
+import FakeAccountsRepository from '../repositories/fakes/FakeAccountsRepository';
 
+let fakeAccountsRepository: FakeAccountsRepository;
 let fakeUsersRepository: FakeUsersRepository;
 let fakeStorageProvider: FakeStorageProvider;
 let updateUserAvatar: UpdateUserAvatarService;
 
 describe('UpdateUserAvatar', () => {
   beforeEach(() => {
+    fakeAccountsRepository = new FakeAccountsRepository();
     fakeUsersRepository = new FakeUsersRepository();
     fakeStorageProvider = new FakeStorageProvider();
 
@@ -20,10 +23,13 @@ describe('UpdateUserAvatar', () => {
   });
 
   it('should be able to update avatar', async () => {
+    const account = await fakeAccountsRepository.create('Fake Labs');
+
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
+      account,
     });
 
     await updateUserAvatar.execute({
@@ -46,10 +52,13 @@ describe('UpdateUserAvatar', () => {
   it('should delete old avatar when updating new one', async () => {
     const deleteFile = jest.spyOn(fakeStorageProvider, 'deleteFile');
 
+    const account = await fakeAccountsRepository.create('Fake Labs');
+
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
+      account,
     });
 
     await updateUserAvatar.execute({

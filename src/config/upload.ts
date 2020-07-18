@@ -5,19 +5,15 @@ import multer, { StorageEngine } from 'multer';
 const tmpFolder = path.resolve(__dirname, '..', '..', 'tmp');
 
 interface IUploadConfig {
-  driver: 's3' | 'disk';
+  driver: 'disk' | 'cloudinary';
 
   tmpFolder: string;
   uploadsFolder: string;
 
   multer: {
     storage: StorageEngine;
-  };
-
-  config: {
-    disk: {};
-    aws: {
-      bucket: string;
+    limits: {
+      fileSize: number;
     };
   };
 }
@@ -33,18 +29,14 @@ export default {
       destination: tmpFolder,
       filename(request, file, callback) {
         const fileHash = crypto.randomBytes(10).toString('hex');
-
-        const fileName = `${fileHash}-${file.originalname}`;
+        const extension = file.originalname.split('.')[1];
+        const fileName = `${fileHash}.${extension}`;
 
         return callback(null, fileName);
       },
     }),
-  },
-
-  config: {
-    disk: {},
-    aws: {
-      bucket: 'avs-app-gobarber',
+    limits: {
+      fileSize: 5 * 1024 * 1024, // 5 MB
     },
   },
 } as IUploadConfig;

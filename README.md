@@ -72,11 +72,11 @@
 - Caso o e-mail ou a senha sejam inválidos, informar um erro genérico para dificultar ataques;
 
 
-## Manter perfil
+## [OK] Manter perfil
 
 **RF**
 
-- [OK] O usuário deve poder atualizar seu nome, e-mail e senha;
+- O usuário deve poder atualizar seu nome, e-mail e senha;
 - O usuário deve poder atualizar seu avatar fazendo o upload de uma imagem;
 
 **RNF**

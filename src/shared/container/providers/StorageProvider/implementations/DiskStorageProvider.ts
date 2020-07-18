@@ -10,11 +10,16 @@ class DiskStorageProvider implements IStorageProvider {
       path.resolve(uploadConfig.uploadsFolder, file),
     );
 
-    return file;
+    const file_url = `${process.env.APP_API_URL}/files/${file}`;
+
+    return file_url;
   }
 
   public async deleteFile(file: string): Promise<void> {
-    const filePath = path.resolve(uploadConfig.uploadsFolder, file);
+    // If file has full path, get only the filename
+    const filename = file.split('/')[file.split('/').length - 1];
+
+    const filePath = path.resolve(uploadConfig.uploadsFolder, filename);
 
     try {
       await fs.promises.stat(filePath);
