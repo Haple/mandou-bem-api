@@ -8,7 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import Account from './Account';
 
 @Entity('users')
@@ -47,6 +47,11 @@ class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Expose({ name: 'username' })
+  getUsername(): string {
+    return this.email.split('@')[0];
+  }
 }
 
 export default User;
