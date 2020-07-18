@@ -47,8 +47,9 @@ class CreateAccountService {
     await this.usersRepository.create({
       name,
       email,
-      password: hashedPassword,
       account,
+      password: hashedPassword,
+      is_admin: true,
     });
 
     return account;

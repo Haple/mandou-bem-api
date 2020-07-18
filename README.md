@@ -88,7 +88,7 @@
 - Para atualizar sua senha, o usuário precisa confirmar sua senha;
 
 
-## Recuperar senha
+## [OK] Recuperar senha
 
 **RF**
 

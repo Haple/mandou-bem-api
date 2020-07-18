@@ -4,7 +4,9 @@ import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import FakeUserTokensRepository from '../repositories/fakes/FakeUserTokensRepository';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 import ResetPasswordService from './ResetPasswordService';
+import FakeAccountsRepository from '../repositories/fakes/FakeAccountsRepository';
 
+let fakeAccountsRepository: FakeAccountsRepository;
 let fakeUsersRepository: FakeUsersRepository;
 let fakeUserTokensRepository: FakeUserTokensRepository;
 let fakeHashProvider: FakeHashProvider;
@@ -12,6 +14,7 @@ let resetPassword: ResetPasswordService;
 
 describe('ResetPasswordService', () => {
   beforeEach(() => {
+    fakeAccountsRepository = new FakeAccountsRepository();
     fakeUsersRepository = new FakeUsersRepository();
     fakeUserTokensRepository = new FakeUserTokensRepository();
     fakeHashProvider = new FakeHashProvider();
@@ -24,10 +27,13 @@ describe('ResetPasswordService', () => {
   });
 
   it('should be able to reset the password', async () => {
+    const account = await fakeAccountsRepository.create('Fake Labs');
+
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
+      account,
     });
 
     const { token } = await fakeUserTokensRepository.generate(user.id);
@@ -68,10 +74,13 @@ describe('ResetPasswordService', () => {
   });
 
   it('should be able to reset the password if passed more than 2 hours', async () => {
+    const account = await fakeAccountsRepository.create('Fake Labs');
+
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
+      account,
     });
 
     const { token } = await fakeUserTokensRepository.generate(user.id);
