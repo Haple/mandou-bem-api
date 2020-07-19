@@ -1,9 +1,10 @@
-import { getRepository, Repository, Not } from 'typeorm';
+import { getRepository, Repository, Not, Like } from 'typeorm';
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 import IFindAllUsersDTO from '@modules/users/dtos/IFindAllUsersDTO';
 
+import IFindUsersByUsernameDTO from '@modules/users/dtos/IFindUsersByUsernameDTO';
 import User from '../entities/User';
 
 class UsersRepository implements IUsersRepository {
@@ -44,6 +45,33 @@ class UsersRepository implements IUsersRepository {
       users = await this.ormRepository.find({
         where: {
           account_id,
+        },
+      });
+    }
+
+    return users;
+  }
+
+  public async findUsersByUsername({
+    except_user_id,
+    account_id,
+    username_like,
+  }: IFindUsersByUsernameDTO): Promise<User[]> {
+    let users: User[];
+
+    if (except_user_id) {
+      users = await this.ormRepository.find({
+        where: {
+          id: Not(except_user_id),
+          account_id,
+          email: Like(`%${username_like}%`),
+        },
+      });
+    } else {
+      users = await this.ormRepository.find({
+        where: {
+          account_id,
+          email: Like(`%${username_like}%`),
         },
       });
     }

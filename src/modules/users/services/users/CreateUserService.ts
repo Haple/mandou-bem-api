@@ -3,7 +3,6 @@ import { generate } from 'generate-password';
 import path from 'path';
 
 import AppError from '@shared/errors/AppError';
-import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
 import IUsersRepository from '../../repositories/IUsersRepository';
 import IHashProvider from '../../providers/HashProvider/models/IHashProvider';
@@ -24,9 +23,6 @@ class CreateUserService {
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
-
-    @inject('CacheProvider')
-    private cacheProvider: ICacheProvider,
 
     @inject('MailProvider')
     private mailProvider: IMailProvider,
@@ -50,8 +46,6 @@ class CreateUserService {
       password: hashedPassword,
       is_admin: false,
     });
-
-    await this.cacheProvider.invalidatePrefix(`users-list-${account_id}`);
 
     const welcomeUserTemplate = path.resolve(
       __dirname,

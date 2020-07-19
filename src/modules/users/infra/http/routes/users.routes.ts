@@ -22,4 +22,14 @@ usersRouter.post(
   usersController.create,
 );
 
+usersRouter.get(
+  '/',
+  celebrate({
+    [Segments.QUERY]: {
+      username_like: Joi.string(),
+    },
+  }),
+  usersController.index,
+);
+
 export default usersRouter;

@@ -4,6 +4,7 @@ import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 import IFindAllUsersDTO from '@modules/users/dtos/IFindAllUsersDTO';
 
+import IFindUsersByUsernameDTO from '@modules/users/dtos/IFindUsersByUsernameDTO';
 import User from '../../infra/typeorm/entities/User';
 
 class FakeUsersRepository implements IUsersRepository {
@@ -28,6 +29,30 @@ class FakeUsersRepository implements IUsersRepository {
 
     if (except_user_id) {
       users = this.users.filter(user => user.id !== except_user_id);
+    }
+
+    return users;
+  }
+
+  public async findUsersByUsername({
+    except_user_id,
+    account_id,
+    username_like,
+  }: IFindUsersByUsernameDTO): Promise<User[]> {
+    let { users } = this;
+
+    if (except_user_id) {
+      users = this.users.filter(
+        user =>
+          user.id !== except_user_id &&
+          user.account_id === account_id &&
+          user.email.includes(username_like),
+      );
+    } else {
+      users = this.users.filter(
+        user =>
+          user.account_id === account_id && user.email.includes(username_like),
+      );
     }
 
     return users;

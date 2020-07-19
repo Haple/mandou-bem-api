@@ -43,14 +43,13 @@
 
 **RF**
 
-- O usuário admin deve poder criar, alterar, listar e excluir colaboradores;
+- O usuário admin deve poder [OK]criar, alterar, [OK]listar e excluir colaboradores;
 - [OK] Para adicionar um colaborador é preciso informar o nome completo e e-mail do mesmo;
 - [OK] Os colaboradores adicionados devem receber um e-mail com sua senha;
 
 **RNF**
 
 - [OK] Utilizar Ethereal para testar envios em ambiente de dev;
-- A listagem dos usuários deve ser armazenada em cache (Redis);
 - O envio de e-mails deve acontecer em segundo plano (background job);
 
 **RN**
@@ -162,7 +161,7 @@
 
 - O usuário deve poder criar uma postagem de reconhecimento para um colega;
 - Para criar a postagem o usuário precisa informar o colaborador, a quantidade de pontos e uma mensagem;
-- Ao digitar o símbolo "@" deve aparecer um *autocomplete* com os colaboradores da empresa que deve ser interrompido com um síbolo de "espaço";
+- Ao digitar o símbolo "@" deve aparecer um *autocomplete* com os colaboradores da empresa que deve ser interrompido ao pressionar a tecla "espaço";
 - O usuário deve poder criar um comentário em uma postagem de reconhecimento;
 - (Pouco prioritário) O usuário deve ser capaz de enviar imagens e gifs na postagem;
 
