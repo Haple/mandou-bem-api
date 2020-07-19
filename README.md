@@ -39,6 +39,22 @@
 ![image info](./github/images/1-criar-conta.png)
 
 
+
+## [OK] Login
+
+**RF**
+- O usuário deve acessar o sistema usando seu e-mail e senha válidos;
+
+**RNF**
+
+- A autenticação deve acontecer usando JWT;
+
+**RN**
+
+- Caso o e-mail ou a senha sejam inválidos, informar um erro genérico para dificultar ataques;
+
+![image info](./github/images/2-login.png)
+
 ## [OK] Manter usuários
 
 **RF**
@@ -57,19 +73,8 @@
 - As senhas enviadas por e-mail devem ser randômicas;
 - O usuário admin não pode adicionar um colaborador com o e-mail de um usuário já cadastrado;
 
-
-## [OK] Login
-
-**RF**
-- O usuário deve acessar o sistema usando seu e-mail e senha válidos;
-
-**RNF**
-
-- A autenticação deve acontecer usando JWT;
-
-**RN**
-
-- Caso o e-mail ou a senha sejam inválidos, informar um erro genérico para dificultar ataques;
+![image info](./github/images/11-admin-editar-empregados.png)
+![image info](./github/images/12-admin-editar-empregados-2.png)
 
 
 ## [OK] Manter perfil
@@ -89,6 +94,7 @@
 - Para atualizar sua senha, o usuário deve informar a senha antiga;
 - Para atualizar sua senha, o usuário precisa confirmar sua senha;
 
+![image info](./github/images/7-perfil.png)
 
 ## [OK] Recuperar senha
 
@@ -108,8 +114,8 @@
 - O link enviado por e-mail para resetar senhas deve expirar em 2h;
 - O usuário precisa confirmar a nova senha ao resetar sua senha;
 
-
-
+![image info](./github/images/3-recuperar-senha.png)
+![image info](./github/images/4-resetar-senha.png)
 
 
 
