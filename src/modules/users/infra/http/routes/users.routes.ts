@@ -22,6 +22,17 @@ usersRouter.post(
   usersController.create,
 );
 
+usersRouter.delete(
+  '/:user_id',
+  ensureIsAdmin,
+  celebrate({
+    [Segments.PARAMS]: {
+      user_id: Joi.string().uuid().required(),
+    },
+  }),
+  usersController.delete,
+);
+
 usersRouter.get(
   '/',
   celebrate({

@@ -91,8 +91,8 @@ class UsersRepository implements IUsersRepository {
     return this.ormRepository.save(user);
   }
 
-  public async delete(id: string): Promise<void> {
-    await this.ormRepository.delete(id);
+  public async remove(user: User): Promise<void> {
+    await this.ormRepository.remove(user);
   }
 }
 

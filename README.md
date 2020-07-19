@@ -24,7 +24,7 @@
 
 `yarn dev:server`
 
-# Requisitos Módulo 1
+# [OK] Requisitos Módulo 1
 ## [OK] Criar conta
 
 **RF**
@@ -39,23 +39,23 @@
 ![image info](./github/images/1-criar-conta.png)
 
 
-## Manter usuários
+## [OK] Manter usuários
 
 **RF**
 
-- O usuário admin deve poder [OK]criar, alterar, [OK]listar e excluir colaboradores;
-- [OK] Para adicionar um colaborador é preciso informar o nome completo e e-mail do mesmo;
-- [OK] Os colaboradores adicionados devem receber um e-mail com sua senha;
+- O usuário admin deve poder criar, listar e excluir colaboradores;
+- Para adicionar um colaborador é preciso informar o nome completo e e-mail do mesmo;
+- Os colaboradores adicionados devem receber um e-mail com sua senha;
 
 **RNF**
 
-- [OK] Utilizar Ethereal para testar envios em ambiente de dev;
+- Utilizar Ethereal para testar envios em ambiente de dev;
 - O envio de e-mails deve acontecer em segundo plano (background job);
 
 **RN**
 
-- [OK] As senhas enviadas por e-mail devem ser randômicas;
-- [OK] O usuário admin não pode adicionar um colaborador com o e-mail de um usuário já cadastrado;
+- As senhas enviadas por e-mail devem ser randômicas;
+- O usuário admin não pode adicionar um colaborador com o e-mail de um usuário já cadastrado;
 
 
 ## [OK] Login
