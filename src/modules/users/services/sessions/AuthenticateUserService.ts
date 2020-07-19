@@ -3,10 +3,10 @@ import authConfig from '@config/auth';
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
-import IUsersRepository from '../repositories/IUsersRepository';
-import IHashProvider from '../providers/HashProvider/models/IHashProvider';
+import IUsersRepository from '../../repositories/IUsersRepository';
+import IHashProvider from '../../providers/HashProvider/models/IHashProvider';
 
-import User from '../infra/typeorm/entities/User';
+import User from '../../infra/typeorm/entities/User';
 
 interface IRequest {
   email: string;
@@ -46,10 +46,17 @@ class AuthenticateUserService {
 
     const { secret, expiresIn } = authConfig.jwt;
 
-    const token = sign({}, secret, {
-      subject: user.id,
-      expiresIn,
-    });
+    const token = sign(
+      {
+        is_admin: user.is_admin,
+        account_id: user.account_id,
+      },
+      secret,
+      {
+        subject: user.id,
+        expiresIn,
+      },
+    );
 
     return {
       user,

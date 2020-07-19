@@ -44,18 +44,19 @@
 **RF**
 
 - O usuário admin deve poder criar, alterar, listar e excluir colaboradores;
-- Para adicionar um colaborador é preciso informar o nome completo e e-mail do mesmo;
-- Os colaboradores adicionados devem receber um e-mail com sua senha;
+- [OK] Para adicionar um colaborador é preciso informar o nome completo e e-mail do mesmo;
+- [OK] Os colaboradores adicionados devem receber um e-mail com sua senha;
 
 **RNF**
 
-- Utilizar Ethereal para testar envios em ambiente de dev;
+- [OK] Utilizar Ethereal para testar envios em ambiente de dev;
+- A listagem dos usuários deve ser armazenada em cache (Redis);
 - O envio de e-mails deve acontecer em segundo plano (background job);
 
 **RN**
 
-- As senhas enviadas por e-mail devem ser randômicas;
-- O usuário admin não pode adicionar um colaborador com o e-mail de um usuário já cadastrado;
+- [OK] As senhas enviadas por e-mail devem ser randômicas;
+- [OK] O usuário admin não pode adicionar um colaborador com o e-mail de um usuário já cadastrado;
 
 
 ## [OK] Login
@@ -207,3 +208,9 @@ todo mês o usuário terá mais 100 pontos disponíveis para serem enviados para
 
 
 
+
+# Próximos passos
+
+- Experimentar outras organizações de pastas
+- Melhorar testes unitários e colocar coisas repetidas no "before"
+- Adicionar testes de intergação

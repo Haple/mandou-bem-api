@@ -1,12 +1,12 @@
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
-import IUsersRepository from '../repositories/IUsersRepository';
+import IUsersRepository from '../../repositories/IUsersRepository';
 
-import IAccountsRepository from '../repositories/IAccountsRepository';
-import IHashProvider from '../providers/HashProvider/models/IHashProvider';
+import IAccountsRepository from '../../repositories/IAccountsRepository';
+import IHashProvider from '../../providers/HashProvider/models/IHashProvider';
 
-import Account from '../infra/typeorm/entities/Account';
+import Account from '../../infra/typeorm/entities/Account';
 
 interface IRequest {
   company_name: string;
@@ -47,7 +47,7 @@ class CreateAccountService {
     await this.usersRepository.create({
       name,
       email,
-      account,
+      account_id: account.id,
       password: hashedPassword,
       is_admin: true,
     });

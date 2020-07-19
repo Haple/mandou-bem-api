@@ -3,8 +3,8 @@ import path from 'path';
 
 import AppError from '@shared/errors/AppError';
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
-import IUsersRepository from '../repositories/IUsersRepository';
-import IUserTokensRepository from '../repositories/IUserTokensRepository';
+import IUsersRepository from '../../repositories/IUsersRepository';
+import IUserTokensRepository from '../../repositories/IUserTokensRepository';
 
 interface IRequest {
   email: string;
@@ -34,6 +34,7 @@ class SendForgotPasswordEmailService {
 
     const forgotPasswordTemplate = path.resolve(
       __dirname,
+      '..',
       '..',
       'views',
       'forgot_password.hbs',

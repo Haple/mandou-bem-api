@@ -1,9 +1,9 @@
 import AppError from '@shared/errors/AppError';
 
-import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
-import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
+import FakeHashProvider from '../../providers/HashProvider/fakes/FakeHashProvider';
+import FakeUsersRepository from '../../repositories/fakes/FakeUsersRepository';
 import UpdateProfileService from './UpdateProfileService';
-import FakeAccountsRepository from '../repositories/fakes/FakeAccountsRepository';
+import FakeAccountsRepository from '../../repositories/fakes/FakeAccountsRepository';
 
 let fakeAccountsRepository: FakeAccountsRepository;
 let fakeUsersRepository: FakeUsersRepository;
@@ -29,7 +29,7 @@ describe('UpdateProfile', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
-      account,
+      account_id: account.id,
     });
 
     const updatedUser = await updateProfile.execute({
@@ -59,14 +59,14 @@ describe('UpdateProfile', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
-      account,
+      account_id: account.id,
     });
 
     const user = await fakeUsersRepository.create({
       name: 'Test',
       email: 'test@example.com',
       password: '123456',
-      account,
+      account_id: account.id,
     });
 
     await expect(
@@ -85,7 +85,7 @@ describe('UpdateProfile', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
-      account,
+      account_id: account.id,
     });
 
     const updatedUser = await updateProfile.execute({
@@ -106,7 +106,7 @@ describe('UpdateProfile', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
-      account,
+      account_id: account.id,
     });
 
     await expect(
@@ -126,7 +126,7 @@ describe('UpdateProfile', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
-      account,
+      account_id: account.id,
     });
 
     await expect(

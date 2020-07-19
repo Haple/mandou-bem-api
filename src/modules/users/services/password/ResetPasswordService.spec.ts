@@ -1,10 +1,10 @@
 import AppError from '@shared/errors/AppError';
 
-import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
-import FakeUserTokensRepository from '../repositories/fakes/FakeUserTokensRepository';
-import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
+import FakeUsersRepository from '../../repositories/fakes/FakeUsersRepository';
+import FakeUserTokensRepository from '../../repositories/fakes/FakeUserTokensRepository';
+import FakeHashProvider from '../../providers/HashProvider/fakes/FakeHashProvider';
 import ResetPasswordService from './ResetPasswordService';
-import FakeAccountsRepository from '../repositories/fakes/FakeAccountsRepository';
+import FakeAccountsRepository from '../../repositories/fakes/FakeAccountsRepository';
 
 let fakeAccountsRepository: FakeAccountsRepository;
 let fakeUsersRepository: FakeUsersRepository;
@@ -33,7 +33,7 @@ describe('ResetPasswordService', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
-      account,
+      account_id: account.id,
     });
 
     const { token } = await fakeUserTokensRepository.generate(user.id);
@@ -80,7 +80,7 @@ describe('ResetPasswordService', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
-      account,
+      account_id: account.id,
     });
 
     const { token } = await fakeUserTokensRepository.generate(user.id);

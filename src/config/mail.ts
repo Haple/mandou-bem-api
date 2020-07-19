@@ -14,7 +14,7 @@ export default {
   defaults: {
     from: {
       email: 'oi@mandoubem.com.br',
-      name: 'Equipe Mandou Bem',
+      name: 'Equipe MandouBem',
     },
   },
 } as IMailConfig;

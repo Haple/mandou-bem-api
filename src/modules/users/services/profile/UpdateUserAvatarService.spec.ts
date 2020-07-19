@@ -1,9 +1,9 @@
 import AppError from '@shared/errors/AppError';
 
 import FakeStorageProvider from '@shared/container/providers/StorageProvider/fakes/FakeStorageProvider';
-import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
+import FakeUsersRepository from '../../repositories/fakes/FakeUsersRepository';
 import UpdateUserAvatarService from './UpdateUserAvatarService';
-import FakeAccountsRepository from '../repositories/fakes/FakeAccountsRepository';
+import FakeAccountsRepository from '../../repositories/fakes/FakeAccountsRepository';
 
 let fakeAccountsRepository: FakeAccountsRepository;
 let fakeUsersRepository: FakeUsersRepository;
@@ -29,7 +29,7 @@ describe('UpdateUserAvatar', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
-      account,
+      account_id: account.id,
     });
 
     await updateUserAvatar.execute({
@@ -58,7 +58,7 @@ describe('UpdateUserAvatar', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
-      account,
+      account_id: account.id,
     });
 
     await updateUserAvatar.execute({

@@ -1,9 +1,9 @@
 import AppError from '@shared/errors/AppError';
 
-import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
-import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
+import FakeUsersRepository from '../../repositories/fakes/FakeUsersRepository';
+import FakeHashProvider from '../../providers/HashProvider/fakes/FakeHashProvider';
 import AuthenticateUserService from './AuthenticateUserService';
-import FakeAccountsRepository from '../repositories/fakes/FakeAccountsRepository';
+import FakeAccountsRepository from '../../repositories/fakes/FakeAccountsRepository';
 
 let fakeAccountsRepository: FakeAccountsRepository;
 let fakeUsersRepository: FakeUsersRepository;
@@ -28,7 +28,7 @@ describe('AuthenticateUser', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
-      account,
+      account_id: account.id,
     });
 
     const response = await authenticateUser.execute({
@@ -56,7 +56,7 @@ describe('AuthenticateUser', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
-      account,
+      account_id: account.id,
     });
 
     await expect(

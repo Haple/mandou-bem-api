@@ -29,6 +29,7 @@ class UsersRepository implements IUsersRepository {
 
   public async findAllUsers({
     except_user_id,
+    account_id,
   }: IFindAllUsersDTO): Promise<User[]> {
     let users: User[];
 
@@ -36,10 +37,15 @@ class UsersRepository implements IUsersRepository {
       users = await this.ormRepository.find({
         where: {
           id: Not(except_user_id),
+          account_id,
         },
       });
     } else {
-      users = await this.ormRepository.find();
+      users = await this.ormRepository.find({
+        where: {
+          account_id,
+        },
+      });
     }
 
     return users;
@@ -55,6 +61,10 @@ class UsersRepository implements IUsersRepository {
 
   public async save(user: User): Promise<User> {
     return this.ormRepository.save(user);
+  }
+
+  public async delete(id: string): Promise<void> {
+    await this.ormRepository.delete(id);
   }
 }
 

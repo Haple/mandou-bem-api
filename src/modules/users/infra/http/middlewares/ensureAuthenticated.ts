@@ -6,6 +6,8 @@ import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
 
 interface ITokenPayload {
+  account_id: string;
+  is_admin: boolean;
   iat: number;
   exp: number;
   sub: string;
@@ -27,10 +29,12 @@ export default function ensureAuthenticated(
   try {
     const decoded = verify(token, authConfig.jwt.secret);
 
-    const { sub } = decoded as ITokenPayload;
+    const { sub, account_id, is_admin } = decoded as ITokenPayload;
 
     request.user = {
       id: sub,
+      account_id,
+      is_admin,
     };
 
     return next();

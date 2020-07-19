@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
-import CreateAccountService from '@modules/users/services/CreateAccountService';
+import CreateAccountService from '@modules/users/services/accounts/CreateAccountService';
 
 export default class AccountsController {
   public async create(request: Request, response: Response): Promise<Response> {
