@@ -12,6 +12,9 @@ import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepo
 import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
 import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 
+import ICatalogRewardsRepository from '@modules/rewards/repositories/ICatalogRewardsRepository';
+import CatalogRewardRepository from '@modules/rewards/infra/typeorm/repositories/CatalogRewardsRepository';
+
 container.registerSingleton<IAccountsRepository>(
   'AccountsRepository',
   AccountsRepository,
@@ -25,4 +28,9 @@ container.registerSingleton<IUsersRepository>(
 container.registerSingleton<IUserTokensRepository>(
   'UserTokensRepository',
   UserTokensRepository,
+);
+
+container.registerSingleton<ICatalogRewardsRepository>(
+  'CatalogRewardRepository',
+  CatalogRewardRepository,
 );
