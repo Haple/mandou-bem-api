@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 import CreateCatalogRewardService from '@modules/rewards/services/CreateCatalogRewardService';
-import ListCatalogRewardsService from '@modules/rewards/services/ListCatalogRewardsService';
 import DeleteCatalogRewardService from '@modules/rewards/services/DeleteCatalogRewardService';
+import CatalogRewardsRepository from '../../typeorm/repositories/CatalogRewardsRepository';
 
 export default class CatalogRewardController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -23,18 +23,17 @@ export default class CatalogRewardController {
   }
 
   public async index(request: Request, response: Response): Promise<Response> {
-    const username_like = request.query.username_like as string;
-    const { account_id, id } = request.user;
+    const { account_id } = request.user;
 
-    const listUsers = container.resolve(ListCatalogRewardsService);
+    const catalogRewardsRepository = container.resolve(
+      CatalogRewardsRepository,
+    );
 
-    const users = await listUsers.execute({
+    const catalog_rewards = await catalogRewardsRepository.findAllFromAccount(
       account_id,
-      except_user_id: id,
-      username_like,
-    });
+    );
 
-    return response.json(classToClass(users));
+    return response.json(classToClass(catalog_rewards));
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
