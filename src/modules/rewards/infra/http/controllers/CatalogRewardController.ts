@@ -37,17 +37,17 @@ export default class CatalogRewardController {
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
-    const { user_id } = request.params;
+    const { catalog_reward_id } = request.params;
     const { account_id } = request.user;
 
-    const deleteUser = container.resolve(DeleteCatalogRewardService);
+    const deleteCatalogReward = container.resolve(DeleteCatalogRewardService);
 
-    const users = await deleteUser.execute({
+    await deleteCatalogReward.execute({
       account_id,
-      user_id,
+      catalog_reward_id,
     });
 
-    return response.json(classToClass(users));
+    return response.json();
   }
 
   public async update(request: Request, response: Response): Promise<Response> {

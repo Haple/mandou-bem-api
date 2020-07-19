@@ -13,7 +13,7 @@ import IUserTokensRepository from '@modules/users/repositories/IUserTokensReposi
 import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 
 import ICatalogRewardsRepository from '@modules/rewards/repositories/ICatalogRewardsRepository';
-import CatalogRewardRepository from '@modules/rewards/infra/typeorm/repositories/CatalogRewardsRepository';
+import CatalogRewardsRepository from '@modules/rewards/infra/typeorm/repositories/CatalogRewardsRepository';
 
 container.registerSingleton<IAccountsRepository>(
   'AccountsRepository',
@@ -31,6 +31,6 @@ container.registerSingleton<IUserTokensRepository>(
 );
 
 container.registerSingleton<ICatalogRewardsRepository>(
-  'CatalogRewardRepository',
-  CatalogRewardRepository,
+  'CatalogRewardsRepository',
+  CatalogRewardsRepository,
 );

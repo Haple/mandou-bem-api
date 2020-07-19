@@ -1,55 +1,57 @@
 import AppError from '@shared/errors/AppError';
 
 import FakeAccountsRepository from '@modules/users/repositories/fakes/FakeAccountsRepository';
-import FakeUsersRepository from '../repositories/fakes/FakeCatalogRewardsRepository';
-import DeleteUserService from './DeleteCatalogRewardService';
+import FakeCatalogRewardsRepository from '../repositories/fakes/FakeCatalogRewardsRepository';
+import DeleteCatalogRewardService from './DeleteCatalogRewardService';
 
 let fakeAccountsRepository: FakeAccountsRepository;
-let fakeUsersRepository: FakeUsersRepository;
-let deleteUser: DeleteUserService;
+let fakeCatalogRewardsRepository: FakeCatalogRewardsRepository;
+let deleteCatalogReward: DeleteCatalogRewardService;
 
-describe('DeleteUser', () => {
+describe('DeleteCatalogReward', () => {
   beforeEach(() => {
     fakeAccountsRepository = new FakeAccountsRepository();
-    fakeUsersRepository = new FakeUsersRepository();
+    fakeCatalogRewardsRepository = new FakeCatalogRewardsRepository();
 
-    deleteUser = new DeleteUserService(fakeUsersRepository);
+    deleteCatalogReward = new DeleteCatalogRewardService(
+      fakeCatalogRewardsRepository,
+    );
   });
 
-  it('should be able to delete user', async () => {
+  it('should be able to delete catalog reward', async () => {
     const account = await fakeAccountsRepository.create('Fake Labs');
 
-    const user = await fakeUsersRepository.create({
-      name: 'John Doe',
-      email: 'johndoe@example.com',
-      password: '123456',
+    const catalog_reward = await fakeCatalogRewardsRepository.create({
       account_id: account.id,
+      title: 'Netflix',
+      image_url: 'https://google.com',
+      points: 50,
     });
 
     await expect(
-      deleteUser.execute({
+      deleteCatalogReward.execute({
         account_id: account.id,
-        user_id: user.id,
+        catalog_reward_id: catalog_reward.id,
       }),
     ).resolves.not.toThrow(AppError);
   });
 
-  it('should not be able to delete user from another account', async () => {
+  it('should not be able to delete catalog reward from another account', async () => {
     const account1 = await fakeAccountsRepository.create('Fake Labs 1');
 
     const account2 = await fakeAccountsRepository.create('Fake Labs 2');
 
-    const account2User = await fakeUsersRepository.create({
-      name: 'John Doe',
-      email: 'johndoe2@example.com',
-      password: '123456',
+    const account2_catalog_reward = await fakeCatalogRewardsRepository.create({
       account_id: account2.id,
+      title: 'Netflix',
+      image_url: 'https://google.com',
+      points: 50,
     });
 
     await expect(
-      deleteUser.execute({
+      deleteCatalogReward.execute({
         account_id: account1.id,
-        user_id: account2User.id,
+        catalog_reward_id: account2_catalog_reward.id,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

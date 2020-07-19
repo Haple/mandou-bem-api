@@ -5,16 +5,16 @@ import FakeCatalogRewardsRepository from '../repositories/fakes/FakeCatalogRewar
 import CreateCatalogRewardService from './CreateCatalogRewardService';
 
 let fakeAccountsRepository: FakeAccountsRepository;
-let fakeCatalogRewardRepository: FakeCatalogRewardsRepository;
+let fakeCatalogRewardsRepository: FakeCatalogRewardsRepository;
 let createCatalogReward: CreateCatalogRewardService;
 
 describe('CreateCatalogReward', () => {
   beforeEach(() => {
     fakeAccountsRepository = new FakeAccountsRepository();
-    fakeCatalogRewardRepository = new FakeCatalogRewardsRepository();
+    fakeCatalogRewardsRepository = new FakeCatalogRewardsRepository();
 
     createCatalogReward = new CreateCatalogRewardService(
-      fakeCatalogRewardRepository,
+      fakeCatalogRewardsRepository,
     );
   });
 

@@ -43,11 +43,11 @@ export default class UsersController {
 
     const deleteUser = container.resolve(DeleteUserService);
 
-    const users = await deleteUser.execute({
+    await deleteUser.execute({
       account_id,
       user_id,
     });
 
-    return response.json(classToClass(users));
+    return response.json();
   }
 }

@@ -15,8 +15,8 @@ interface IRequest {
 @injectable()
 class CreateCatalogRewardService {
   constructor(
-    @inject('CatalogRewardRepository')
-    private catalogRewardRepository: ICatalogRewardsRepository,
+    @inject('CatalogRewardsRepository')
+    private catalogRewardsRepository: ICatalogRewardsRepository,
   ) {}
 
   public async execute({
@@ -25,7 +25,7 @@ class CreateCatalogRewardService {
     points,
     account_id,
   }: IRequest): Promise<CatalogReward> {
-    const checkCatalogRewardExists = await this.catalogRewardRepository.findByTitle(
+    const checkCatalogRewardExists = await this.catalogRewardsRepository.findByTitle(
       {
         title,
         account_id,
@@ -36,7 +36,7 @@ class CreateCatalogRewardService {
       throw new AppError('Reward title already used.');
     }
 
-    const catalog_reward = await this.catalogRewardRepository.create({
+    const catalog_reward = await this.catalogRewardsRepository.create({
       title,
       image_url,
       points,
