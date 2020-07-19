@@ -126,7 +126,7 @@
 
 **RF**
 
-- O usuário admin deve poder [OK]criar, alterar, [OK]listar e excluir prêmios do catálogo;
+- O usuário admin deve poder [OK]criar, alterar, [OK]listar e [OK]excluir prêmios do catálogo;
 - Para adicionar um prêmio é preciso informar o título, link da imagem e a quantidade de pontos;
 
 **RN**
