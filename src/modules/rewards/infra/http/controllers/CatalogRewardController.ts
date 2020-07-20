@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 import CreateCatalogRewardService from '@modules/rewards/services/CreateCatalogRewardService';
+import UpdateCatalogRewardService from '@modules/rewards/services/UpdateCatalogRewardService';
 import DeleteCatalogRewardService from '@modules/rewards/services/DeleteCatalogRewardService';
 import CatalogRewardsRepository from '../../typeorm/repositories/CatalogRewardsRepository';
 
@@ -51,12 +52,14 @@ export default class CatalogRewardController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
+    const { catalog_reward_id } = request.params;
     const { title, image_url, points } = request.body;
     const { account_id } = request.user;
 
-    const createCatalogReward = container.resolve(CreateCatalogRewardService);
+    const createCatalogReward = container.resolve(UpdateCatalogRewardService);
 
     const catalog_reward = await createCatalogReward.execute({
+      catalog_reward_id,
       title,
       image_url,
       points,

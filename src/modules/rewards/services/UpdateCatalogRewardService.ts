@@ -6,6 +6,7 @@ import ICatalogRewardsRepository from '../repositories/ICatalogRewardsRepository
 import CatalogReward from '../infra/typeorm/entities/CatalogReward';
 
 interface IRequest {
+  catalog_reward_id: string;
   title: string;
   image_url: string;
   points: number;
@@ -13,18 +14,27 @@ interface IRequest {
 }
 
 @injectable()
-class CreateCatalogRewardService {
+class UpdateCatalogRewardService {
   constructor(
     @inject('CatalogRewardsRepository')
     private catalogRewardsRepository: ICatalogRewardsRepository,
   ) {}
 
   public async execute({
+    catalog_reward_id,
     title,
     image_url,
     points,
     account_id,
   }: IRequest): Promise<CatalogReward> {
+    const catalog_reward = await this.catalogRewardsRepository.findById(
+      catalog_reward_id,
+    );
+
+    if (!catalog_reward || catalog_reward.account_id !== account_id) {
+      throw new AppError('Catalog reward not found.');
+    }
+
     const rewardWithSameTitle = await this.catalogRewardsRepository.findByTitle(
       {
         title,
@@ -32,19 +42,17 @@ class CreateCatalogRewardService {
       },
     );
 
-    if (rewardWithSameTitle) {
+    if (rewardWithSameTitle && rewardWithSameTitle.id !== catalog_reward_id) {
       throw new AppError('Reward title already used.');
     }
 
-    const catalog_reward = await this.catalogRewardsRepository.create({
+    return this.catalogRewardsRepository.save({
+      ...catalog_reward,
       title,
       image_url,
       points,
-      account_id,
     });
-
-    return catalog_reward;
   }
 }
 
-export default CreateCatalogRewardService;
+export default UpdateCatalogRewardService;
