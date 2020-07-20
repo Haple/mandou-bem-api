@@ -122,17 +122,20 @@
 
 # Requisitos Módulo 2
 
-## Catálogo de prêmios
+## [OK] Catálogo de prêmios
 
 **RF**
 
-- O usuário admin deve poder [OK]criar, alterar, [OK]listar e [OK]excluir prêmios do catálogo;
+- O usuário admin deve poder criar, alterar, listar e excluir prêmios do catálogo;
 - Para adicionar um prêmio é preciso informar o título, link da imagem e a quantidade de pontos;
 
 **RN**
 
 - Não pode ser possível adicionar um prêmio com o nome de um prêmio já cadastrado na empresa;
 - Não pode ser possível adicionar um prêmio com pontos negativos
+
+![image info](./github/images/9-admin-editar-catalogo.png)
+![image info](./github/images/10-admin-editar-catalogo-2.png)
 
 
 ## Resgate de prêmio
