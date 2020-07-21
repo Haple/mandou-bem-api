@@ -1,7 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
-import ICatalogRewardsRepository from '../repositories/ICatalogRewardsRepository';
+import ICatalogRewardsRepository from '../../repositories/ICatalogRewardsRepository';
 
 interface IRequest {
   account_id: string;

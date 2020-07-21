@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
-import CreateCatalogRewardService from '@modules/rewards/services/CreateCatalogRewardService';
-import UpdateCatalogRewardService from '@modules/rewards/services/UpdateCatalogRewardService';
-import DeleteCatalogRewardService from '@modules/rewards/services/DeleteCatalogRewardService';
+import CreateCatalogRewardService from '@modules/rewards/services/catalog_rewards/CreateCatalogRewardService';
+import UpdateCatalogRewardService from '@modules/rewards/services/catalog_rewards/UpdateCatalogRewardService';
+import DeleteCatalogRewardService from '@modules/rewards/services/catalog_rewards/DeleteCatalogRewardService';
 import CatalogRewardsRepository from '../../typeorm/repositories/CatalogRewardsRepository';
 
 export default class CatalogRewardController {

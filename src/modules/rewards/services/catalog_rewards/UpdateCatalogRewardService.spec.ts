@@ -1,7 +1,7 @@
 import AppError from '@shared/errors/AppError';
 
 import FakeAccountsRepository from '@modules/users/repositories/fakes/FakeAccountsRepository';
-import FakeCatalogRewardsRepository from '../repositories/fakes/FakeCatalogRewardsRepository';
+import FakeCatalogRewardsRepository from '../../repositories/fakes/FakeCatalogRewardsRepository';
 import UpdateCatalogRewardService from './UpdateCatalogRewardService';
 
 let fakeAccountsRepository: FakeAccountsRepository;

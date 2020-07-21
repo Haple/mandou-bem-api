@@ -138,7 +138,7 @@
 ![image info](./github/images/10-admin-editar-catalogo-2.png)
 
 
-## Resgate de prêmio
+## [OK] Resgate de prêmio
 
 **RF**
 
@@ -148,6 +148,9 @@
 
 - O usuário só pode resgatar prêmios que tenha quantidade de pontos igual ou menor que a quantidade de pontos recebidos;
 - A quantidade de pontos do prêmio deve ser subtraída do total de pontos recebidos pelo usuário;
+- Não pode ser possível resgatar o prêmio que não existe na empresa
+
+![image info](./github/images/6-catalogo.png)
 
 ## Entrega de prêmio
 
