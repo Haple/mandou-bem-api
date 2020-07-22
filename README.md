@@ -224,4 +224,4 @@ todo mês o usuário terá mais 100 pontos disponíveis para serem enviados para
 
 - Experimentar outras organizações de pastas
 - Melhorar testes unitários e colocar coisas repetidas no "before"
-- Adicionar testes de intergação
+- Adicionar testes de integração
