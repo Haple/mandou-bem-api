@@ -162,7 +162,7 @@
 **RN**
 
 - Resgates de prêmios marcados como entregues não devem aparecer na listagem do admin;
-6-catalogo.png
+
 ![image info](./github/images/13-admin-premios-resgatados.png)
 
 # Requisitos Módulo 3
