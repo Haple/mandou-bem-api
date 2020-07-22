@@ -38,6 +38,9 @@ class RewardRequest {
   @JoinColumn({ name: 'catalog_reward_id' })
   catalog_reward: CatalogReward;
 
+  @Column()
+  status: string;
+
   @CreateDateColumn()
   created_at: Date;
 

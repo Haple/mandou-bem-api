@@ -157,13 +157,13 @@
 **RF**
 
 - O usuário admin deve listar os resgates de prêmio;
-- O usuário admin deve poder marcar um resgate de prêmio como entregue;
+- [OK] O usuário admin deve poder marcar um resgate de prêmio como entregue;
 
 **RN**
 
 - Resgates de prêmios marcados como entregues não devem aparecer na listagem do admin;
-
-
+6-catalogo.png
+![image info](./github/images/13-admin-premios-resgatados.png)
 
 # Requisitos Módulo 3
 

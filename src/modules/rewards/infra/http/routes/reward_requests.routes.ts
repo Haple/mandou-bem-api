@@ -23,4 +23,14 @@ rewardRequestsRouter.post(
   rewardRequestsController.create,
 );
 
+rewardRequestsRouter.patch(
+  '/:reward_request_id/deliver',
+  celebrate({
+    [Segments.PARAMS]: {
+      reward_request_id: Joi.string().uuid().required(),
+    },
+  }),
+  rewardRequestsController.deliver,
+);
+
 export default rewardRequestsRouter;

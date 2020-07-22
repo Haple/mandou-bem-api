@@ -50,6 +50,7 @@ class CreateRewardRequestService {
       catalog_reward_id,
       user_id,
       account_id,
+      status: 'CREATED',
     });
 
     user.recognition_points -= catalog_reward.points;

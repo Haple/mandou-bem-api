@@ -27,6 +27,10 @@ export default class CreateRewardRequests1595363128079
             type: 'uuid',
           },
           {
+            name: 'status',
+            type: 'varchar',
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',
