@@ -22,6 +22,7 @@ export default class RewardRequestsController {
   }
 
   public async index(request: Request, response: Response): Promise<Response> {
+    const status = request.query.status as string;
     const { account_id } = request.user;
 
     const rewardRequestsRepository = container.resolve(
@@ -30,6 +31,7 @@ export default class RewardRequestsController {
 
     const catalog_rewards = await rewardRequestsRepository.findAllFromAccount(
       account_id,
+      status,
     );
 
     return response.json(classToClass(catalog_rewards));

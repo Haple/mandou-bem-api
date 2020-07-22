@@ -11,8 +11,6 @@ const rewardRequestsController = new RewardRequestsController();
 
 rewardRequestsRouter.use(ensureAuthenticaded);
 
-rewardRequestsRouter.get('/', ensureIsAdmin, rewardRequestsController.index);
-
 rewardRequestsRouter.post(
   '/',
   celebrate({
@@ -23,8 +21,20 @@ rewardRequestsRouter.post(
   rewardRequestsController.create,
 );
 
+rewardRequestsRouter.get(
+  '/',
+  ensureIsAdmin,
+  celebrate({
+    [Segments.QUERY]: {
+      status: Joi.string().valid('CREATED', 'DELIVERED'),
+    },
+  }),
+  rewardRequestsController.index,
+);
+
 rewardRequestsRouter.patch(
   '/:reward_request_id/deliver',
+  ensureIsAdmin,
   celebrate({
     [Segments.PARAMS]: {
       reward_request_id: Joi.string().uuid().required(),

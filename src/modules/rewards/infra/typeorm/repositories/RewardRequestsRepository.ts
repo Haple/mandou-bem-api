@@ -19,14 +19,21 @@ class RewardRequestsRepository implements IRewardRequestsRepository {
 
   public async findAllFromAccount(
     account_id: string,
+    status?: string,
   ): Promise<RewardRequest[]> {
-    const reward_requests = await this.ormRepository.find({
+    if (status) {
+      return this.ormRepository.find({
+        where: {
+          account_id,
+          status,
+        },
+      });
+    }
+    return this.ormRepository.find({
       where: {
         account_id,
       },
     });
-
-    return reward_requests;
   }
 
   public async create(

@@ -120,7 +120,7 @@
 
 
 
-# Requisitos Módulo 2
+# [OK] Requisitos Módulo 2
 
 ## [OK] Catálogo de prêmios
 
@@ -152,12 +152,12 @@
 
 ![image info](./github/images/6-catalogo.png)
 
-## Entrega de prêmio
+## [OK] Entrega de prêmio
 
 **RF**
 
 - O usuário admin deve listar os resgates de prêmio;
-- [OK] O usuário admin deve poder marcar um resgate de prêmio como entregue;
+- O usuário admin deve poder marcar um resgate de prêmio como entregue;
 
 **RN**
 
