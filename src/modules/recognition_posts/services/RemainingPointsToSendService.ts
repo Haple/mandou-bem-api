@@ -22,13 +22,13 @@ class RemainingPointsToSendService {
   public async execute({
     user_id,
   }: IRequest): Promise<IRemainingPointsToSendDTO> {
-    // const cached_remaining_points = await this.cacheProvider.recover<
-    //   IRemainingPointsToSendDTO
-    // >(`remaining_points:${user_id}`);
+    const cached_remaining_points = await this.cacheProvider.recover<
+      IRemainingPointsToSendDTO
+    >(`remaining_points:${user_id}`);
 
-    // if (cached_remaining_points) {
-    //   return cached_remaining_points;
-    // }
+    if (cached_remaining_points) {
+      return cached_remaining_points;
+    }
 
     const recognition_posts = await this.recognitionPostsRepository.findAllFromUser(
       {
