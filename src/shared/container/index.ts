@@ -14,8 +14,12 @@ import UserTokensRepository from '@modules/users/infra/typeorm/repositories/User
 
 import ICatalogRewardsRepository from '@modules/rewards/repositories/ICatalogRewardsRepository';
 import CatalogRewardsRepository from '@modules/rewards/infra/typeorm/repositories/CatalogRewardsRepository';
+
 import RewardRequestsRepository from '@modules/rewards/infra/typeorm/repositories/RewardRequestsRepository';
 import IRewardRequestsRepository from '@modules/rewards/repositories/IRewardRequestsRepository';
+
+import IRecognitionPostsRepository from '@modules/recognition_posts/repositories/IRecognitionPostsRepository';
+import RecognitionPostsRepository from '@modules/recognition_posts/infra/typeorm/repositories/RecognitionPostsRepository';
 
 container.registerSingleton<IAccountsRepository>(
   'AccountsRepository',
@@ -40,4 +44,9 @@ container.registerSingleton<ICatalogRewardsRepository>(
 container.registerSingleton<IRewardRequestsRepository>(
   'RewardRequestsRepository',
   RewardRequestsRepository,
+);
+
+container.registerSingleton<IRecognitionPostsRepository>(
+  'RecognitionPostsRepository',
+  RecognitionPostsRepository,
 );

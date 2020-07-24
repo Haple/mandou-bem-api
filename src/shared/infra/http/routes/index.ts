@@ -7,6 +7,7 @@ import passwordRouter from '@modules/users/infra/http/routes/password.routes';
 import profileRouter from '@modules/users/infra/http/routes/profile.routes';
 import catalogRewardsRouter from '@modules/rewards/infra/http/routes/catalog_rewards.routes';
 import rewardsRequestsRouter from '@modules/rewards/infra/http/routes/reward_requests.routes';
+import remainingPointsToSendRouter from '@modules/recognition_posts/infra/http/routes/remaining_points_to_send.routes';
 
 const routes = Router();
 
@@ -18,5 +19,6 @@ routes.use('/sessions', sessionsRouter);
 
 routes.use('/catalog-rewards', catalogRewardsRouter);
 routes.use('/reward-requests', rewardsRequestsRouter);
+routes.use('/remaining-points', remainingPointsToSendRouter);
 
 export default routes;

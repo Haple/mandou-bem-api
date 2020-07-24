@@ -173,7 +173,7 @@
 
 - O usuário deve poder criar uma postagem de reconhecimento para um colega;
 - Para criar a postagem o usuário precisa informar o colaborador, a quantidade de pontos e uma mensagem;
-- Ao digitar o símbolo "@" deve aparecer um *autocomplete* com os colaboradores da empresa que deve ser interrompido ao pressionar a tecla "espaço";
+- [OK] Ao digitar o símbolo "@" deve aparecer um *autocomplete* com os colaboradores da empresa que deve ser interrompido ao pressionar a tecla "espaço";
 - O usuário deve poder criar um comentário em uma postagem de reconhecimento;
 - (Pouco prioritário) O usuário deve ser capaz de enviar imagens e gifs na postagem;
 
@@ -189,6 +189,7 @@
 - Os pontos enviados na postagem devem ser subtraídos dos pontos disponíveis para enviar do usuário que criou a postagem;
 - Os pontos enviados na postagem devem ser adicionados nos pontos recebidos pelo usuário reconhecido na postagem;
 
+![image info](./github/images/5-feed.png)
 
 ## Ranking dos ganhadores de pontos
 
@@ -200,8 +201,10 @@
 
 - A listagem do ranking deve ser armazenada em cache (Redis);
 
+![image info](./github/images/5-feed.png)
 
-## Pontos restantes para enviar
+
+## [OK] Pontos restantes para enviar
 
 **RF**
 
@@ -214,10 +217,9 @@
 **RN**
 
 - A quantidade de pontos restantes para enviar deve ser calculada subtraindo de 100 a quantidade de pontos já enviados no mês atual, ou seja
-todo mês o usuário terá mais 100 pontos disponíveis para serem enviados para seus colegas;
+todo mês o usuário terá 100 pontos disponíveis para serem enviados para seus colegas;
 
-
-
+![image info](./github/images/5-feed.png)
 
 
 # Próximos passos

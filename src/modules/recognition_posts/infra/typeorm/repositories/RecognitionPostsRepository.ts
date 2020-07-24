@@ -2,6 +2,7 @@ import { getMongoRepository, MongoRepository } from 'typeorm';
 
 import IRecognitionPostsRepository from '@modules/recognition_posts/repositories/IRecognitionPostsRepository';
 import ICreateRecognitionPostDTO from '@modules/recognition_posts/dtos/ICreateRecognitionPostDTO';
+import IFindAllFromUserDTO from '@modules/recognition_posts/dtos/IFindAllFromUserDTO';
 import RecognitionPost from '../schemas/RecognitionPost';
 
 class RecognitionPostsRepository implements IRecognitionPostsRepository {
@@ -17,6 +18,18 @@ class RecognitionPostsRepository implements IRecognitionPostsRepository {
     return this.ormRepository.find({
       where: {
         account_id,
+      },
+    });
+  }
+
+  public async findAllFromUser({
+    from_user_id,
+    since_date,
+  }: IFindAllFromUserDTO): Promise<RecognitionPost[]> {
+    return this.ormRepository.find({
+      where: {
+        from_user_id,
+        created_at: { $gte: since_date.toISOString() },
       },
     });
   }
