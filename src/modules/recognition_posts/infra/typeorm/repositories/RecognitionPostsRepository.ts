@@ -29,7 +29,7 @@ class RecognitionPostsRepository implements IRecognitionPostsRepository {
     return this.ormRepository.find({
       where: {
         from_user_id,
-        created_at: { $gte: since_date.toISOString() },
+        created_at: { $gte: since_date },
       },
     });
   }

@@ -2,13 +2,13 @@ import { Router } from 'express';
 
 import ensureAuthenticaded from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
-import CatalogRewardController from '../controllers/RemainingPointsToSendController';
+import RemainingPointsToSendController from '../controllers/RemainingPointsToSendController';
 
-const catalogRewardsRouter = Router();
-const catalogRewardController = new CatalogRewardController();
+const remainingPointsToSendRouter = Router();
+const remainingPointsToSendController = new RemainingPointsToSendController();
 
-catalogRewardsRouter.use(ensureAuthenticaded);
+remainingPointsToSendRouter.use(ensureAuthenticaded);
 
-catalogRewardsRouter.get('/', catalogRewardController.index);
+remainingPointsToSendRouter.get('/', remainingPointsToSendController.index);
 
-export default catalogRewardsRouter;
+export default remainingPointsToSendRouter;

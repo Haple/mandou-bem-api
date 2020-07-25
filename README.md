@@ -171,23 +171,23 @@
 
 **RF**
 
-- O usuário deve poder criar uma postagem de reconhecimento para um colega;
-- Para criar a postagem o usuário precisa informar o colaborador, a quantidade de pontos e uma mensagem;
 - [OK] Ao digitar o símbolo "@" deve aparecer um *autocomplete* com os colaboradores da empresa que deve ser interrompido ao pressionar a tecla "espaço";
+- [OK] O usuário deve poder criar uma postagem de reconhecimento para um colega;
+- [OK] Para criar a postagem o usuário precisa informar o colaborador, a quantidade de pontos e uma mensagem;
 - O usuário deve poder criar um comentário em uma postagem de reconhecimento;
 - (Pouco prioritário) O usuário deve ser capaz de enviar imagens e gifs na postagem;
 
 **RNF**
 
-- As postagens devem ser armazenadas no MongoDB;
+- [OK] As postagens devem ser armazenadas no MongoDB;
 - A listagem das postagens deve ser armazenado em cache (Redis);
 
 **RN**
 
-- O usuário não pode criar uma postagem de reconhecimento para ele mesmo;
-- O usuário pode criar uma postagem de reconhecimento com uma quantidade de pontos igual ou menor ao seu total disponível;
-- Os pontos enviados na postagem devem ser subtraídos dos pontos disponíveis para enviar do usuário que criou a postagem;
-- Os pontos enviados na postagem devem ser adicionados nos pontos recebidos pelo usuário reconhecido na postagem;
+- [OK] O usuário não pode criar uma postagem de reconhecimento para ele mesmo;
+- [OK] O usuário pode criar uma postagem de reconhecimento com uma quantidade de pontos igual ou menor ao seu total disponível;
+- [OK] Os pontos enviados na postagem devem ser subtraídos dos pontos disponíveis para enviar do usuário que criou a postagem;
+- [OK] Os pontos enviados na postagem devem ser adicionados nos pontos recebidos pelo usuário reconhecido na postagem;
 
 ![image info](./github/images/5-feed.png)
 
