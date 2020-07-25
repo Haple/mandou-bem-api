@@ -180,7 +180,7 @@
 **RNF**
 
 - [OK] As postagens devem ser armazenadas no MongoDB;
-- A listagem das postagens deve ser armazenado em cache (Redis);
+- [OK] A listagem das postagens deve ser armazenado em cache (Redis);
 
 **RN**
 

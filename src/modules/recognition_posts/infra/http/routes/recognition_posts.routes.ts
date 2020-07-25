@@ -22,4 +22,6 @@ recognitionPostsRouter.post(
   recognitionPostsController.create,
 );
 
+recognitionPostsRouter.get('/', recognitionPostsController.index);
+
 export default recognitionPostsRouter;
