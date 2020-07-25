@@ -19,6 +19,9 @@ class RecognitionPostsRepository implements IRecognitionPostsRepository {
       where: {
         account_id,
       },
+      order: {
+        created_at: 'DESC',
+      },
     });
   }
 
