@@ -4,9 +4,11 @@ import ensureAuthenticaded from '@modules/users/infra/http/middlewares/ensureAut
 
 import { celebrate, Segments, Joi } from 'celebrate';
 import RecognitionPostsController from '../controllers/RecognitionPostsController';
+import CommentsController from '../controllers/CommentsController';
 
 const recognitionPostsRouter = Router();
 const recognitionPostsController = new RecognitionPostsController();
+const commentsController = new CommentsController();
 
 recognitionPostsRouter.use(ensureAuthenticaded);
 
@@ -20,6 +22,19 @@ recognitionPostsRouter.post(
     },
   }),
   recognitionPostsController.create,
+);
+
+recognitionPostsRouter.post(
+  '/:recognition_post_id/comments',
+  celebrate({
+    [Segments.PARAMS]: {
+      recognition_post_id: Joi.string().required(),
+    },
+    [Segments.BODY]: {
+      content: Joi.string().required(),
+    },
+  }),
+  commentsController.create,
 );
 
 recognitionPostsRouter.get('/', recognitionPostsController.index);

@@ -167,14 +167,14 @@
 
 # Requisitos Módulo 3
 
-## Postagens de reconhecimento
+## [OK] Postagens de reconhecimento
 
 **RF**
 
 - [OK] Ao digitar o símbolo "@" deve aparecer um *autocomplete* com os colaboradores da empresa que deve ser interrompido ao pressionar a tecla "espaço";
 - [OK] O usuário deve poder criar uma postagem de reconhecimento para um colega;
 - [OK] Para criar a postagem o usuário precisa informar o colaborador, a quantidade de pontos e uma mensagem;
-- O usuário deve poder criar um comentário em uma postagem de reconhecimento;
+- [OK] O usuário deve poder criar um comentário em uma postagem de reconhecimento;
 - (Pouco prioritário) O usuário deve ser capaz de enviar imagens e gifs na postagem;
 
 **RNF**

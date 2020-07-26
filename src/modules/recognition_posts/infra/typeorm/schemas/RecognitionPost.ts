@@ -39,6 +39,13 @@ class RecognitionPost {
   @Column()
   recognition_points: number;
 
+  @Column()
+  comments: {
+    user_id: string;
+    user_name: string;
+    content: string;
+  }[] = [];
+
   @CreateDateColumn()
   created_at: Date;
 

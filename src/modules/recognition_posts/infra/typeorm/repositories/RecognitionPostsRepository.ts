@@ -12,6 +12,12 @@ class RecognitionPostsRepository implements IRecognitionPostsRepository {
     this.ormRepository = getMongoRepository(RecognitionPost, 'mongo');
   }
 
+  public async findById(
+    recognition_post_id: string,
+  ): Promise<RecognitionPost | undefined> {
+    return this.ormRepository.findOne(recognition_post_id);
+  }
+
   public async findAllFromAccount(
     account_id: string,
   ): Promise<RecognitionPost[]> {
@@ -45,6 +51,12 @@ class RecognitionPostsRepository implements IRecognitionPostsRepository {
     await this.ormRepository.save(recognition_post);
 
     return recognition_post;
+  }
+
+  public async save(
+    recognition_post: RecognitionPost,
+  ): Promise<RecognitionPost> {
+    return this.ormRepository.save(recognition_post);
   }
 }
 
