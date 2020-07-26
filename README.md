@@ -165,7 +165,7 @@
 
 ![image info](./github/images/13-admin-premios-resgatados.png)
 
-# Requisitos Módulo 3
+# [OK] Requisitos Módulo 3
 
 ## [OK] Postagens de reconhecimento
 
@@ -191,7 +191,7 @@
 
 ![image info](./github/images/5-feed.png)
 
-## Ranking dos ganhadores de pontos
+## [OK] Ranking dos ganhadores de pontos
 
 **RF**
 
@@ -227,3 +227,5 @@ todo mês o usuário terá 100 pontos disponíveis para serem enviados para seus
 - Experimentar outras organizações de pastas
 - Melhorar testes unitários e colocar coisas repetidas no "before"
 - Adicionar testes de integração
+- Adicionar paginação da listagem dos posts de reconhecimento
+- Fazer deploy da aplicação (Heroku ou algum provedor de kubernetes?)

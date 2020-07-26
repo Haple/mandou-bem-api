@@ -2,11 +2,36 @@ import ICreateRecognitionPostDTO from '@modules/recognition_posts/dtos/ICreateRe
 import IFindAllFromUserDTO from '@modules/recognition_posts/dtos/IFindAllFromUserDTO';
 import { isAfter } from 'date-fns';
 import { ObjectID } from 'mongodb';
+import IRankingItemDTO from '@modules/recognition_posts/dtos/IRankingItemDTO';
 import RecognitionPost from '../../infra/typeorm/schemas/RecognitionPost';
 import IRecognitionPostsRepository from '../IRecognitionPostsRepository';
 
 class FakeRecognitionPostsRepository implements IRecognitionPostsRepository {
   private recognition_posts: RecognitionPost[] = [];
+
+  public async rankByReceivedRecognitionPoints(
+    account_id: string,
+  ): Promise<IRankingItemDTO[]> {
+    const posts = this.recognition_posts.filter(
+      r => r.account_id === account_id,
+    );
+
+    const rankingMap = new Map<string, IRankingItemDTO>();
+
+    posts.forEach(post => {
+      const item = rankingMap.get(post.to_user_id);
+      if (item) {
+        item.recognition_points += post.recognition_points;
+      } else {
+        rankingMap.set(post.to_user_id, {
+          to_name: post.to_name,
+          recognition_points: post.recognition_points,
+        });
+      }
+    });
+
+    return Array.from(rankingMap.values());
+  }
 
   public async findById(
     recognition_post_id: string,

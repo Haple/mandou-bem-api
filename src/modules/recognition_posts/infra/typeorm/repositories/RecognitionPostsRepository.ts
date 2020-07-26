@@ -3,6 +3,7 @@ import { getMongoRepository, MongoRepository } from 'typeorm';
 import IRecognitionPostsRepository from '@modules/recognition_posts/repositories/IRecognitionPostsRepository';
 import ICreateRecognitionPostDTO from '@modules/recognition_posts/dtos/ICreateRecognitionPostDTO';
 import IFindAllFromUserDTO from '@modules/recognition_posts/dtos/IFindAllFromUserDTO';
+import IRankingItemDTO from '@modules/recognition_posts/dtos/IRankingItemDTO';
 import RecognitionPost from '../schemas/RecognitionPost';
 
 class RecognitionPostsRepository implements IRecognitionPostsRepository {
@@ -10,6 +11,35 @@ class RecognitionPostsRepository implements IRecognitionPostsRepository {
 
   constructor() {
     this.ormRepository = getMongoRepository(RecognitionPost, 'mongo');
+  }
+
+  public async rankByReceivedRecognitionPoints(
+    account_id: string,
+  ): Promise<IRankingItemDTO[]> {
+    const ranking = await this.ormRepository
+      .aggregate<IRankingItemDTO>([
+        {
+          $match: {
+            account_id,
+          },
+        },
+        {
+          $group: {
+            _id: {
+              to_user_id: '$to_user_id',
+            },
+            to_name: { $first: '$to_name' },
+            recognition_points: { $sum: '$recognition_points' },
+          },
+        },
+        {
+          $sort: {
+            recognition_points: -1,
+          },
+        },
+      ])
+      .toArray();
+    return ranking;
   }
 
   public async findById(

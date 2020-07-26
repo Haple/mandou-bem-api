@@ -9,6 +9,7 @@ import catalogRewardsRouter from '@modules/rewards/infra/http/routes/catalog_rew
 import rewardsRequestsRouter from '@modules/rewards/infra/http/routes/reward_requests.routes';
 import remainingPointsToSendRouter from '@modules/recognition_posts/infra/http/routes/remaining_points_to_send.routes';
 import recognitionPostsRouter from '@modules/recognition_posts/infra/http/routes/recognition_posts.routes';
+import recognitionRankingRouter from '@modules/recognition_posts/infra/http/routes/recognition_ranking.routes';
 
 const routes = Router();
 
@@ -22,5 +23,6 @@ routes.use('/catalog-rewards', catalogRewardsRouter);
 routes.use('/reward-requests', rewardsRequestsRouter);
 routes.use('/remaining-points', remainingPointsToSendRouter);
 routes.use('/recognition-posts', recognitionPostsRouter);
+routes.use('/recognition-ranking', recognitionRankingRouter);
 
 export default routes;

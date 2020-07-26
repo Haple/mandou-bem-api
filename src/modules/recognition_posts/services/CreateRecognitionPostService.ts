@@ -80,6 +80,9 @@ class CreateRecognitionPostService {
     await this.cacheProvider.invalidate(
       `recognition_posts:${from_user.account_id}`,
     );
+    await this.cacheProvider.invalidate(
+      `recognition_ranking:${from_user.account_id}`,
+    );
 
     return recognition_post;
   }
