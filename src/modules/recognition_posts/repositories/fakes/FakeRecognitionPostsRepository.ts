@@ -25,6 +25,7 @@ class FakeRecognitionPostsRepository implements IRecognitionPostsRepository {
       } else {
         rankingMap.set(post.to_user_id, {
           to_name: post.to_name,
+          to_avatar: post.to_avatar,
           recognition_points: post.recognition_points,
         });
       }

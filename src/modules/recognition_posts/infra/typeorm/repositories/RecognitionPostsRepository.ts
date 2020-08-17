@@ -29,6 +29,7 @@ class RecognitionPostsRepository implements IRecognitionPostsRepository {
               to_user_id: '$to_user_id',
             },
             to_name: { $first: '$to_name' },
+            to_avatar: { $last: '$to_avatar' },
             recognition_points: { $sum: '$recognition_points' },
           },
         },

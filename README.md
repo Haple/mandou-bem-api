@@ -24,6 +24,12 @@
 
 `yarn dev:server`
 
+## Executar testes
+`yarn test`
+
+![image info](./github/images/14-coverage.png)
+
+
 # [OK] Requisitos Módulo 1
 ## [OK] Criar conta
 
