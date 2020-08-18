@@ -2,6 +2,23 @@ version: '3'
 
 services:
 
+  api:
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:3333/health || exit 1"]
+      interval: 5s
+    container_name: mandoubem_api
+    build: .
+    ports:
+      - '3333:3333'
+    # command: yarn start
+    env_file: .env
+    depends_on:
+      - postgres
+      - redis
+      - mongo
+    network_mode: host
+
+
   postgres:
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
@@ -14,6 +31,7 @@ services:
       - POSTGRES_DB=mandoubem
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=docker
+    network_mode: host
 
   redis:
     healthcheck:
@@ -23,6 +41,7 @@ services:
     container_name: mandoubem_redis
     ports:
       - "6379:6379"
+    network_mode: host
 
   mongo:
     healthcheck:
@@ -32,3 +51,4 @@ services:
     container_name: mandoubem_mongodb
     ports:
       - "27017:27017"
+    network_mode: host
