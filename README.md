@@ -1,12 +1,15 @@
 # mandou-bem-api
 
-# Instruções
-## Requisitos
+Tema: oferecemos um sistema de reconhecimento e engajamento de empregados, onde os colaboradores da empresa mandam pontos uns aos outros como forma de reconhecimento. Esses pontos podem ser usados para ganhar prêmios que a empresa oferece.
+
+# Requisitos
 
 - NodeJS
 - Yarn
 - Docker
 - Docker Compose
+
+# Instruções para desenvolvimento
 
 ## Instalar dependências
 

@@ -1,12 +1,12 @@
-[
+module.exports = [
   {
     "name": "default",
     "type": "postgres",
-    "host": "localhost",
-    "port": 5432,
-    "username": "postgres",
-    "password": "docker",
-    "database": "mandoubem",
+    "host": process.env.POSTGRES_HOST,
+    "port": process.env.POSTGRES_PORT,
+    "username": process.env.POSTGRES_USERNAME,
+    "password": process.env.POSTGRES_PASS,
+    "database": process.env.POSTGRES_DATABASE,
     "entities": [
       "./src/modules/**/infra/typeorm/entities/*.ts"
     ],
@@ -20,12 +20,14 @@
   {
     "name": "mongo",
     "type": "mongodb",
-    "host": "localhost",
-    "port": 27017,
-    "database": "mandoubem",
+    "host": process.env.MONGO_HOST,
+    "port": process.env.MONGO_PORT,
+    "username": process.env.MONGO_USERNAME,
+    "password": process.env.MONGO_PASS,
+    "database": process.env.MONGO_DATABASE,
     "useUnifiedTopology": true,
     "entities": [
       "./src/modules/**/infra/typeorm/schemas/*.ts"
     ]
   }
-]
+];
