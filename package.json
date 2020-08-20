@@ -4,9 +4,9 @@
   "description": "Mandou Bem API",
   "main": "index.js",
   "scripts": {
-    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
-    "start": "ts-node -r tsconfig-paths/register src/shared/infra/http/server.ts",
+    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
+    "start": "node dist/shared/infra/http/server.js",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "test": "jest"
   },
@@ -41,7 +41,9 @@
     "jest": "^26.0.1",
     "prettier": "^2.0.4",
     "ts-jest": "^25.5.1",
+    "ts-node": "3.3.0",
     "ts-node-dev": "^1.0.0-pre.44",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.8.3"
   },
   "dependencies": {
@@ -68,8 +70,6 @@
     "redis": "^3.0.2",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.2.0",
-    "ts-node": "3.3.0",
-    "tsconfig-paths": "^3.9.0",
     "typeorm": "^0.2.24",
     "uuidv4": "^6.0.7"
   },

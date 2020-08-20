@@ -1,4 +1,5 @@
 import { createConnections } from 'typeorm';
+import path from 'path';
 
 createConnections([
   {
@@ -9,8 +10,32 @@ createConnections([
     username: process.env.POSTGRES_USERNAME,
     password: process.env.POSTGRES_PASS,
     database: process.env.POSTGRES_DATABASE,
-    entities: ['./src/modules/**/infra/typeorm/entities/*.ts'],
-    migrations: ['./src/shared/infra/typeorm/migrations/*.ts'],
+    entities: [
+      path.resolve(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        '**',
+        'infra',
+        'typeorm',
+        'entities',
+        '*.*',
+      ),
+    ],
+    migrations: [
+      path.resolve(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        '**',
+        'infra',
+        'typeorm',
+        'migrations',
+        '*.*',
+      ),
+    ],
     cli: {
       migrationsDir: './src/shared/infra/typeorm/migrations',
     },
@@ -24,6 +49,18 @@ createConnections([
     password: process.env.MONGO_PASS,
     database: process.env.MONGO_DATABASE,
     useUnifiedTopology: true,
-    entities: ['./src/modules/**/infra/typeorm/schemas/*.ts'],
+    entities: [
+      path.resolve(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        '**',
+        'infra',
+        'typeorm',
+        'schemas',
+        '*.*',
+      ),
+    ],
   },
 ]);
