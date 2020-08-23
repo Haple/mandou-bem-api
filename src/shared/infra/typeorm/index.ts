@@ -1,5 +1,53 @@
-import { createConnections } from 'typeorm';
+import { createConnections, ConnectionOptions } from 'typeorm';
 import path from 'path';
+
+const getMongoConnection = (): ConnectionOptions =>
+  process.env.NODE_ENV === 'production'
+    ? {
+        name: 'mongo',
+        type: 'mongodb',
+        url: `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASS}@${process.env.MONGO_HOST}/${process.env.MONGO_DATABASE}`,
+        useNewUrlParser: true,
+        synchronize: true,
+        logging: true,
+        useUnifiedTopology: true,
+        entities: [
+          path.resolve(
+            __dirname,
+            '..',
+            '..',
+            '..',
+            '**',
+            'infra',
+            'typeorm',
+            'schemas',
+            '*.*',
+          ),
+        ],
+      }
+    : {
+        name: 'mongo',
+        type: 'mongodb',
+        host: process.env.MONGO_HOST,
+        port: parseInt(process.env.MONGO_PORT || '27017', 10),
+        username: process.env.MONGO_USERNAME,
+        password: process.env.MONGO_PASS,
+        database: process.env.MONGO_DATABASE,
+        useUnifiedTopology: true,
+        entities: [
+          path.resolve(
+            __dirname,
+            '..',
+            '..',
+            '..',
+            '**',
+            'infra',
+            'typeorm',
+            'schemas',
+            '*.*',
+          ),
+        ],
+      };
 
 createConnections([
   {
@@ -40,27 +88,5 @@ createConnections([
       migrationsDir: './src/shared/infra/typeorm/migrations',
     },
   },
-  {
-    name: 'mongo',
-    type: 'mongodb',
-    host: process.env.MONGO_HOST,
-    port: parseInt(process.env.MONGO_PORT || '27017', 10),
-    username: process.env.MONGO_USERNAME,
-    password: process.env.MONGO_PASS,
-    database: process.env.MONGO_DATABASE,
-    useUnifiedTopology: true,
-    entities: [
-      path.resolve(
-        __dirname,
-        '..',
-        '..',
-        '..',
-        '**',
-        'infra',
-        'typeorm',
-        'schemas',
-        '*.*',
-      ),
-    ],
-  },
+  getMongoConnection(),
 ]);
