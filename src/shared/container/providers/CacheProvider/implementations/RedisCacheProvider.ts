@@ -10,7 +10,11 @@ export default class RedisCacheProvider implements ICacheProvider {
   }
 
   public async save(key: string, value: any, ttl?: number): Promise<void> {
-    await this.client.set(key, JSON.stringify(value), 'EX', ttl);
+    if (ttl) {
+      await this.client.set(key, JSON.stringify(value), 'EX', ttl);
+    } else {
+      await this.client.set(key, JSON.stringify(value));
+    }
   }
 
   public async recover<T>(key: string): Promise<T | null> {
