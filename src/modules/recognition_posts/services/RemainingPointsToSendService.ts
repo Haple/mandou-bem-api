@@ -1,7 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import { startOfMonth } from 'date-fns';
+import { differenceInSeconds, lastDayOfMonth, startOfMonth } from 'date-fns';
 import IRemainingPointsToSendDTO from '../dtos/IRemainingPointsToSendDTO';
 import IRecognitionPostsRepository from '../repositories/IRecognitionPostsRepository';
 
@@ -46,9 +46,14 @@ class RemainingPointsToSendService {
         0,
       );
 
-    await this.cacheProvider.save(`remaining_points:${user_id}`, {
-      remaining_points,
-    });
+    await this.cacheProvider.save(
+      `remaining_points:${user_id}`,
+      {
+        remaining_points,
+      },
+      differenceInSeconds(lastDayOfMonth(new Date()), new Date()) +
+        60 * 60 * 24,
+    );
 
     return {
       remaining_points,
