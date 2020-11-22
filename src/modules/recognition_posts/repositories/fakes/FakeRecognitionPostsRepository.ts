@@ -3,6 +3,7 @@ import IFindAllFromUserDTO from '@modules/recognition_posts/dtos/IFindAllFromUse
 import { isAfter } from 'date-fns';
 import { ObjectID } from 'mongodb';
 import IRankingItemDTO from '@modules/recognition_posts/dtos/IRankingItemDTO';
+import IPaginationDTO from '@modules/recognition_posts/dtos/IPaginationDTO';
 import RecognitionPost from '../../infra/typeorm/schemas/RecognitionPost';
 import IRecognitionPostsRepository from '../IRecognitionPostsRepository';
 
@@ -45,10 +46,14 @@ class FakeRecognitionPostsRepository implements IRecognitionPostsRepository {
 
   public async findAllFromAccount(
     account_id: string,
-  ): Promise<RecognitionPost[]> {
-    return this.recognition_posts.filter(
+  ): Promise<IPaginationDTO<RecognitionPost>> {
+    const posts = this.recognition_posts.filter(
       recognition_post => recognition_post.account_id === account_id,
     );
+    return {
+      total: posts.length,
+      result: posts,
+    };
   }
 
   public async findAllFromUser({

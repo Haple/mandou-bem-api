@@ -24,11 +24,15 @@ export default class RecognitionPostsController {
 
   public async index(request: Request, response: Response): Promise<Response> {
     const { account_id } = request.user;
+    const page = (request.query.page as unknown) as number;
+    const size = (request.query.size as unknown) as number;
 
     const listRecognitionPosts = container.resolve(ListRecognitionPostsService);
 
     const recognition_posts = await listRecognitionPosts.execute({
       account_id,
+      page,
+      size,
     });
 
     return response.json(recognition_posts);

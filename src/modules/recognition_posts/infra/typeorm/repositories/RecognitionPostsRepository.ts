@@ -4,6 +4,7 @@ import IRecognitionPostsRepository from '@modules/recognition_posts/repositories
 import ICreateRecognitionPostDTO from '@modules/recognition_posts/dtos/ICreateRecognitionPostDTO';
 import IFindAllFromUserDTO from '@modules/recognition_posts/dtos/IFindAllFromUserDTO';
 import IRankingItemDTO from '@modules/recognition_posts/dtos/IRankingItemDTO';
+import IPaginationDTO from '@modules/recognition_posts/dtos/IPaginationDTO';
 import RecognitionPost from '../schemas/RecognitionPost';
 
 class RecognitionPostsRepository implements IRecognitionPostsRepository {
@@ -51,15 +52,23 @@ class RecognitionPostsRepository implements IRecognitionPostsRepository {
 
   public async findAllFromAccount(
     account_id: string,
-  ): Promise<RecognitionPost[]> {
-    return this.ormRepository.find({
+    page: number,
+    size: number,
+  ): Promise<IPaginationDTO<RecognitionPost>> {
+    const [posts, total] = await this.ormRepository.findAndCount({
       where: {
         account_id,
       },
       order: {
         created_at: 'DESC',
       },
+      skip: page * size,
+      take: size,
     });
+    return {
+      total,
+      result: posts,
+    };
   }
 
   public async findAllFromUser({

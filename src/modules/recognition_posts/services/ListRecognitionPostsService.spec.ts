@@ -34,8 +34,10 @@ describe('ListRecognitionPosts', () => {
 
     const recognition_posts = await listRecognitionPosts.execute({
       account_id: recognition_post_dto.account_id,
+      page: 0,
+      size: 2,
     });
 
-    expect(recognition_posts.length).toBe(2);
+    expect(recognition_posts.total).toBe(2);
   });
 });

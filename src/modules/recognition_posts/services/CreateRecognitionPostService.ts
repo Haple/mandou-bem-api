@@ -77,7 +77,7 @@ class CreateRecognitionPostService {
     this.usersRepository.save(to_user);
 
     await this.cacheProvider.invalidate(`remaining_points:${from_user_id}`);
-    await this.cacheProvider.invalidate(
+    await this.cacheProvider.invalidatePrefix(
       `recognition_posts:${from_user.account_id}`,
     );
     await this.cacheProvider.invalidate(

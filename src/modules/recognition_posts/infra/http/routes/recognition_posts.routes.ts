@@ -37,6 +37,15 @@ recognitionPostsRouter.post(
   commentsController.create,
 );
 
-recognitionPostsRouter.get('/', recognitionPostsController.index);
+recognitionPostsRouter.get(
+  '/',
+  celebrate({
+    [Segments.QUERY]: {
+      page: Joi.number().default(0).min(0),
+      size: Joi.number().positive().default(10).min(1),
+    },
+  }),
+  recognitionPostsController.index,
+);
 
 export default recognitionPostsRouter;

@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import CreateRecognitionPostService from '@modules/recognition_posts/services/CreateRecognitionPostService';
 import CreateCommentService from '@modules/recognition_posts/services/CreateCommentService';
 
 export default class CommentsController {
