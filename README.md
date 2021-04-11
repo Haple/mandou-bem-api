@@ -23,6 +23,10 @@ Tema: oferecemos um sistema de reconhecimento e engajamento de empregados, onde 
 
 `yarn typeorm migration:run`
 
+## Criar nova migration
+
+`yarn typeorm migration:create -n YourMigrationNameHere`
+
 ## Iniciar servidor
 
 `yarn dev:server`
@@ -32,6 +36,8 @@ Tema: oferecemos um sistema de reconhecimento e engajamento de empregados, onde 
 
 ![image info](./github/images/14-coverage.png)
 
+## Se estiver problemas em que o Typescript está apontando um erro que já foi corrigido:
+`(Faça isso dentro de um arquivo '.ts') Ctrl+Shift+P > Typescript: Restart TS Server`
 
 # [OK] Requisitos Módulo 1
 ## [OK] Criar conta

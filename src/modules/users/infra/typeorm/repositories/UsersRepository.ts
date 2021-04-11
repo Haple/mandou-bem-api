@@ -92,7 +92,7 @@ class UsersRepository implements IUsersRepository {
   }
 
   public async remove(user: User): Promise<void> {
-    await this.ormRepository.remove(user);
+    await this.ormRepository.softRemove(user);
   }
 }
 

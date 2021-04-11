@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateCatalogRewards1595193130750
+export default class CreatePositions1617669843317
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'catalog_rewards',
+        name: 'positions',
         columns: [
           {
             name: 'id',
@@ -19,11 +19,7 @@ export default class CreateCatalogRewards1595193130750
             type: 'uuid',
           },
           {
-            name: 'title',
-            type: 'varchar',
-          },
-          {
-            name: 'image_url',
+            name: 'position_name',
             type: 'varchar',
           },
           {
@@ -49,7 +45,7 @@ export default class CreateCatalogRewards1595193130750
         ],
         foreignKeys: [
           {
-            name: 'FK_CatalogRewards_Accounts',
+            name: 'FK_Positions_Accounts',
             columnNames: ['account_id'],
             referencedColumnNames: ['id'],
             referencedTableName: 'accounts',
@@ -62,6 +58,6 @@ export default class CreateCatalogRewards1595193130750
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('catalog_rewards');
+    await queryRunner.dropTable('positions');
   }
 }

@@ -58,7 +58,7 @@ class CatalogRewardsRepository implements ICatalogRewardsRepository {
   }
 
   public async remove(catalog_reward: CatalogReward): Promise<void> {
-    await this.ormRepository.remove(catalog_reward);
+    await this.ormRepository.softRemove(catalog_reward);
   }
 }
 

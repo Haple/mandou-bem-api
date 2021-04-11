@@ -56,9 +56,9 @@ export default class CatalogRewardController {
     const { title, image_url, points } = request.body;
     const { account_id } = request.user;
 
-    const createCatalogReward = container.resolve(UpdateCatalogRewardService);
+    const updateCatalogReward = container.resolve(UpdateCatalogRewardService);
 
-    const catalog_reward = await createCatalogReward.execute({
+    const catalog_reward = await updateCatalogReward.execute({
       catalog_reward_id,
       title,
       image_url,

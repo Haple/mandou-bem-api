@@ -9,10 +9,10 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 
-import Account from '@modules/users/infra/typeorm/entities/Account';
+import Account from './Account';
 
-@Entity('catalog_rewards')
-class CatalogReward {
+@Entity('positions')
+class Position {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -24,10 +24,7 @@ class CatalogReward {
   account: Account;
 
   @Column()
-  title: string;
-
-  @Column()
-  image_url: string;
+  position_name: string;
 
   @Column()
   points: number;
@@ -42,4 +39,4 @@ class CatalogReward {
   deleted_at: Date;
 }
 
-export default CatalogReward;
+export default Position;

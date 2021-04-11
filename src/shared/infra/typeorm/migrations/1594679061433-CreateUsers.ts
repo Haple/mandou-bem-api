@@ -55,6 +55,11 @@ export default class CreateUsers1594679061433 implements MigrationInterface {
             type: 'timestamp',
             default: 'now()',
           },
+          {
+            name: 'deleted_at',
+            type: 'timestamp',
+            isNullable: true,
+          },
         ],
         foreignKeys: [
           {

@@ -21,6 +21,9 @@ import IRewardRequestsRepository from '@modules/rewards/repositories/IRewardRequ
 import IRecognitionPostsRepository from '@modules/recognition_posts/repositories/IRecognitionPostsRepository';
 import RecognitionPostsRepository from '@modules/recognition_posts/infra/typeorm/repositories/RecognitionPostsRepository';
 
+import IPositionsRepository from '@modules/users/repositories/IPositionsRepository';
+import PositionsRepository from '@modules/users/infra/typeorm/repositories/PositionsRepository';
+
 import RemainingPointsToSendService from '@modules/recognition_posts/services/RemainingPointsToSendService';
 
 container.registerSingleton<IAccountsRepository>(
@@ -51,6 +54,11 @@ container.registerSingleton<IRewardRequestsRepository>(
 container.registerSingleton<IRecognitionPostsRepository>(
   'RecognitionPostsRepository',
   RecognitionPostsRepository,
+);
+
+container.registerSingleton<IPositionsRepository>(
+  'PositionsRepository',
+  PositionsRepository,
 );
 
 container.registerSingleton<RemainingPointsToSendService>(

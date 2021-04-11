@@ -136,7 +136,7 @@ describe('UpdateCatalogReward', () => {
     expect(updated_catalog_reward?.title).toBe(catalog_reward_1.title);
   });
 
-  it('should not be able to delete catalog reward from another account', async () => {
+  it('should not be able to update catalog reward from another account', async () => {
     const account1 = await fakeAccountsRepository.create('Fake Labs 1');
 
     const account2 = await fakeAccountsRepository.create('Fake Labs 2');

@@ -6,10 +6,12 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 
 import { Exclude, Expose } from 'class-transformer';
 import Account from './Account';
+import Position from './Position';
 
 @Entity('users')
 class User {
@@ -19,9 +21,16 @@ class User {
   @Column()
   account_id: string;
 
+  @Column()
+  position_id: string;
+
   @ManyToOne(() => Account, { eager: true })
   @JoinColumn({ name: 'account_id' })
   account: Account;
+
+  @ManyToOne(() => Position, { eager: true })
+  @JoinColumn({ name: 'position_id' })
+  position: Position;
 
   @Column()
   name: string;
@@ -47,6 +56,9 @@ class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @DeleteDateColumn()
+  deleted_at: Date;
 
   @Expose({ name: 'username' })
   getUsername(): string {

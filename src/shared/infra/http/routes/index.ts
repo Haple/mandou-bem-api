@@ -2,6 +2,8 @@ import { Router } from 'express';
 
 import accountsRouter from '@modules/users/infra/http/routes/accounts.routes';
 import usersRouter from '@modules/users/infra/http/routes/users.routes';
+import positionsRouter from '@modules/users/infra/http/routes/positions.routes';
+
 import sessionsRouter from '@modules/users/infra/http/routes/sessions.routes';
 import passwordRouter from '@modules/users/infra/http/routes/password.routes';
 import profileRouter from '@modules/users/infra/http/routes/profile.routes';
@@ -14,6 +16,7 @@ import recognitionRankingRouter from '@modules/recognition_posts/infra/http/rout
 const routes = Router();
 
 routes.use('/accounts', accountsRouter);
+routes.use('/positions', positionsRouter);
 routes.use('/users', usersRouter);
 routes.use('/profile', profileRouter);
 routes.use('/password', passwordRouter);
