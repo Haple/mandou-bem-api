@@ -49,44 +49,86 @@ const getMongoConnection = (): ConnectionOptions =>
         ],
       };
 
-createConnections([
-  {
-    name: 'default',
-    type: 'postgres',
-    host: process.env.POSTGRES_HOST,
-    port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
-    username: process.env.POSTGRES_USERNAME,
-    password: process.env.POSTGRES_PASS,
-    database: process.env.POSTGRES_DATABASE,
-    entities: [
-      path.resolve(
-        __dirname,
-        '..',
-        '..',
-        '..',
-        '**',
-        'infra',
-        'typeorm',
-        'entities',
-        '*.*',
-      ),
-    ],
-    migrations: [
-      path.resolve(
-        __dirname,
-        '..',
-        '..',
-        '..',
-        '**',
-        'infra',
-        'typeorm',
-        'migrations',
-        '*.*',
-      ),
-    ],
-    cli: {
-      migrationsDir: './src/shared/infra/typeorm/migrations',
-    },
-  },
-  getMongoConnection(),
-]);
+const getPostgresConnection = (): ConnectionOptions =>
+  process.env.NODE_ENV === 'production'
+    ? {
+        name: 'default',
+        type: 'postgres',
+        host: process.env.POSTGRES_HOST,
+        port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
+        username: process.env.POSTGRES_USERNAME,
+        password: process.env.POSTGRES_PASS,
+        database: process.env.POSTGRES_DATABASE,
+        ssl: {
+          rejectUnauthorized: false,
+        },
+        entities: [
+          path.resolve(
+            __dirname,
+            '..',
+            '..',
+            '..',
+            '**',
+            'infra',
+            'typeorm',
+            'entities',
+            '*.*',
+          ),
+        ],
+        migrations: [
+          path.resolve(
+            __dirname,
+            '..',
+            '..',
+            '..',
+            '**',
+            'infra',
+            'typeorm',
+            'migrations',
+            '*.*',
+          ),
+        ],
+        cli: {
+          migrationsDir: './src/shared/infra/typeorm/migrations',
+        },
+      }
+    : {
+        name: 'default',
+        type: 'postgres',
+        host: process.env.POSTGRES_HOST,
+        port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
+        username: process.env.POSTGRES_USERNAME,
+        password: process.env.POSTGRES_PASS,
+        database: process.env.POSTGRES_DATABASE,
+        entities: [
+          path.resolve(
+            __dirname,
+            '..',
+            '..',
+            '..',
+            '**',
+            'infra',
+            'typeorm',
+            'entities',
+            '*.*',
+          ),
+        ],
+        migrations: [
+          path.resolve(
+            __dirname,
+            '..',
+            '..',
+            '..',
+            '**',
+            'infra',
+            'typeorm',
+            'migrations',
+            '*.*',
+          ),
+        ],
+        cli: {
+          migrationsDir: './src/shared/infra/typeorm/migrations',
+        },
+      };
+
+createConnections([getPostgresConnection(), getMongoConnection()]);
