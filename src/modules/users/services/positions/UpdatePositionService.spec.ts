@@ -118,7 +118,7 @@ describe('UpdatePosition', () => {
     expect(updated_position?.position_name).toBe(position_1.position_name);
   });
 
-  it('should not be able to update catalog reward from another account', async () => {
+  it('should not be able to update position from another account', async () => {
     const account1 = await fakeAccountsRepository.create('Fake Labs 1');
     const account2 = await fakeAccountsRepository.create('Fake Labs 2');
 

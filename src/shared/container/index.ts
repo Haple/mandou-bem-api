@@ -24,6 +24,9 @@ import RecognitionPostsRepository from '@modules/recognition_posts/infra/typeorm
 import IPositionsRepository from '@modules/users/repositories/IPositionsRepository';
 import PositionsRepository from '@modules/users/infra/typeorm/repositories/PositionsRepository';
 
+import IDepartmentsRepository from '@modules/users/repositories/IDepartmentsRepository';
+import DepartmentsRepository from '@modules/users/infra/typeorm/repositories/DepartmentsRepository';
+
 import RemainingPointsToSendService from '@modules/recognition_posts/services/RemainingPointsToSendService';
 
 container.registerSingleton<IAccountsRepository>(
@@ -59,6 +62,11 @@ container.registerSingleton<IRecognitionPostsRepository>(
 container.registerSingleton<IPositionsRepository>(
   'PositionsRepository',
   PositionsRepository,
+);
+
+container.registerSingleton<IDepartmentsRepository>(
+  'DepartmentsRepository',
+  DepartmentsRepository,
 );
 
 container.registerSingleton<RemainingPointsToSendService>(

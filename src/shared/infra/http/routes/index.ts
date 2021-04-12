@@ -3,6 +3,7 @@ import { Router } from 'express';
 import accountsRouter from '@modules/users/infra/http/routes/accounts.routes';
 import usersRouter from '@modules/users/infra/http/routes/users.routes';
 import positionsRouter from '@modules/users/infra/http/routes/positions.routes';
+import departmentsRouter from '@modules/users/infra/http/routes/departments.routes';
 
 import sessionsRouter from '@modules/users/infra/http/routes/sessions.routes';
 import passwordRouter from '@modules/users/infra/http/routes/password.routes';
@@ -17,6 +18,7 @@ const routes = Router();
 
 routes.use('/accounts', accountsRouter);
 routes.use('/positions', positionsRouter);
+routes.use('/departments', departmentsRouter);
 routes.use('/users', usersRouter);
 routes.use('/profile', profileRouter);
 routes.use('/password', passwordRouter);

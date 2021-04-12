@@ -12,6 +12,7 @@ import {
 import { Exclude, Expose } from 'class-transformer';
 import Account from './Account';
 import Position from './Position';
+import Department from './Department';
 
 @Entity('users')
 class User {
@@ -24,6 +25,9 @@ class User {
   @Column()
   position_id: string;
 
+  @Column()
+  department_id: string;
+
   @ManyToOne(() => Account, { eager: true })
   @JoinColumn({ name: 'account_id' })
   account: Account;
@@ -31,6 +35,10 @@ class User {
   @ManyToOne(() => Position, { eager: true })
   @JoinColumn({ name: 'position_id' })
   position: Position;
+
+  @ManyToOne(() => Department, { eager: true })
+  @JoinColumn({ name: 'department_id' })
+  department: Department;
 
   @Column()
   name: string;
