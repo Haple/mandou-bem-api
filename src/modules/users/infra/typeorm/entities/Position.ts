@@ -19,7 +19,7 @@ class Position {
   @Column()
   account_id: string;
 
-  @ManyToOne(() => Account, { eager: true })
+  @ManyToOne(() => Account, { eager: false })
   @JoinColumn({ name: 'account_id' })
   account: Account;
 

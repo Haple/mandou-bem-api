@@ -4,4 +4,6 @@ export default interface ICreateUserDTO {
   email: string;
   password: string;
   is_admin?: boolean;
+  position_id: string;
+  department_id: string;
 }

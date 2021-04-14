@@ -1,42 +1,32 @@
 import AppError from '@shared/errors/AppError';
 
 import FakeAccountsRepository from '@modules/users/repositories/fakes/FakeAccountsRepository';
-import FakeMailProvider from '@shared/container/providers/MailProvider/fakes/FakeMailProvider';
 import FakeDepartmentsRepository from '@modules/users/repositories/fakes/FakeDepartmentsRepository';
 import FakePositionsRepository from '@modules/users/repositories/fakes/FakePositionsRepository';
-import FakeHashProvider from '../../providers/HashProvider/fakes/FakeHashProvider';
 import FakeUsersRepository from '../../repositories/fakes/FakeUsersRepository';
-import CreateUserService from './CreateUserService';
+import UpdateUserService from './UpdateUserService';
 
 let fakeAccountsRepository: FakeAccountsRepository;
 let fakeDepartmentsRepository: FakeDepartmentsRepository;
 let fakePositionsRepository: FakePositionsRepository;
 let fakeUsersRepository: FakeUsersRepository;
-let fakeMailProvider: FakeMailProvider;
-let fakeHashProvider: FakeHashProvider;
-let createUser: CreateUserService;
+let updateUser: UpdateUserService;
 
-describe('CreateUser', () => {
+describe('UpdatePosition', () => {
   beforeEach(() => {
     fakeAccountsRepository = new FakeAccountsRepository();
-    fakeDepartmentsRepository = new FakeDepartmentsRepository();
     fakePositionsRepository = new FakePositionsRepository();
+    fakeDepartmentsRepository = new FakeDepartmentsRepository();
     fakeUsersRepository = new FakeUsersRepository();
-    fakeMailProvider = new FakeMailProvider();
-    fakeHashProvider = new FakeHashProvider();
 
-    createUser = new CreateUserService(
+    updateUser = new UpdateUserService(
       fakePositionsRepository,
       fakeDepartmentsRepository,
       fakeUsersRepository,
-      fakeHashProvider,
-      fakeMailProvider,
     );
   });
 
-  it('should be able to create a new user', async () => {
-    const sendMail = jest.spyOn(fakeMailProvider, 'sendMail');
-
+  it('should be able to update a user', async () => {
     const account = await fakeAccountsRepository.create('Fake Labs');
     const position = await fakePositionsRepository.create({
       account_id: account.id,
@@ -47,22 +37,37 @@ describe('CreateUser', () => {
       account_id: account.id,
       department_name: 'Marketing',
     });
-
-    const user = await createUser.execute({
+    const new_position = await fakePositionsRepository.create({
+      account_id: account.id,
+      points: 100,
+      position_name: 'New Manager',
+    });
+    const new_department = await fakeDepartmentsRepository.create({
+      account_id: account.id,
+      department_name: 'New Marketing',
+    });
+    const user = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
       account_id: account.id,
       position_id: position.id,
       department_id: department.id,
+      password: '123',
     });
 
-    expect(user).toHaveProperty('id');
-    expect(sendMail).toBeCalled();
+    const updated_user = await updateUser.execute({
+      user_id: user.id,
+      account_id: account.id,
+      position_id: new_position.id,
+      department_id: new_department.id,
+    });
+
+    expect(updated_user).toHaveProperty('id');
+    expect(updated_user?.position).toBe(new_position);
+    expect(updated_user?.department).toBe(new_department);
   });
 
-  it('should not be able to create a new user with same email from another', async () => {
-    const sendMail = jest.spyOn(fakeMailProvider, 'sendMail');
-
+  it('should be able to update a user without change anything', async () => {
     const account = await fakeAccountsRepository.create('Fake Labs');
     const position = await fakePositionsRepository.create({
       account_id: account.id,
@@ -73,39 +78,69 @@ describe('CreateUser', () => {
       account_id: account.id,
       department_name: 'Marketing',
     });
-
-    await createUser.execute({
+    const user = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
       account_id: account.id,
       position_id: position.id,
       department_id: department.id,
+      password: '123',
+    });
+
+    const updated_user = await updateUser.execute({
+      user_id: user.id,
+      account_id: account.id,
+      position_id: position.id,
+      department_id: department.id,
+    });
+
+    expect(updated_user).toHaveProperty('id');
+    expect(updated_user?.position).toBe(position);
+    expect(updated_user?.department).toBe(department);
+  });
+
+  it('should not be able to update user from another account', async () => {
+    const account1 = await fakeAccountsRepository.create('Fake Labs 1');
+    const account2 = await fakeAccountsRepository.create('Fake Labs 2');
+
+    const account1_user = await fakeUsersRepository.create({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      account_id: account1.id,
+      position_id: 'fake-position-id',
+      department_id: 'fake-department-id',
+      password: '123',
     });
 
     await expect(
-      createUser.execute({
-        name: 'John Doe',
-        email: 'johndoe@example.com',
-        account_id: account.id,
-        position_id: position.id,
-        department_id: department.id,
+      updateUser.execute({
+        user_id: account1_user.id,
+        account_id: account2.id,
+        position_id: 'updated-fake-position-id',
+        department_id: 'updated-fake-department-id',
       }),
     ).rejects.toBeInstanceOf(AppError);
-
-    expect(sendMail).toBeCalledTimes(1);
   });
 
-  it('should not be able to create a new user with unknown position', async () => {
+  it('should not be able to update a user with unknown position', async () => {
     const account = await fakeAccountsRepository.create('Fake Labs');
     const department = await fakeDepartmentsRepository.create({
       account_id: account.id,
       department_name: 'Marketing',
     });
 
+    const user = await fakeUsersRepository.create({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      account_id: account.id,
+      position_id: 'fake-position-id',
+      department_id: department.id,
+      password: '123',
+    });
+
     await expect(
-      createUser.execute({
-        name: 'John Doe',
-        email: 'johndoe@example.com',
+      updateUser.execute({
+        user_id: user.id,
         account_id: account.id,
         position_id: 'unknown-position-id',
         department_id: department.id,
@@ -113,7 +148,7 @@ describe('CreateUser', () => {
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('should not be able to create a new user with unknown department', async () => {
+  it('should not be able to update a user with unknown department', async () => {
     const account = await fakeAccountsRepository.create('Fake Labs');
     const position = await fakePositionsRepository.create({
       account_id: account.id,
@@ -121,10 +156,18 @@ describe('CreateUser', () => {
       position_name: 'Manager',
     });
 
+    const user = await fakeUsersRepository.create({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      account_id: account.id,
+      position_id: position.id,
+      department_id: 'fake-department-id',
+      password: '123',
+    });
+
     await expect(
-      createUser.execute({
-        name: 'John Doe',
-        email: 'johndoe@example.com',
+      updateUser.execute({
+        user_id: user.id,
         account_id: account.id,
         position_id: position.id,
         department_id: 'unknown-department-id',
@@ -132,7 +175,7 @@ describe('CreateUser', () => {
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('should not be able to create a new user with position from another account', async () => {
+  it('should not be able to update a user with position from another account', async () => {
     const account_1 = await fakeAccountsRepository.create('Fake Labs 1');
     const account_1_position = await fakePositionsRepository.create({
       account_id: account_1.id,
@@ -146,10 +189,18 @@ describe('CreateUser', () => {
       department_name: 'Marketing',
     });
 
+    const user = await fakeUsersRepository.create({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      account_id: account_2.id,
+      position_id: 'fake-position-id',
+      department_id: department.id,
+      password: '123',
+    });
+
     await expect(
-      createUser.execute({
-        name: 'John Doe',
-        email: 'johndoe@example.com',
+      updateUser.execute({
+        user_id: user.id,
         account_id: account_2.id,
         position_id: account_1_position.id,
         department_id: department.id,
@@ -157,7 +208,7 @@ describe('CreateUser', () => {
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('should not be able to create a new user with department from another account', async () => {
+  it('should not be able to update a user with department from another account', async () => {
     const account_1 = await fakeAccountsRepository.create('Fake Labs 1');
     const account_1_department = await fakeDepartmentsRepository.create({
       account_id: account_1.id,
@@ -171,10 +222,18 @@ describe('CreateUser', () => {
       position_name: 'Manager',
     });
 
+    const user = await fakeUsersRepository.create({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      account_id: account_2.id,
+      position_id: position.id,
+      department_id: 'fake-department-id',
+      password: '123',
+    });
+
     await expect(
-      createUser.execute({
-        name: 'John Doe',
-        email: 'johndoe@example.com',
+      updateUser.execute({
+        user_id: user.id,
         account_id: account_2.id,
         position_id: position.id,
         department_id: account_1_department.id,

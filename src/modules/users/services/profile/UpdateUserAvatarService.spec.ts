@@ -30,6 +30,8 @@ describe('UpdateUserAvatar', () => {
       email: 'johndoe@example.com',
       password: '123456',
       account_id: account.id,
+      position_id: 'fake-position-id',
+      department_id: 'fake-department-id'
     });
 
     await updateUserAvatar.execute({
@@ -59,6 +61,8 @@ describe('UpdateUserAvatar', () => {
       email: 'johndoe@example.com',
       password: '123456',
       account_id: account.id,
+      position_id: 'fake-position-id',
+      department_id: 'fake-department-id'
     });
 
     await updateUserAvatar.execute({

@@ -22,6 +22,8 @@ describe('ListUsers', () => {
       password: '123456',
       account_id: account.id,
       is_admin: true,
+      position_id: 'fake-position-id',
+      department_id: 'fake-department-id'
     });
 
     await fakeUsersRepository.create({
@@ -29,6 +31,8 @@ describe('ListUsers', () => {
       email: 'johndoe@example.com',
       password: '123456',
       account_id: account.id,
+      position_id: 'fake-position-id',
+      department_id: 'fake-department-id'
     });
 
     await fakeUsersRepository.create({
@@ -36,6 +40,8 @@ describe('ListUsers', () => {
       email: 'jessicahill@example.com',
       password: '123456',
       account_id: account.id,
+      position_id: 'fake-position-id',
+      department_id: 'fake-department-id'
     });
 
     const users = await listUsers.execute({
@@ -54,6 +60,8 @@ describe('ListUsers', () => {
       password: '123456',
       account_id: account1.id,
       is_admin: true,
+      position_id: 'fake-position-id',
+      department_id: 'fake-department-id'
     });
 
     const account1User1 = await fakeUsersRepository.create({
@@ -61,6 +69,8 @@ describe('ListUsers', () => {
       email: 'johndoe@example.com',
       password: '123456',
       account_id: account1.id,
+      position_id: 'fake-position-id',
+      department_id: 'fake-department-id'
     });
 
     const account2 = await fakeAccountsRepository.create('Fake Labs 2');
@@ -70,6 +80,8 @@ describe('ListUsers', () => {
       email: 'johndoe2@example.com',
       password: '123456',
       account_id: account2.id,
+      position_id: 'fake-position-id',
+      department_id: 'fake-department-id'
     });
 
     const users = await listUsers.execute({

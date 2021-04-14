@@ -40,6 +40,8 @@ describe('CreateComment', () => {
       name: 'John Doe',
       email: 'johndoe@corp.com',
       password: '1234',
+      position_id: 'fake-position-id',
+      department_id: 'fake-department-id'
     });
 
     const post = await fakeRecognitionPostsRepository.create(

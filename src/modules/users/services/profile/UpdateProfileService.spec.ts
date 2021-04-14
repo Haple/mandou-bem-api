@@ -30,6 +30,8 @@ describe('UpdateProfile', () => {
       email: 'johndoe@example.com',
       password: '123456',
       account_id: account.id,
+      position_id: 'fake-position-id',
+      department_id: 'fake-department-id'
     });
 
     const updatedUser = await updateProfile.execute({
@@ -60,6 +62,8 @@ describe('UpdateProfile', () => {
       email: 'johndoe@example.com',
       password: '123456',
       account_id: account.id,
+      position_id: 'fake-position-id',
+      department_id: 'fake-department-id'
     });
 
     const user = await fakeUsersRepository.create({
@@ -67,6 +71,8 @@ describe('UpdateProfile', () => {
       email: 'test@example.com',
       password: '123456',
       account_id: account.id,
+      position_id: 'fake-position-id',
+      department_id: 'fake-department-id'
     });
 
     await expect(
@@ -86,6 +92,8 @@ describe('UpdateProfile', () => {
       email: 'johndoe@example.com',
       password: '123456',
       account_id: account.id,
+      position_id: 'fake-position-id',
+      department_id: 'fake-department-id'
     });
 
     const updatedUser = await updateProfile.execute({
@@ -107,6 +115,8 @@ describe('UpdateProfile', () => {
       email: 'johndoe@example.com',
       password: '123456',
       account_id: account.id,
+      position_id: 'fake-position-id',
+      department_id: 'fake-department-id'
     });
 
     await expect(
@@ -127,6 +137,8 @@ describe('UpdateProfile', () => {
       email: 'johndoe@example.com',
       password: '123456',
       account_id: account.id,
+      position_id: 'fake-position-id',
+      department_id: 'fake-department-id'
     });
 
     await expect(

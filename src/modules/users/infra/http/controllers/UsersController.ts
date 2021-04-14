@@ -5,10 +5,11 @@ import { classToClass } from 'class-transformer';
 import CreateUserService from '@modules/users/services/users/CreateUserService';
 import ListUsersService from '@modules/users/services/users/ListUsersService';
 import DeleteUserService from '@modules/users/services/users/DeleteUserService';
+import UpdateUserService from '@modules/users/services/users/UpdateUserService';
 
 export default class UsersController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, email } = request.body;
+    const { name, email, department_id, position_id } = request.body;
     const { account_id } = request.user;
 
     const createUser = container.resolve(CreateUserService);
@@ -17,6 +18,8 @@ export default class UsersController {
       name,
       email,
       account_id,
+      department_id,
+      position_id,
     });
 
     return response.json(classToClass(user));
@@ -49,5 +52,22 @@ export default class UsersController {
     });
 
     return response.json();
+  }
+
+  public async update(request: Request, response: Response): Promise<Response> {
+    const { user_id } = request.params;
+    const { position_id, department_id } = request.body;
+    const { account_id } = request.user;
+
+    const updateUser = container.resolve(UpdateUserService);
+
+    const user = await updateUser.execute({
+      user_id,
+      position_id,
+      department_id,
+      account_id,
+    });
+
+    return response.json(classToClass(user));
   }
 }

@@ -4,6 +4,8 @@ import path from 'path';
 
 import AppError from '@shared/errors/AppError';
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
+import IDepartmentsRepository from '@modules/users/repositories/IDepartmentsRepository';
+import IPositionsRepository from '@modules/users/repositories/IPositionsRepository';
 import IUsersRepository from '../../repositories/IUsersRepository';
 import IHashProvider from '../../providers/HashProvider/models/IHashProvider';
 
@@ -13,11 +15,19 @@ interface IRequest {
   name: string;
   email: string;
   account_id: string;
+  department_id: string;
+  position_id: string;
 }
 
 @injectable()
 class CreateUserService {
   constructor(
+    @inject('PositionsRepository')
+    private positionsRepository: IPositionsRepository,
+
+    @inject('DepartmentsRepository')
+    private departmentsRepository: IDepartmentsRepository,
+
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
 
@@ -28,11 +38,29 @@ class CreateUserService {
     private mailProvider: IMailProvider,
   ) {}
 
-  public async execute({ name, email, account_id }: IRequest): Promise<User> {
+  public async execute({
+    name,
+    email,
+    account_id,
+    department_id,
+    position_id,
+  }: IRequest): Promise<User> {
     const checkUserExists = await this.usersRepository.findByEmail(email);
 
     if (checkUserExists) {
       throw new AppError('Email address already used.');
+    }
+
+    const department = await this.departmentsRepository.findById(department_id);
+
+    if (!department || department.account_id !== account_id) {
+      throw new AppError('Department not found.');
+    }
+
+    const position = await this.positionsRepository.findById(position_id);
+
+    if (!position || position.account_id !== account_id) {
+      throw new AppError('Position not found.');
     }
 
     const password = generate({ length: 10, numbers: true });
@@ -43,6 +71,8 @@ class CreateUserService {
       name,
       email,
       account_id,
+      position_id,
+      department_id,
       password: hashedPassword,
       is_admin: false,
     });

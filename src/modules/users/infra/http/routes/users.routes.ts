@@ -17,6 +17,8 @@ usersRouter.post(
     [Segments.BODY]: {
       name: Joi.string().required(),
       email: Joi.string().email().required(),
+      department_id: Joi.string().uuid().required(),
+      position_id: Joi.string().uuid().required(),
     },
   }),
   usersController.create,
@@ -41,6 +43,21 @@ usersRouter.get(
     },
   }),
   usersController.index,
+);
+
+usersRouter.put(
+  '/:user_id',
+  ensureIsAdmin,
+  celebrate({
+    [Segments.PARAMS]: {
+      user_id: Joi.string().uuid().required(),
+    },
+    [Segments.BODY]: {
+      position_id: Joi.string().uuid().required(),
+      department_id: Joi.string().uuid().required(),
+    },
+  }),
+  usersController.update,
 );
 
 export default usersRouter;

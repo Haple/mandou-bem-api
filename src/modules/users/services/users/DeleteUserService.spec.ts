@@ -24,6 +24,8 @@ describe('DeleteUser', () => {
       email: 'johndoe@example.com',
       password: '123456',
       account_id: account.id,
+      position_id: 'fake-position-id',
+      department_id: 'fake-department-id'
     });
 
     await expect(
@@ -44,6 +46,8 @@ describe('DeleteUser', () => {
       email: 'johndoe2@example.com',
       password: '123456',
       account_id: account2.id,
+      position_id: 'fake-position-id',
+      department_id: 'fake-department-id'
     });
 
     await expect(
