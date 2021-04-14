@@ -32,6 +32,12 @@ class CatalogReward {
   @Column()
   points: number;
 
+  @Column()
+  units_available: number;
+
+  @Column()
+  description: string;
+
   @CreateDateColumn()
   created_at: Date;
 

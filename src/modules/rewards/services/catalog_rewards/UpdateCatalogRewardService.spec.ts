@@ -26,6 +26,8 @@ describe('UpdateCatalogReward', () => {
       title: 'Netflix',
       image_url: 'https://google.com',
       points: 50,
+      units_available: 10,
+      description: 'fake description'
     });
 
     await updateCatalogReward.execute({
@@ -34,6 +36,8 @@ describe('UpdateCatalogReward', () => {
       title: 'Updated Netflix',
       image_url: 'https://updated.google.com',
       points: 40,
+      units_available: 10,
+      description: 'fake description'
     });
 
     const updated_catalog_reward = await fakeCatalogRewardsRepository.findById(
@@ -56,6 +60,8 @@ describe('UpdateCatalogReward', () => {
       title: 'Netflix',
       image_url: 'https://google.com',
       points: 50,
+      units_available: 10,
+      description: 'fake description'
     });
 
     await updateCatalogReward.execute({
@@ -64,6 +70,8 @@ describe('UpdateCatalogReward', () => {
       title: 'Netflix',
       image_url: 'https://updated.google.com',
       points: 40,
+      units_available: 10,
+      description: 'fake description'
     });
 
     const updated_catalog_reward = await fakeCatalogRewardsRepository.findById(
@@ -86,6 +94,8 @@ describe('UpdateCatalogReward', () => {
       title: 'Netflix',
       image_url: 'https://google.com',
       points: 50,
+      units_available: 10,
+      description: 'fake description'
     });
 
     const catalog_reward_2 = await fakeCatalogRewardsRepository.create({
@@ -93,6 +103,8 @@ describe('UpdateCatalogReward', () => {
       title: 'Google Play',
       image_url: 'https://google.com',
       points: 50,
+      units_available: 10,
+      description: 'fake description'
     });
 
     await expect(
@@ -102,6 +114,8 @@ describe('UpdateCatalogReward', () => {
         title: catalog_reward_1.title,
         image_url: 'https://google.com',
         points: 50,
+        units_available: 10,
+        description: 'fake description'
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -115,6 +129,8 @@ describe('UpdateCatalogReward', () => {
       title: 'Netflix',
       image_url: 'https://google.com',
       points: 50,
+      units_available: 10,
+      description: 'fake description'
     });
 
     const catalog_reward_2 = await fakeCatalogRewardsRepository.create({
@@ -122,6 +138,8 @@ describe('UpdateCatalogReward', () => {
       title: 'Google Play',
       image_url: 'https://google.com',
       points: 50,
+      units_available: 10,
+      description: 'fake description'
     });
 
     const updated_catalog_reward = await updateCatalogReward.execute({
@@ -130,6 +148,8 @@ describe('UpdateCatalogReward', () => {
       title: catalog_reward_1.title,
       image_url: 'https://google.com',
       points: 50,
+      units_available: 10,
+      description: 'fake description'
     });
 
     expect(updated_catalog_reward).toBeDefined();
@@ -146,6 +166,8 @@ describe('UpdateCatalogReward', () => {
       title: 'Netflix',
       image_url: 'https://google.com',
       points: 50,
+      units_available: 10,
+      description: 'fake description'
     });
 
     await expect(
@@ -155,6 +177,8 @@ describe('UpdateCatalogReward', () => {
         title: 'Google Play',
         image_url: 'https://google.com',
         points: 50,
+        units_available: 10,
+      description: 'fake description'
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

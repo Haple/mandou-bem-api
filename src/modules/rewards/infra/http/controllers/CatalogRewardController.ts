@@ -8,7 +8,7 @@ import CatalogRewardsRepository from '../../typeorm/repositories/CatalogRewardsR
 
 export default class CatalogRewardController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { title, image_url, points } = request.body;
+    const { title, image_url, points, units_available, description } = request.body;
     const { account_id } = request.user;
 
     const createCatalogReward = container.resolve(CreateCatalogRewardService);
@@ -18,6 +18,8 @@ export default class CatalogRewardController {
       image_url,
       points,
       account_id,
+      units_available,
+      description,
     });
 
     return response.json(classToClass(catalog_reward));
@@ -53,7 +55,7 @@ export default class CatalogRewardController {
 
   public async update(request: Request, response: Response): Promise<Response> {
     const { catalog_reward_id } = request.params;
-    const { title, image_url, points } = request.body;
+    const { title, image_url, points, units_available, description } = request.body;
     const { account_id } = request.user;
 
     const updateCatalogReward = container.resolve(UpdateCatalogRewardService);
@@ -64,6 +66,8 @@ export default class CatalogRewardController {
       image_url,
       points,
       account_id,
+      units_available,
+      description,
     });
 
     return response.json(classToClass(catalog_reward));

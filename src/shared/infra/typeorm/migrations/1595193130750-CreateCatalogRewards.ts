@@ -32,6 +32,15 @@ export default class CreateCatalogRewards1595193130750
             default: 0,
           },
           {
+            name: 'units_available',
+            type: 'integer',
+            default: 0,
+          },
+          {
+            name: 'description',
+            type: 'varchar',
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

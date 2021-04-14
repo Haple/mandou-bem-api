@@ -10,6 +10,8 @@ interface IRequest {
   image_url: string;
   points: number;
   account_id: string;
+  units_available: number;
+  description: string;
 }
 
 @injectable()
@@ -24,6 +26,8 @@ class CreateCatalogRewardService {
     image_url,
     points,
     account_id,
+    units_available,
+    description
   }: IRequest): Promise<CatalogReward> {
     const rewardWithSameTitle = await this.catalogRewardsRepository.findByTitle(
       {
@@ -41,6 +45,8 @@ class CreateCatalogRewardService {
       image_url,
       points,
       account_id,
+      units_available,
+      description
     });
 
     return catalog_reward;

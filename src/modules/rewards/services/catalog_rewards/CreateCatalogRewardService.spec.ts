@@ -26,6 +26,8 @@ describe('CreateCatalogReward', () => {
       title: 'Netflix',
       image_url: 'https://google.com',
       points: 50,
+      units_available: 10,
+      description: 'fake description'
     });
 
     expect(catalog_reward).toHaveProperty('id');
@@ -39,6 +41,8 @@ describe('CreateCatalogReward', () => {
       title: 'Netflix',
       image_url: 'https://google.com',
       points: 50,
+      units_available: 10,
+      description: 'fake description'
     });
 
     await expect(
@@ -47,6 +51,8 @@ describe('CreateCatalogReward', () => {
         title: 'Netflix',
         image_url: 'https://google.com',
         points: 50,
+        units_available: 10,
+        description: 'fake description'
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -60,6 +66,8 @@ describe('CreateCatalogReward', () => {
       title: 'Netflix',
       image_url: 'https://google.com',
       points: 50,
+      units_available: 10,
+      description: 'fake description'
     });
 
     const catalog_reward = await createCatalogReward.execute({
@@ -67,6 +75,8 @@ describe('CreateCatalogReward', () => {
       title: 'Netflix',
       image_url: 'https://google.com',
       points: 50,
+      units_available: 10,
+      description: 'fake description'
     });
 
     expect(catalog_reward).toHaveProperty('id');

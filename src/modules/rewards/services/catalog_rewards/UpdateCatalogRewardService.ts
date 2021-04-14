@@ -11,6 +11,8 @@ interface IRequest {
   image_url: string;
   points: number;
   account_id: string;
+  units_available: number;
+  description: string;
 }
 
 @injectable()
@@ -26,6 +28,8 @@ class UpdateCatalogRewardService {
     image_url,
     points,
     account_id,
+    units_available,
+    description
   }: IRequest): Promise<CatalogReward> {
     const catalog_reward = await this.catalogRewardsRepository.findById(
       catalog_reward_id,
@@ -51,6 +55,8 @@ class UpdateCatalogRewardService {
       title,
       image_url,
       points,
+      units_available,
+      description
     });
   }
 }

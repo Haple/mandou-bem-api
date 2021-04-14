@@ -26,6 +26,8 @@ describe('DeleteCatalogReward', () => {
       title: 'Netflix',
       image_url: 'https://google.com',
       points: 50,
+      units_available: 10,
+      description: 'fake description'
     });
 
     await expect(
@@ -46,6 +48,8 @@ describe('DeleteCatalogReward', () => {
       title: 'Netflix',
       image_url: 'https://google.com',
       points: 50,
+      units_available: 10,
+      description: 'fake description'
     });
 
     await expect(
