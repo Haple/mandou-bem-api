@@ -27,7 +27,7 @@ describe('DeleteCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
-      description: 'fake description'
+      description: 'fake description',
     });
 
     await expect(
@@ -49,7 +49,7 @@ describe('DeleteCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
-      description: 'fake description'
+      description: 'fake description',
     });
 
     await expect(

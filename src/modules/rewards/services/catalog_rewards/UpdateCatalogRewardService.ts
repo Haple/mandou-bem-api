@@ -29,7 +29,7 @@ class UpdateCatalogRewardService {
     points,
     account_id,
     units_available,
-    description
+    description,
   }: IRequest): Promise<CatalogReward> {
     const catalog_reward = await this.catalogRewardsRepository.findById(
       catalog_reward_id,
@@ -56,7 +56,7 @@ class UpdateCatalogRewardService {
       image_url,
       points,
       units_available,
-      description
+      description,
     });
   }
 }

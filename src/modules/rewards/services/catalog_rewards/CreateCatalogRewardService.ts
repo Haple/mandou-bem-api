@@ -27,7 +27,7 @@ class CreateCatalogRewardService {
     points,
     account_id,
     units_available,
-    description
+    description,
   }: IRequest): Promise<CatalogReward> {
     const rewardWithSameTitle = await this.catalogRewardsRepository.findByTitle(
       {
@@ -46,7 +46,7 @@ class CreateCatalogRewardService {
       points,
       account_id,
       units_available,
-      description
+      description,
     });
 
     return catalog_reward;

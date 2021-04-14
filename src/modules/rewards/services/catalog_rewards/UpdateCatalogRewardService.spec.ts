@@ -27,7 +27,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
-      description: 'fake description'
+      description: 'fake description',
     });
 
     await updateCatalogReward.execute({
@@ -37,7 +37,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://updated.google.com',
       points: 40,
       units_available: 10,
-      description: 'fake description'
+      description: 'fake description',
     });
 
     const updated_catalog_reward = await fakeCatalogRewardsRepository.findById(
@@ -61,7 +61,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
-      description: 'fake description'
+      description: 'fake description',
     });
 
     await updateCatalogReward.execute({
@@ -71,7 +71,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://updated.google.com',
       points: 40,
       units_available: 10,
-      description: 'fake description'
+      description: 'fake description',
     });
 
     const updated_catalog_reward = await fakeCatalogRewardsRepository.findById(
@@ -95,7 +95,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
-      description: 'fake description'
+      description: 'fake description',
     });
 
     const catalog_reward_2 = await fakeCatalogRewardsRepository.create({
@@ -104,7 +104,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
-      description: 'fake description'
+      description: 'fake description',
     });
 
     await expect(
@@ -115,7 +115,7 @@ describe('UpdateCatalogReward', () => {
         image_url: 'https://google.com',
         points: 50,
         units_available: 10,
-        description: 'fake description'
+        description: 'fake description',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -130,7 +130,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
-      description: 'fake description'
+      description: 'fake description',
     });
 
     const catalog_reward_2 = await fakeCatalogRewardsRepository.create({
@@ -139,7 +139,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
-      description: 'fake description'
+      description: 'fake description',
     });
 
     const updated_catalog_reward = await updateCatalogReward.execute({
@@ -149,7 +149,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
-      description: 'fake description'
+      description: 'fake description',
     });
 
     expect(updated_catalog_reward).toBeDefined();
@@ -167,7 +167,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
-      description: 'fake description'
+      description: 'fake description',
     });
 
     await expect(
@@ -178,7 +178,7 @@ describe('UpdateCatalogReward', () => {
         image_url: 'https://google.com',
         points: 50,
         units_available: 10,
-      description: 'fake description'
+        description: 'fake description',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
