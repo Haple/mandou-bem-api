@@ -35,7 +35,7 @@ describe('CreateRewardRequest', () => {
       email: 'johndoe@corp.com',
       password: '1234',
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
     user.recognition_points = 200;
     await fakeUsersRepository.save(user);
@@ -45,6 +45,9 @@ describe('CreateRewardRequest', () => {
       title: 'Netflix',
       image_url: 'https://google.com',
       points: 50,
+      units_available: 10,
+      expiration_days: 100,
+      description: 'fake description',
     });
 
     const catalog_reward_request = await createRewardRequest.execute({
@@ -69,7 +72,7 @@ describe('CreateRewardRequest', () => {
       email: 'johndoe@corp.com',
       password: '1234',
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
     user.recognition_points = 200;
     await fakeUsersRepository.save(user);
@@ -79,6 +82,9 @@ describe('CreateRewardRequest', () => {
       title: 'Netflix',
       image_url: 'https://google.com',
       points: 50,
+      units_available: 10,
+      expiration_days: 100,
+      description: 'fake description',
     });
 
     await expect(
@@ -99,7 +105,7 @@ describe('CreateRewardRequest', () => {
       email: 'johndoe@corp.com',
       password: '1234',
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
     user.recognition_points = 10;
     await fakeUsersRepository.save(user);
@@ -109,6 +115,9 @@ describe('CreateRewardRequest', () => {
       title: 'Netflix',
       image_url: 'https://google.com',
       points: 50,
+      units_available: 10,
+      expiration_days: 100,
+      description: 'fake description',
     });
 
     await expect(
@@ -130,7 +139,7 @@ describe('CreateRewardRequest', () => {
       email: 'johndoe@corp.com',
       password: '1234',
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
     user.recognition_points = 200;
     await fakeUsersRepository.save(user);
@@ -140,6 +149,9 @@ describe('CreateRewardRequest', () => {
       title: 'Netflix',
       image_url: 'https://google.com',
       points: 50,
+      units_available: 10,
+      expiration_days: 100,
+      description: 'fake description',
     });
 
     await expect(

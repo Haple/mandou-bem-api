@@ -36,6 +36,9 @@ class CatalogReward {
   units_available: number;
 
   @Column()
+  expiration_days: number;
+
+  @Column()
   description: string;
 
   @CreateDateColumn()

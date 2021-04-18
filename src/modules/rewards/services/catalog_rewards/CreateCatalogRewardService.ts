@@ -11,6 +11,7 @@ interface IRequest {
   points: number;
   account_id: string;
   units_available: number;
+  expiration_days: number;
   description: string;
 }
 
@@ -27,6 +28,7 @@ class CreateCatalogRewardService {
     points,
     account_id,
     units_available,
+    expiration_days,
     description,
   }: IRequest): Promise<CatalogReward> {
     const rewardWithSameTitle = await this.catalogRewardsRepository.findByTitle(
@@ -46,6 +48,7 @@ class CreateCatalogRewardService {
       points,
       account_id,
       units_available,
+      expiration_days,
       description,
     });
 

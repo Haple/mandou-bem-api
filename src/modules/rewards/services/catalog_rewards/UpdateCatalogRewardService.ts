@@ -12,6 +12,7 @@ interface IRequest {
   points: number;
   account_id: string;
   units_available: number;
+  expiration_days: number;
   description: string;
 }
 
@@ -29,6 +30,7 @@ class UpdateCatalogRewardService {
     points,
     account_id,
     units_available,
+    expiration_days,
     description,
   }: IRequest): Promise<CatalogReward> {
     const catalog_reward = await this.catalogRewardsRepository.findById(
@@ -56,6 +58,7 @@ class UpdateCatalogRewardService {
       image_url,
       points,
       units_available,
+      expiration_days,
       description,
     });
   }

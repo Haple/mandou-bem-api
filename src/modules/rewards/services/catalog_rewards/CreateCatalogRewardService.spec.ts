@@ -27,6 +27,7 @@ describe('CreateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
+      expiration_days: 100,
       description: 'fake description',
     });
 
@@ -42,6 +43,7 @@ describe('CreateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
+      expiration_days: 100,
       description: 'fake description',
     });
 
@@ -52,6 +54,7 @@ describe('CreateCatalogReward', () => {
         image_url: 'https://google.com',
         points: 50,
         units_available: 10,
+        expiration_days: 100,
         description: 'fake description',
       }),
     ).rejects.toBeInstanceOf(AppError);
@@ -67,6 +70,7 @@ describe('CreateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
+      expiration_days: 100,
       description: 'fake description',
     });
 
@@ -76,6 +80,7 @@ describe('CreateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
+      expiration_days: 100,
       description: 'fake description',
     });
 

@@ -27,6 +27,7 @@ describe('DeleteCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
+      expiration_days: 100,
       description: 'fake description',
     });
 
@@ -49,6 +50,7 @@ describe('DeleteCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
+      expiration_days: 100,
       description: 'fake description',
     });
 

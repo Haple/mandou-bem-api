@@ -27,6 +27,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
+      expiration_days: 100,
       description: 'fake description',
     });
 
@@ -37,6 +38,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://updated.google.com',
       points: 40,
       units_available: 10,
+      expiration_days: 100,
       description: 'fake description',
     });
 
@@ -61,6 +63,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
+      expiration_days: 100,
       description: 'fake description',
     });
 
@@ -71,6 +74,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://updated.google.com',
       points: 40,
       units_available: 10,
+      expiration_days: 100,
       description: 'fake description',
     });
 
@@ -95,6 +99,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
+      expiration_days: 100,
       description: 'fake description',
     });
 
@@ -104,6 +109,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
+      expiration_days: 100,
       description: 'fake description',
     });
 
@@ -115,6 +121,7 @@ describe('UpdateCatalogReward', () => {
         image_url: 'https://google.com',
         points: 50,
         units_available: 10,
+        expiration_days: 100,
         description: 'fake description',
       }),
     ).rejects.toBeInstanceOf(AppError);
@@ -130,6 +137,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
+      expiration_days: 100,
       description: 'fake description',
     });
 
@@ -139,6 +147,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
+      expiration_days: 100,
       description: 'fake description',
     });
 
@@ -149,6 +158,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
+      expiration_days: 100,
       description: 'fake description',
     });
 
@@ -167,6 +177,7 @@ describe('UpdateCatalogReward', () => {
       image_url: 'https://google.com',
       points: 50,
       units_available: 10,
+      expiration_days: 100,
       description: 'fake description',
     });
 
@@ -178,6 +189,7 @@ describe('UpdateCatalogReward', () => {
         image_url: 'https://google.com',
         points: 50,
         units_available: 10,
+        expiration_days: 100,
         description: 'fake description',
       }),
     ).rejects.toBeInstanceOf(AppError);

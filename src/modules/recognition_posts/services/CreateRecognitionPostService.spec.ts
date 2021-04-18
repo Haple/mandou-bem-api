@@ -38,7 +38,7 @@ describe('CreateRecognitionPost', () => {
       email: 'johndoe@corp.com',
       password: '1234',
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     const to_user = await fakeUsersRepository.create({
@@ -47,7 +47,7 @@ describe('CreateRecognitionPost', () => {
       email: 'jessicahill@corp.com',
       password: '1234',
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     const recognition_post = await createRecognitionPost.execute({
@@ -70,7 +70,7 @@ describe('CreateRecognitionPost', () => {
       email: 'johndoe@corp.com',
       password: '1234',
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     const to_user = await fakeUsersRepository.create({
@@ -79,7 +79,7 @@ describe('CreateRecognitionPost', () => {
       email: 'jessicahill@corp.com',
       password: '1234',
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     const { remaining_points } = await remainingPointsToSendService.execute({
@@ -103,7 +103,7 @@ describe('CreateRecognitionPost', () => {
       email: 'cheater@corp.com',
       password: '1234',
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     await expect(
@@ -123,7 +123,7 @@ describe('CreateRecognitionPost', () => {
       email: 'johndoe@corp.com',
       password: '1234',
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     const user_from_another_account = await fakeUsersRepository.create({
@@ -132,7 +132,7 @@ describe('CreateRecognitionPost', () => {
       email: 'jessicahill@corp.com',
       password: '1234',
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     await expect(

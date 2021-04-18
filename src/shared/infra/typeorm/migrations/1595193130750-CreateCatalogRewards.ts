@@ -37,6 +37,11 @@ export default class CreateCatalogRewards1595193130750
             default: 0,
           },
           {
+            name: 'expiration_days',
+            type: 'integer',
+            default: 0,
+          },
+          {
             name: 'description',
             type: 'varchar',
           },

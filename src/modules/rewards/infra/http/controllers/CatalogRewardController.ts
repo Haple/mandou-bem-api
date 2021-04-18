@@ -13,6 +13,7 @@ export default class CatalogRewardController {
       image_url,
       points,
       units_available,
+      expiration_days,
       description,
     } = request.body;
     const { account_id } = request.user;
@@ -25,6 +26,7 @@ export default class CatalogRewardController {
       points,
       account_id,
       units_available,
+      expiration_days,
       description,
     });
 
@@ -66,6 +68,7 @@ export default class CatalogRewardController {
       image_url,
       points,
       units_available,
+      expiration_days,
       description,
     } = request.body;
     const { account_id } = request.user;
@@ -79,6 +82,7 @@ export default class CatalogRewardController {
       points,
       account_id,
       units_available,
+      expiration_days,
       description,
     });
 
