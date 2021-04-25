@@ -1,8 +1,8 @@
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
-import RewardRequest from '@modules/rewards/infra/typeorm/entities/RewardRequest';
-import IRewardRequestsRepository from '../../repositories/IRewardRequestsRepository';
+import CustomRewardRequest from '@modules/rewards/infra/typeorm/entities/CustomRewardRequest';
+import ICustomRewardRequestsRepository from '../../repositories/ICustomRewardRequestsRepository';
 
 interface IRequest {
   reward_request_id: string;
@@ -12,15 +12,15 @@ interface IRequest {
 @injectable()
 class DeliverRewardService {
   constructor(
-    @inject('RewardRequestsRepository')
-    private rewardRequestsRepository: IRewardRequestsRepository,
+    @inject('CustomRewardRequestsRepository')
+    private customRewardRequestsRepository: ICustomRewardRequestsRepository,
   ) {}
 
   public async execute({
     reward_request_id,
     account_id,
-  }: IRequest): Promise<RewardRequest> {
-    const reward_request = await this.rewardRequestsRepository.findById(
+  }: IRequest): Promise<CustomRewardRequest> {
+    const reward_request = await this.customRewardRequestsRepository.findById(
       reward_request_id,
     );
 
@@ -32,10 +32,12 @@ class DeliverRewardService {
       throw new AppError('Reward request was already delivered.');
     }
 
-    const reward_request_updated = await this.rewardRequestsRepository.save({
-      ...reward_request,
-      status: 'DELIVERED',
-    });
+    const reward_request_updated = await this.customRewardRequestsRepository.save(
+      {
+        ...reward_request,
+        status: 'DELIVERED',
+      },
+    );
 
     return reward_request_updated;
   }

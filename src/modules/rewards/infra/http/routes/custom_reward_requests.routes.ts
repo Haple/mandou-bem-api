@@ -4,10 +4,10 @@ import { celebrate, Segments, Joi } from 'celebrate';
 import ensureAuthenticaded from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import ensureIsAdmin from '@modules/users/infra/http/middlewares/ensureIsAdmin';
 
-import RewardRequestsController from '../controllers/RewardRequestsController';
+import CustomRewardRequestsController from '../controllers/CustomRewardRequestsController';
 
 const rewardRequestsRouter = Router();
-const rewardRequestsController = new RewardRequestsController();
+const rewardRequestsController = new CustomRewardRequestsController();
 
 rewardRequestsRouter.use(ensureAuthenticaded);
 
@@ -15,7 +15,7 @@ rewardRequestsRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
-      catalog_reward_id: Joi.string().uuid().required(),
+      custom_reward_id: Joi.string().uuid().required(),
     },
   }),
   rewardRequestsController.create,
@@ -33,11 +33,11 @@ rewardRequestsRouter.get(
 );
 
 rewardRequestsRouter.patch(
-  '/:reward_request_id/deliver',
+  '/:custom_reward_request_id/deliver',
   ensureIsAdmin,
   celebrate({
     [Segments.PARAMS]: {
-      reward_request_id: Joi.string().uuid().required(),
+      custom_reward_request_id: Joi.string().uuid().required(),
     },
   }),
   rewardRequestsController.deliver,

@@ -4,16 +4,16 @@ import { celebrate, Segments, Joi } from 'celebrate';
 import ensureAuthenticaded from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import ensureIsAdmin from '@modules/users/infra/http/middlewares/ensureIsAdmin';
 
-import CatalogRewardController from '../controllers/CatalogRewardController';
+import CustomRewardController from '../controllers/CustomRewardController';
 
-const catalogRewardsRouter = Router();
-const catalogRewardController = new CatalogRewardController();
+const customRewardsRouter = Router();
+const customRewardController = new CustomRewardController();
 
-catalogRewardsRouter.use(ensureAuthenticaded);
+customRewardsRouter.use(ensureAuthenticaded);
 
-catalogRewardsRouter.get('/', catalogRewardController.index);
+customRewardsRouter.get('/', customRewardController.index);
 
-catalogRewardsRouter.post(
+customRewardsRouter.post(
   '/',
   ensureIsAdmin,
   celebrate({
@@ -26,26 +26,26 @@ catalogRewardsRouter.post(
       description: Joi.string().required(),
     },
   }),
-  catalogRewardController.create,
+  customRewardController.create,
 );
 
-catalogRewardsRouter.delete(
-  '/:catalog_reward_id',
+customRewardsRouter.delete(
+  '/:custom_reward_id',
   ensureIsAdmin,
   celebrate({
     [Segments.PARAMS]: {
-      catalog_reward_id: Joi.string().uuid().required(),
+      custom_reward_id: Joi.string().uuid().required(),
     },
   }),
-  catalogRewardController.delete,
+  customRewardController.delete,
 );
 
-catalogRewardsRouter.put(
-  '/:catalog_reward_id',
+customRewardsRouter.put(
+  '/:custom_reward_id',
   ensureIsAdmin,
   celebrate({
     [Segments.PARAMS]: {
-      catalog_reward_id: Joi.string().uuid().required(),
+      custom_reward_id: Joi.string().uuid().required(),
     },
     [Segments.BODY]: {
       title: Joi.string().required(),
@@ -56,7 +56,7 @@ catalogRewardsRouter.put(
       description: Joi.string().required(),
     },
   }),
-  catalogRewardController.update,
+  customRewardController.update,
 );
 
-export default catalogRewardsRouter;
+export default customRewardsRouter;

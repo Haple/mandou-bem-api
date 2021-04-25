@@ -1,4 +1,4 @@
-export default interface ICreateCatalogRewardDTO {
+export default interface ICreateCustomRewardDTO {
   account_id: string;
   title: string;
   image_url: string;

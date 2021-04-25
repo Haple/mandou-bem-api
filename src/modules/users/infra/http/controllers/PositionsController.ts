@@ -11,9 +11,9 @@ export default class PositionController {
     const { position_name, points } = request.body;
     const { account_id } = request.user;
 
-    const createCatalogReward = container.resolve(CreatePositionService);
+    const createPositionReward = container.resolve(CreatePositionService);
 
-    const position = await createCatalogReward.execute({
+    const position = await createPositionReward.execute({
       position_name,
       points,
       account_id,

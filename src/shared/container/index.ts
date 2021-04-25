@@ -14,11 +14,11 @@ import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepo
 import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
 import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 
-import ICatalogRewardsRepository from '@modules/rewards/repositories/ICatalogRewardsRepository';
-import CatalogRewardsRepository from '@modules/rewards/infra/typeorm/repositories/CatalogRewardsRepository';
+import ICustomRewardsRepository from '@modules/rewards/repositories/ICustomRewardsRepository';
+import CustomRewardsRepository from '@modules/rewards/infra/typeorm/repositories/CustomRewardsRepository';
 
-import RewardRequestsRepository from '@modules/rewards/infra/typeorm/repositories/RewardRequestsRepository';
-import IRewardRequestsRepository from '@modules/rewards/repositories/IRewardRequestsRepository';
+import CustomRewardRequestsRepository from '@modules/rewards/infra/typeorm/repositories/CustomRewardRequestsRepository';
+import ICustomRewardRequestsRepository from '@modules/rewards/repositories/ICustomRewardRequestsRepository';
 
 import IRecognitionPostsRepository from '@modules/recognition_posts/repositories/IRecognitionPostsRepository';
 import RecognitionPostsRepository from '@modules/recognition_posts/infra/typeorm/repositories/RecognitionPostsRepository';
@@ -51,14 +51,14 @@ container.registerSingleton<IUserTokensRepository>(
   UserTokensRepository,
 );
 
-container.registerSingleton<ICatalogRewardsRepository>(
-  'CatalogRewardsRepository',
-  CatalogRewardsRepository,
+container.registerSingleton<ICustomRewardsRepository>(
+  'CustomRewardsRepository',
+  CustomRewardsRepository,
 );
 
-container.registerSingleton<IRewardRequestsRepository>(
-  'RewardRequestsRepository',
-  RewardRequestsRepository,
+container.registerSingleton<ICustomRewardRequestsRepository>(
+  'CustomRewardRequestsRepository',
+  CustomRewardRequestsRepository,
 );
 
 container.registerSingleton<IRecognitionPostsRepository>(

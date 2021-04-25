@@ -1,27 +1,27 @@
 import AppError from '@shared/errors/AppError';
 
 import FakeAccountsRepository from '@modules/users/repositories/fakes/FakeAccountsRepository';
-import FakeCatalogRewardsRepository from '../../repositories/fakes/FakeCatalogRewardsRepository';
-import CreateCatalogRewardService from './CreateCatalogRewardService';
+import FakeCustomRewardsRepository from '../../repositories/fakes/FakeCustomRewardsRepository';
+import CreateCustomRewardService from './CreateCustomRewardService';
 
 let fakeAccountsRepository: FakeAccountsRepository;
-let fakeCatalogRewardsRepository: FakeCatalogRewardsRepository;
-let createCatalogReward: CreateCatalogRewardService;
+let fakeCustomRewardsRepository: FakeCustomRewardsRepository;
+let createCustomReward: CreateCustomRewardService;
 
-describe('CreateCatalogReward', () => {
+describe('CreateCustomReward', () => {
   beforeEach(() => {
     fakeAccountsRepository = new FakeAccountsRepository();
-    fakeCatalogRewardsRepository = new FakeCatalogRewardsRepository();
+    fakeCustomRewardsRepository = new FakeCustomRewardsRepository();
 
-    createCatalogReward = new CreateCatalogRewardService(
-      fakeCatalogRewardsRepository,
+    createCustomReward = new CreateCustomRewardService(
+      fakeCustomRewardsRepository,
     );
   });
 
-  it('should be able to create a new catalog reward', async () => {
+  it('should be able to create a new custom reward', async () => {
     const account = await fakeAccountsRepository.create('Fake Labs');
 
-    const catalog_reward = await createCatalogReward.execute({
+    const custom_reward = await createCustomReward.execute({
       account_id: account.id,
       title: 'Netflix',
       image_url: 'https://google.com',
@@ -31,13 +31,13 @@ describe('CreateCatalogReward', () => {
       description: 'fake description',
     });
 
-    expect(catalog_reward).toHaveProperty('id');
+    expect(custom_reward).toHaveProperty('id');
   });
 
-  it('should not be able to create a new catalog reward with same title from another', async () => {
+  it('should not be able to create a new custom reward with same title from another', async () => {
     const account = await fakeAccountsRepository.create('Fake Labs');
 
-    await createCatalogReward.execute({
+    await createCustomReward.execute({
       account_id: account.id,
       title: 'Netflix',
       image_url: 'https://google.com',
@@ -48,7 +48,7 @@ describe('CreateCatalogReward', () => {
     });
 
     await expect(
-      createCatalogReward.execute({
+      createCustomReward.execute({
         account_id: account.id,
         title: 'Netflix',
         image_url: 'https://google.com',
@@ -60,11 +60,11 @@ describe('CreateCatalogReward', () => {
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('should be able to create catalog reward with same title and different accounts', async () => {
+  it('should be able to create custom reward with same title and different accounts', async () => {
     const account1 = await fakeAccountsRepository.create('Fake Labs 1');
     const account2 = await fakeAccountsRepository.create('Fake Labs 2');
 
-    await createCatalogReward.execute({
+    await createCustomReward.execute({
       account_id: account1.id,
       title: 'Netflix',
       image_url: 'https://google.com',
@@ -74,7 +74,7 @@ describe('CreateCatalogReward', () => {
       description: 'fake description',
     });
 
-    const catalog_reward = await createCatalogReward.execute({
+    const custom_reward = await createCustomReward.execute({
       account_id: account2.id,
       title: 'Netflix',
       image_url: 'https://google.com',
@@ -84,6 +84,6 @@ describe('CreateCatalogReward', () => {
       description: 'fake description',
     });
 
-    expect(catalog_reward).toHaveProperty('id');
+    expect(custom_reward).toHaveProperty('id');
   });
 });

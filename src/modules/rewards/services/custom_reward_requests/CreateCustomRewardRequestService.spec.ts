@@ -2,26 +2,26 @@ import AppError from '@shared/errors/AppError';
 
 import FakeAccountsRepository from '@modules/users/repositories/fakes/FakeAccountsRepository';
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
-import FakeCatalogRewardsRepository from '../../repositories/fakes/FakeCatalogRewardsRepository';
-import FakeRewardsRequestsRepository from '../../repositories/fakes/FakeRewardsRequestsRepository';
-import CreateRewardRequestService from './CreateRewardRequestService';
+import FakeCustomRewardsRepository from '../../repositories/fakes/FakeCustomRewardsRepository';
+import FakeCustomRewardsRequestsRepository from '../../repositories/fakes/FakeCustomRewardsRequestsRepository';
+import CreateCustomRewardRequestService from './CreateCustomRewardRequestService';
 
 let fakeAccountsRepository: FakeAccountsRepository;
-let fakeCatalogRewardsRepository: FakeCatalogRewardsRepository;
-let fakeRewardsRequestsRepository: FakeRewardsRequestsRepository;
+let fakeCustomRewardsRepository: FakeCustomRewardsRepository;
+let fakeRewardsRequestsRepository: FakeCustomRewardsRequestsRepository;
 let fakeUsersRepository: FakeUsersRepository;
-let createRewardRequest: CreateRewardRequestService;
+let createCustomRewardRequest: CreateCustomRewardRequestService;
 
-describe('CreateRewardRequest', () => {
+describe('CreateCustomRewardRequest', () => {
   beforeEach(() => {
     fakeAccountsRepository = new FakeAccountsRepository();
-    fakeCatalogRewardsRepository = new FakeCatalogRewardsRepository();
-    fakeRewardsRequestsRepository = new FakeRewardsRequestsRepository();
+    fakeCustomRewardsRepository = new FakeCustomRewardsRepository();
+    fakeRewardsRequestsRepository = new FakeCustomRewardsRequestsRepository();
     fakeUsersRepository = new FakeUsersRepository();
 
-    createRewardRequest = new CreateRewardRequestService(
+    createCustomRewardRequest = new CreateCustomRewardRequestService(
       fakeRewardsRequestsRepository,
-      fakeCatalogRewardsRepository,
+      fakeCustomRewardsRepository,
       fakeUsersRepository,
     );
   });
@@ -40,7 +40,7 @@ describe('CreateRewardRequest', () => {
     user.recognition_points = 200;
     await fakeUsersRepository.save(user);
 
-    const catalog_reward = await fakeCatalogRewardsRepository.create({
+    const custom_reward = await fakeCustomRewardsRepository.create({
       account_id: account.id,
       title: 'Netflix',
       image_url: 'https://google.com',
@@ -50,15 +50,15 @@ describe('CreateRewardRequest', () => {
       description: 'fake description',
     });
 
-    const catalog_reward_request = await createRewardRequest.execute({
+    const custom_reward_request = await createCustomRewardRequest.execute({
       account_id: account.id,
       user_id: user.id,
-      catalog_reward_id: catalog_reward.id,
+      custom_reward_id: custom_reward.id,
     });
 
     const updated_user = await fakeUsersRepository.findById(user.id);
 
-    expect(catalog_reward_request).toHaveProperty('id');
+    expect(custom_reward_request).toHaveProperty('id');
     expect(updated_user?.recognition_points).toBe(150);
   });
 
@@ -77,7 +77,7 @@ describe('CreateRewardRequest', () => {
     user.recognition_points = 200;
     await fakeUsersRepository.save(user);
 
-    const catalog_reward = await fakeCatalogRewardsRepository.create({
+    const custom_reward = await fakeCustomRewardsRepository.create({
       account_id: account2.id,
       title: 'Netflix',
       image_url: 'https://google.com',
@@ -88,10 +88,10 @@ describe('CreateRewardRequest', () => {
     });
 
     await expect(
-      createRewardRequest.execute({
+      createCustomRewardRequest.execute({
         account_id: account.id,
         user_id: user.id,
-        catalog_reward_id: catalog_reward.id,
+        custom_reward_id: custom_reward.id,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -110,7 +110,7 @@ describe('CreateRewardRequest', () => {
     user.recognition_points = 10;
     await fakeUsersRepository.save(user);
 
-    const catalog_reward = await fakeCatalogRewardsRepository.create({
+    const custom_reward = await fakeCustomRewardsRepository.create({
       account_id: account.id,
       title: 'Netflix',
       image_url: 'https://google.com',
@@ -121,10 +121,10 @@ describe('CreateRewardRequest', () => {
     });
 
     await expect(
-      createRewardRequest.execute({
+      createCustomRewardRequest.execute({
         account_id: account.id,
         user_id: user.id,
-        catalog_reward_id: catalog_reward.id,
+        custom_reward_id: custom_reward.id,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -144,7 +144,7 @@ describe('CreateRewardRequest', () => {
     user.recognition_points = 200;
     await fakeUsersRepository.save(user);
 
-    const catalog_reward = await fakeCatalogRewardsRepository.create({
+    const custom_reward = await fakeCustomRewardsRepository.create({
       account_id: account.id,
       title: 'Netflix',
       image_url: 'https://google.com',
@@ -155,10 +155,10 @@ describe('CreateRewardRequest', () => {
     });
 
     await expect(
-      createRewardRequest.execute({
+      createCustomRewardRequest.execute({
         account_id: account.id,
         user_id: user.id,
-        catalog_reward_id: catalog_reward.id,
+        custom_reward_id: custom_reward.id,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

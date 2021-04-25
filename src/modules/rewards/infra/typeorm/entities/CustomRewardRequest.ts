@@ -10,10 +10,10 @@ import {
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import Account from '@modules/users/infra/typeorm/entities/Account';
-import CatalogReward from './CatalogReward';
+import CustomReward from './CustomReward';
 
-@Entity('reward_requests')
-class RewardRequest {
+@Entity('custom_reward_requests')
+class CustomRewardRequest {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -32,11 +32,11 @@ class RewardRequest {
   user: User;
 
   @Column()
-  catalog_reward_id: string;
+  custom_reward_id: string;
 
-  @ManyToOne(() => CatalogReward, { eager: true })
-  @JoinColumn({ name: 'catalog_reward_id' })
-  catalog_reward: CatalogReward;
+  @ManyToOne(() => CustomReward, { eager: true })
+  @JoinColumn({ name: 'custom_reward_id' })
+  custom_reward: CustomReward;
 
   @Column()
   status: string;
@@ -48,4 +48,4 @@ class RewardRequest {
   updated_at: Date;
 }
 
-export default RewardRequest;
+export default CustomRewardRequest;

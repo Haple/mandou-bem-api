@@ -1,27 +1,27 @@
 import AppError from '@shared/errors/AppError';
 
 import FakeAccountsRepository from '@modules/users/repositories/fakes/FakeAccountsRepository';
-import FakeCatalogRewardsRepository from '../../repositories/fakes/FakeCatalogRewardsRepository';
-import DeleteCatalogRewardService from './DeleteCatalogRewardService';
+import FakeCustomRewardsRepository from '../../repositories/fakes/FakeCustomRewardsRepository';
+import DeleteCustomRewardService from './DeleteCustomRewardService';
 
 let fakeAccountsRepository: FakeAccountsRepository;
-let fakeCatalogRewardsRepository: FakeCatalogRewardsRepository;
-let deleteCatalogReward: DeleteCatalogRewardService;
+let fakeCustomRewardsRepository: FakeCustomRewardsRepository;
+let deleteCustomReward: DeleteCustomRewardService;
 
-describe('DeleteCatalogReward', () => {
+describe('DeleteCustomReward', () => {
   beforeEach(() => {
     fakeAccountsRepository = new FakeAccountsRepository();
-    fakeCatalogRewardsRepository = new FakeCatalogRewardsRepository();
+    fakeCustomRewardsRepository = new FakeCustomRewardsRepository();
 
-    deleteCatalogReward = new DeleteCatalogRewardService(
-      fakeCatalogRewardsRepository,
+    deleteCustomReward = new DeleteCustomRewardService(
+      fakeCustomRewardsRepository,
     );
   });
 
-  it('should be able to delete catalog reward', async () => {
+  it('should be able to delete custom reward', async () => {
     const account = await fakeAccountsRepository.create('Fake Labs');
 
-    const catalog_reward = await fakeCatalogRewardsRepository.create({
+    const custom_reward = await fakeCustomRewardsRepository.create({
       account_id: account.id,
       title: 'Netflix',
       image_url: 'https://google.com',
@@ -32,19 +32,19 @@ describe('DeleteCatalogReward', () => {
     });
 
     await expect(
-      deleteCatalogReward.execute({
+      deleteCustomReward.execute({
         account_id: account.id,
-        catalog_reward_id: catalog_reward.id,
+        custom_reward_id: custom_reward.id,
       }),
     ).resolves.not.toThrow(AppError);
   });
 
-  it('should not be able to delete catalog reward from another account', async () => {
+  it('should not be able to delete custom reward from another account', async () => {
     const account1 = await fakeAccountsRepository.create('Fake Labs 1');
 
     const account2 = await fakeAccountsRepository.create('Fake Labs 2');
 
-    const account2_catalog_reward = await fakeCatalogRewardsRepository.create({
+    const account2_custom_reward = await fakeCustomRewardsRepository.create({
       account_id: account2.id,
       title: 'Netflix',
       image_url: 'https://google.com',
@@ -55,9 +55,9 @@ describe('DeleteCatalogReward', () => {
     });
 
     await expect(
-      deleteCatalogReward.execute({
+      deleteCustomReward.execute({
         account_id: account1.id,
-        catalog_reward_id: account2_catalog_reward.id,
+        custom_reward_id: account2_custom_reward.id,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

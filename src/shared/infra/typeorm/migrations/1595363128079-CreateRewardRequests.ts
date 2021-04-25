@@ -5,7 +5,7 @@ export default class CreateRewardRequests1595363128079
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'reward_requests',
+        name: 'custom_reward_requests',
         columns: [
           {
             name: 'id',
@@ -15,7 +15,7 @@ export default class CreateRewardRequests1595363128079
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'catalog_reward_id',
+            name: 'custom_reward_id',
             type: 'uuid',
           },
           {
@@ -43,15 +43,15 @@ export default class CreateRewardRequests1595363128079
         ],
         foreignKeys: [
           {
-            name: 'FK_RewardRequests_CatalogRewards',
-            columnNames: ['catalog_reward_id'],
+            name: 'FK_CustomRewardRequests_CustomRewards',
+            columnNames: ['custom_reward_id'],
             referencedColumnNames: ['id'],
-            referencedTableName: 'catalog_rewards',
+            referencedTableName: 'custom_rewards',
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
           {
-            name: 'FK_RewardRequests_Users',
+            name: 'FK_CustomRewardRequests_Users',
             columnNames: ['user_id'],
             referencedColumnNames: ['id'],
             referencedTableName: 'users',
@@ -59,7 +59,7 @@ export default class CreateRewardRequests1595363128079
             onUpdate: 'CASCADE',
           },
           {
-            name: 'FK_RewardRequests_Accounts',
+            name: 'FK_CustomRewardRequests_Accounts',
             columnNames: ['account_id'],
             referencedColumnNames: ['id'],
             referencedTableName: 'accounts',
@@ -72,6 +72,6 @@ export default class CreateRewardRequests1595363128079
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('reward_requests');
+    await queryRunner.dropTable('custom_reward_requests');
   }
 }

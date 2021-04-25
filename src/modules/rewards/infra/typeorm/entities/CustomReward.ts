@@ -11,8 +11,8 @@ import {
 
 import Account from '@modules/users/infra/typeorm/entities/Account';
 
-@Entity('catalog_rewards')
-class CatalogReward {
+@Entity('custom_rewards')
+class CustomReward {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -51,4 +51,4 @@ class CatalogReward {
   deleted_at: Date;
 }
 
-export default CatalogReward;
+export default CustomReward;

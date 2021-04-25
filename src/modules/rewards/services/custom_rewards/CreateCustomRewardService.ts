@@ -1,9 +1,9 @@
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
-import ICatalogRewardsRepository from '../../repositories/ICatalogRewardsRepository';
+import ICustomRewardsRepository from '../../repositories/ICustomRewardsRepository';
 
-import CatalogReward from '../../infra/typeorm/entities/CatalogReward';
+import CustomReward from '../../infra/typeorm/entities/CustomReward';
 
 interface IRequest {
   title: string;
@@ -16,10 +16,10 @@ interface IRequest {
 }
 
 @injectable()
-class CreateCatalogRewardService {
+class CreateCustomRewardService {
   constructor(
-    @inject('CatalogRewardsRepository')
-    private catalogRewardsRepository: ICatalogRewardsRepository,
+    @inject('CustomRewardsRepository')
+    private customRewardsRepository: ICustomRewardsRepository,
   ) {}
 
   public async execute({
@@ -30,19 +30,17 @@ class CreateCatalogRewardService {
     units_available,
     expiration_days,
     description,
-  }: IRequest): Promise<CatalogReward> {
-    const rewardWithSameTitle = await this.catalogRewardsRepository.findByTitle(
-      {
-        title,
-        account_id,
-      },
-    );
+  }: IRequest): Promise<CustomReward> {
+    const rewardWithSameTitle = await this.customRewardsRepository.findByTitle({
+      title,
+      account_id,
+    });
 
     if (rewardWithSameTitle) {
       throw new AppError('Reward title already used.');
     }
 
-    const catalog_reward = await this.catalogRewardsRepository.create({
+    const custom_reward = await this.customRewardsRepository.create({
       title,
       image_url,
       points,
@@ -52,8 +50,8 @@ class CreateCatalogRewardService {
       description,
     });
 
-    return catalog_reward;
+    return custom_reward;
   }
 }
 
-export default CreateCatalogRewardService;
+export default CreateCustomRewardService;

@@ -1,27 +1,29 @@
 import AppError from '@shared/errors/AppError';
 
-import FakeRewardsRequestsRepository from '../../repositories/fakes/FakeRewardsRequestsRepository';
-import DeliverRewardService from './DeliverRewardService';
+import FakeCustomRewardsRequestsRepository from '../../repositories/fakes/FakeCustomRewardsRequestsRepository';
+import DeliverCustomRewardService from './DeliverCustomRewardService';
 
-let fakeRewardsRequestsRepository: FakeRewardsRequestsRepository;
-let deliverReward: DeliverRewardService;
+let fakeRewardsRequestsRepository: FakeCustomRewardsRequestsRepository;
+let deliverCustomReward: DeliverCustomRewardService;
 
-describe('DeliverReward', () => {
+describe('DeliverCustomReward', () => {
   beforeEach(() => {
-    fakeRewardsRequestsRepository = new FakeRewardsRequestsRepository();
+    fakeRewardsRequestsRepository = new FakeCustomRewardsRequestsRepository();
 
-    deliverReward = new DeliverRewardService(fakeRewardsRequestsRepository);
+    deliverCustomReward = new DeliverCustomRewardService(
+      fakeRewardsRequestsRepository,
+    );
   });
 
-  it('should be able to deliver a reward', async () => {
+  it('should be able to deliver a custom reward', async () => {
     const reward_request = await fakeRewardsRequestsRepository.create({
-      catalog_reward_id: 'fake-catalog-reward-id',
+      custom_reward_id: 'fake-custom-reward-id',
       account_id: 'fake-account-id',
       user_id: 'fake-user-id',
       status: 'CREATED',
     });
 
-    const reward_request_updated = await deliverReward.execute({
+    const reward_request_updated = await deliverCustomReward.execute({
       account_id: reward_request.account_id,
       reward_request_id: reward_request.id,
     });
@@ -30,16 +32,16 @@ describe('DeliverReward', () => {
     expect(reward_request_updated.status).toBe('DELIVERED');
   });
 
-  it('should not be able to deliver a reward from another account', async () => {
+  it('should not be able to deliver a custom reward from another account', async () => {
     const reward_request = await fakeRewardsRequestsRepository.create({
-      catalog_reward_id: 'fake-catalog-reward-id',
+      custom_reward_id: 'fake-custom-reward-id',
       account_id: 'fake-account-id',
       user_id: 'fake-user-id',
       status: 'CREATED',
     });
 
     await expect(
-      deliverReward.execute({
+      deliverCustomReward.execute({
         account_id: 'another-fake-account-id',
         reward_request_id: reward_request.id,
       }),
@@ -48,14 +50,14 @@ describe('DeliverReward', () => {
 
   it('should not be able to deliver a reward already delivered', async () => {
     const reward_request = await fakeRewardsRequestsRepository.create({
-      catalog_reward_id: 'fake-catalog-reward-id',
+      custom_reward_id: 'fake-custom-reward-id',
       account_id: 'fake-account-id',
       user_id: 'fake-user-id',
       status: 'DELIVERED',
     });
 
     await expect(
-      deliverReward.execute({
+      deliverCustomReward.execute({
         account_id: reward_request.account_id,
         reward_request_id: reward_request.id,
       }),

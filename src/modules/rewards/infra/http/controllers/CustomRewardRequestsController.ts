@@ -1,19 +1,21 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
-import CreateRewardRequestService from '@modules/rewards/services/reward_requests/CreateRewardRequestService';
-import DeliverRewardService from '@modules/rewards/services/reward_requests/DeliverRewardService';
-import RewardRequestsRepository from '../../typeorm/repositories/RewardRequestsRepository';
+import CreateCustomRewardRequestService from '@modules/rewards/services/custom_reward_requests/CreateCustomRewardRequestService';
+import DeliverCustomRewardService from '@modules/rewards/services/custom_reward_requests/DeliverCustomRewardService';
+import CustomRewardRequestsRepository from '../../typeorm/repositories/CustomRewardRequestsRepository';
 
 export default class RewardRequestsController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { catalog_reward_id } = request.body;
+    const { custom_reward_id } = request.body;
     const { account_id, id: user_id } = request.user;
 
-    const createRewardRequest = container.resolve(CreateRewardRequestService);
+    const createRewardRequest = container.resolve(
+      CreateCustomRewardRequestService,
+    );
 
     const reward_request = await createRewardRequest.execute({
-      catalog_reward_id,
+      custom_reward_id,
       user_id,
       account_id,
     });
@@ -26,15 +28,15 @@ export default class RewardRequestsController {
     const { account_id } = request.user;
 
     const rewardRequestsRepository = container.resolve(
-      RewardRequestsRepository,
+      CustomRewardRequestsRepository,
     );
 
-    const catalog_rewards = await rewardRequestsRepository.findAllFromAccount(
+    const custom_rewards = await rewardRequestsRepository.findAllFromAccount(
       account_id,
       status,
     );
 
-    return response.json(classToClass(catalog_rewards));
+    return response.json(classToClass(custom_rewards));
   }
 
   public async deliver(
@@ -44,7 +46,7 @@ export default class RewardRequestsController {
     const { reward_request_id } = request.params;
     const { account_id } = request.user;
 
-    const deliverReward = container.resolve(DeliverRewardService);
+    const deliverReward = container.resolve(DeliverCustomRewardService);
 
     const reward_request_updated = await deliverReward.execute({
       reward_request_id,
