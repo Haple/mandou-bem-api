@@ -4,7 +4,7 @@ import FakeAccountsRepository from '@modules/users/repositories/fakes/FakeAccoun
 import FakeMailProvider from '@shared/container/providers/MailProvider/fakes/FakeMailProvider';
 import FakeDepartmentsRepository from '@modules/users/repositories/fakes/FakeDepartmentsRepository';
 import FakePositionsRepository from '@modules/users/repositories/fakes/FakePositionsRepository';
-import FakeHashProvider from '../../providers/HashProvider/fakes/FakeHashProvider';
+import FakeHashProvider from '@shared/container/providers/HashProvider/fakes/FakeHashProvider';
 import FakeUsersRepository from '../../repositories/fakes/FakeUsersRepository';
 import CreateUserService from './CreateUserService';
 

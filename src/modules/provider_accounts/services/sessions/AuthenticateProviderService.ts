@@ -1,12 +1,12 @@
+import { injectable, inject } from 'tsyringe';
 import { sign } from 'jsonwebtoken';
 import authConfig from '@config/auth';
-import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
-import IUsersRepository from '../../repositories/IUsersRepository';
+import IProviderAccountsRepository from '../../repositories/IProviderAccountsRepository';
 
-import User from '../../infra/typeorm/entities/User';
+import ProviderAccount from '../../infra/typeorm/entities/ProviderAccount';
 
 interface IRequest {
   email: string;
@@ -14,30 +14,30 @@ interface IRequest {
 }
 
 interface IResponse {
-  user: User;
+  provider: ProviderAccount;
   token: string;
 }
 
 @injectable()
-class AuthenticateUserService {
+class AuthenticateProviderService {
   constructor(
-    @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
+    @inject('ProviderAccountsRepository')
+    private providerAccountsRepository: IProviderAccountsRepository,
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
   ) {}
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
-    const user = await this.usersRepository.findByEmail(email);
+    const provider = await this.providerAccountsRepository.findByEmail(email);
 
-    if (!user) {
+    if (!provider) {
       throw new AppError('Incorrect email/password combination.', 401);
     }
 
     const passwordMatched = await this.hashProvider.compareHash(
       password,
-      user.password,
+      provider.password,
     );
 
     if (!passwordMatched) {
@@ -48,21 +48,20 @@ class AuthenticateUserService {
 
     const token = sign(
       {
-        is_admin: user.is_admin,
-        account_id: user.account_id,
+        provider_name: provider.company_name,
       },
       secret,
       {
-        subject: user.id,
+        subject: provider.id,
         expiresIn,
       },
     );
 
     return {
-      user,
+      provider,
       token,
     };
   }
 }
 
-export default AuthenticateUserService;
+export default AuthenticateProviderService;

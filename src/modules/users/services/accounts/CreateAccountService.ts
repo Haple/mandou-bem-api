@@ -1,10 +1,10 @@
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
+import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
 import IUsersRepository from '../../repositories/IUsersRepository';
 
 import IAccountsRepository from '../../repositories/IAccountsRepository';
-import IHashProvider from '../../providers/HashProvider/models/IHashProvider';
 
 import Account from '../../infra/typeorm/entities/Account';
 

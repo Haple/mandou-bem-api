@@ -1,7 +1,9 @@
 import { container } from 'tsyringe';
 
-import '@modules/users/providers';
 import './providers';
+
+import IProviderAccountsRepository from '@modules/provider_accounts/repositories/IProviderAccountsRepository';
+import ProviderAccountsRepository from '@modules/provider_accounts/infra/typeorm/repositories/ProviderAccountsRepository';
 
 import IAccountsRepository from '@modules/users/repositories/IAccountsRepository';
 import AccountsRepository from '@modules/users/infra/typeorm/repositories/AccountsRepository';
@@ -28,6 +30,11 @@ import IDepartmentsRepository from '@modules/users/repositories/IDepartmentsRepo
 import DepartmentsRepository from '@modules/users/infra/typeorm/repositories/DepartmentsRepository';
 
 import RemainingPointsToSendService from '@modules/recognition_posts/services/RemainingPointsToSendService';
+
+container.registerSingleton<IProviderAccountsRepository>(
+  'ProviderAccountsRepository',
+  ProviderAccountsRepository,
+);
 
 container.registerSingleton<IAccountsRepository>(
   'AccountsRepository',

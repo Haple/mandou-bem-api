@@ -1,6 +1,6 @@
 import AppError from '@shared/errors/AppError';
 
-import FakeHashProvider from '../../providers/HashProvider/fakes/FakeHashProvider';
+import FakeHashProvider from '@shared/container/providers/HashProvider/fakes/FakeHashProvider';
 import FakeUsersRepository from '../../repositories/fakes/FakeUsersRepository';
 import UpdateProfileService from './UpdateProfileService';
 import FakeAccountsRepository from '../../repositories/fakes/FakeAccountsRepository';
@@ -31,7 +31,7 @@ describe('UpdateProfile', () => {
       password: '123456',
       account_id: account.id,
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     const updatedUser = await updateProfile.execute({
@@ -63,7 +63,7 @@ describe('UpdateProfile', () => {
       password: '123456',
       account_id: account.id,
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     const user = await fakeUsersRepository.create({
@@ -72,7 +72,7 @@ describe('UpdateProfile', () => {
       password: '123456',
       account_id: account.id,
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     await expect(
@@ -93,7 +93,7 @@ describe('UpdateProfile', () => {
       password: '123456',
       account_id: account.id,
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     const updatedUser = await updateProfile.execute({
@@ -116,7 +116,7 @@ describe('UpdateProfile', () => {
       password: '123456',
       account_id: account.id,
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     await expect(
@@ -138,7 +138,7 @@ describe('UpdateProfile', () => {
       password: '123456',
       account_id: account.id,
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     await expect(

@@ -1,8 +1,8 @@
 import AppError from '@shared/errors/AppError';
 
+import FakeHashProvider from '@shared/container/providers/HashProvider/fakes/FakeHashProvider';
 import FakeUsersRepository from '../../repositories/fakes/FakeUsersRepository';
 import FakeUserTokensRepository from '../../repositories/fakes/FakeUserTokensRepository';
-import FakeHashProvider from '../../providers/HashProvider/fakes/FakeHashProvider';
 import ResetPasswordService from './ResetPasswordService';
 import FakeAccountsRepository from '../../repositories/fakes/FakeAccountsRepository';
 
@@ -35,7 +35,7 @@ describe('ResetPasswordService', () => {
       password: '123456',
       account_id: account.id,
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     const { token } = await fakeUserTokensRepository.generate(user.id);
@@ -84,7 +84,7 @@ describe('ResetPasswordService', () => {
       password: '123456',
       account_id: account.id,
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     const { token } = await fakeUserTokensRepository.generate(user.id);
