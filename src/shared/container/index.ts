@@ -31,6 +31,9 @@ import DepartmentsRepository from '@modules/users/infra/typeorm/repositories/Dep
 
 import RemainingPointsToSendService from '@modules/recognition_posts/services/RemainingPointsToSendService';
 
+import IGiftCardsRepository from '@modules/rewards/repositories/IGiftCardsRepository';
+import GiftCardsRepository from '@modules/rewards/infra/typeorm/repositories/GiftCardsRepository';
+
 container.registerSingleton<IProviderAccountsRepository>(
   'ProviderAccountsRepository',
   ProviderAccountsRepository,
@@ -74,6 +77,11 @@ container.registerSingleton<IPositionsRepository>(
 container.registerSingleton<IDepartmentsRepository>(
   'DepartmentsRepository',
   DepartmentsRepository,
+);
+
+container.registerSingleton<IGiftCardsRepository>(
+  'GiftCardsRepository',
+  GiftCardsRepository,
 );
 
 container.registerSingleton<RemainingPointsToSendService>(

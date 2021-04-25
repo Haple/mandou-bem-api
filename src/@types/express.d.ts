@@ -5,5 +5,9 @@ declare namespace Express {
       account_id: string;
       is_admin: boolean;
     };
+    provider: {
+      id: string;
+      provider_name: string;
+    };
   }
 }

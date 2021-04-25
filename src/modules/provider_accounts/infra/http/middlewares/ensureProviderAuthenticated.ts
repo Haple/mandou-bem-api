@@ -6,14 +6,13 @@ import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
 
 interface ITokenPayload {
-  account_id: string;
-  is_admin: boolean;
+  provider_name: string;
   iat: number;
   exp: number;
   sub: string;
 }
 
-export default function ensureAuthenticated(
+export default function ensureProviderAuthenticated(
   request: Request,
   response: Response,
   next: NextFunction,
@@ -29,12 +28,15 @@ export default function ensureAuthenticated(
   try {
     const decoded = verify(token, authConfig.jwt.secret);
 
-    const { sub, account_id, is_admin } = decoded as ITokenPayload;
+    const { sub, provider_name } = decoded as ITokenPayload;
 
-    request.user = {
+    if (!provider_name) {
+      throw new AppError('Only providers are allowed to do this', 403);
+    }
+
+    request.provider = {
       id: sub,
-      account_id,
-      is_admin,
+      provider_name,
     };
 
     return next();
