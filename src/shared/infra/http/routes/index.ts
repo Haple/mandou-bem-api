@@ -12,6 +12,7 @@ import passwordRouter from '@modules/users/infra/http/routes/password.routes';
 import profileRouter from '@modules/users/infra/http/routes/profile.routes';
 import customRewardsRouter from '@modules/rewards/infra/http/routes/custom_rewards.routes';
 import giftCardsRouter from '@modules/rewards/infra/http/routes/gift_cards.routes';
+import catalogRouter from '@modules/rewards/infra/http/routes/catalog.routes';
 import rewardsRequestsRouter from '@modules/rewards/infra/http/routes/custom_reward_requests.routes';
 import remainingPointsToSendRouter from '@modules/recognition_posts/infra/http/routes/remaining_points_to_send.routes';
 import recognitionPostsRouter from '@modules/recognition_posts/infra/http/routes/recognition_posts.routes';
@@ -31,6 +32,8 @@ routes.use('/sessions', sessionsRouter);
 
 routes.use('/gift-cards', giftCardsRouter);
 routes.use('/custom-rewards', customRewardsRouter);
+routes.use('/catalog', catalogRouter);
+
 routes.use('/custom-reward-requests', rewardsRequestsRouter);
 routes.use('/remaining-points', remainingPointsToSendRouter);
 routes.use('/recognition-posts', recognitionPostsRouter);

@@ -36,7 +36,12 @@ class FakeCustomRewardsRepository implements ICustomRewardsRepository {
   ): Promise<CustomReward> {
     const custom_reward = new CustomReward();
 
-    Object.assign(custom_reward, { id: uuid() }, custom_reward_data);
+    Object.assign(
+      custom_reward,
+      { id: uuid() },
+      { account: { company_name: 'fake-company-name' } },
+      custom_reward_data,
+    );
 
     this.custom_rewards.push(custom_reward);
 
@@ -54,10 +59,7 @@ class FakeCustomRewardsRepository implements ICustomRewardsRepository {
   }
 
   public async remove(custom_reward: CustomReward): Promise<void> {
-    this.custom_rewards.splice(
-      this.custom_rewards.indexOf(custom_reward),
-      1,
-    );
+    this.custom_rewards.splice(this.custom_rewards.indexOf(custom_reward), 1);
   }
 }
 

@@ -41,6 +41,11 @@ class GiftCardsRepository implements IGiftCardsRepository {
     return gift_cards;
   }
 
+  public async findAll(): Promise<GiftCard[]> {
+    const gift_cards = await this.ormRepository.find();
+    return gift_cards;
+  }
+
   public async create(gift_card_data: ICreateGiftCardDTO): Promise<GiftCard> {
     const gift_card = this.ormRepository.create(gift_card_data);
 

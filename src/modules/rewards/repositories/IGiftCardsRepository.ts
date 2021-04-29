@@ -3,6 +3,7 @@ import ICreateGiftCardDTO from '../dtos/ICreateGiftCardDTO';
 import IFindGiftCardByTitleDTO from '../dtos/IFindGiftCardByTitleDTO';
 
 export default interface IGiftCardsRepository {
+  findAll(): Promise<GiftCard[]>;
   findAllFromAccount(provider_id: string): Promise<GiftCard[]>;
   findById(id: string): Promise<GiftCard | undefined>;
   findByTitle(data: IFindGiftCardByTitleDTO): Promise<GiftCard | undefined>;

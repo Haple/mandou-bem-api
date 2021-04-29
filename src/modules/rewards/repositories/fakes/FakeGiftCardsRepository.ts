@@ -30,10 +30,19 @@ class FakeGiftCardsRepository implements IGiftCardsRepository {
     );
   }
 
+  public async findAll(): Promise<GiftCard[]> {
+    return this.gift_cards;
+  }
+
   public async create(gift_card_data: ICreateGiftCardDTO): Promise<GiftCard> {
     const gift_card = new GiftCard();
 
-    Object.assign(gift_card, { id: uuid() }, gift_card_data);
+    Object.assign(
+      gift_card,
+      { id: uuid() },
+      { provider: { company_name: 'fake-company-name' } },
+      gift_card_data,
+    );
 
     this.gift_cards.push(gift_card);
 
