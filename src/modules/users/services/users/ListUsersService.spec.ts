@@ -23,7 +23,7 @@ describe('ListUsers', () => {
       account_id: account.id,
       is_admin: true,
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     await fakeUsersRepository.create({
@@ -32,7 +32,7 @@ describe('ListUsers', () => {
       password: '123456',
       account_id: account.id,
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     await fakeUsersRepository.create({
@@ -41,7 +41,7 @@ describe('ListUsers', () => {
       password: '123456',
       account_id: account.id,
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     const users = await listUsers.execute({
@@ -49,7 +49,7 @@ describe('ListUsers', () => {
       except_user_id: admin.id,
     });
 
-    expect(users.length).toBe(2);
+    expect(users.length).toBe(3);
   });
 
   it('should list users by especific username and ignore users from other accounts', async () => {
@@ -61,7 +61,7 @@ describe('ListUsers', () => {
       account_id: account1.id,
       is_admin: true,
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     const account1User1 = await fakeUsersRepository.create({
@@ -70,7 +70,7 @@ describe('ListUsers', () => {
       password: '123456',
       account_id: account1.id,
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     const account2 = await fakeAccountsRepository.create('Fake Labs 2');
@@ -81,7 +81,7 @@ describe('ListUsers', () => {
       password: '123456',
       account_id: account2.id,
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     const users = await listUsers.execute({

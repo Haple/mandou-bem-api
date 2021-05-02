@@ -31,7 +31,7 @@ class ListUsersService {
     }
     return this.usersRepository.findAllUsers({
       account_id,
-      except_user_id,
+      // except_user_id,
     });
   }
 }
