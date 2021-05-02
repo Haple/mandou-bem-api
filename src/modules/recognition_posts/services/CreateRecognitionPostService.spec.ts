@@ -20,6 +20,7 @@ describe('CreateRecognitionPost', () => {
 
     remainingPointsToSendService = new RemainingPointsToSendService(
       fakeRecognitionPostsRepository,
+      fakeUsersRepository,
       fakeCacheProvider,
     );
 

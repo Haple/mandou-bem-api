@@ -1,19 +1,25 @@
 import AppError from '@shared/errors/AppError';
 
 import FakeAccountsRepository from '@modules/users/repositories/fakes/FakeAccountsRepository';
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import FakePositionsRepository from '../../repositories/fakes/FakePositionsRepository';
 import UpdatePositionService from './UpdatePositionService';
 
 let fakeAccountsRepository: FakeAccountsRepository;
 let fakePositionsRepository: FakePositionsRepository;
+let fakeCacheProvider: FakeCacheProvider;
 let updatePosition: UpdatePositionService;
 
 describe('UpdatePosition', () => {
   beforeEach(() => {
     fakeAccountsRepository = new FakeAccountsRepository();
     fakePositionsRepository = new FakePositionsRepository();
+    fakeCacheProvider = new FakeCacheProvider();
 
-    updatePosition = new UpdatePositionService(fakePositionsRepository);
+    updatePosition = new UpdatePositionService(
+      fakePositionsRepository,
+      fakeCacheProvider,
+    );
   });
 
   it('should be able to update a position', async () => {

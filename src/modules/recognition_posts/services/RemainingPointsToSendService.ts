@@ -2,6 +2,8 @@ import { injectable, inject } from 'tsyringe';
 
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import { differenceInSeconds, lastDayOfMonth, startOfMonth } from 'date-fns';
+import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import AppError from '@shared/errors/AppError';
 import IRemainingPointsToSendDTO from '../dtos/IRemainingPointsToSendDTO';
 import IRecognitionPostsRepository from '../repositories/IRecognitionPostsRepository';
 
@@ -14,7 +16,8 @@ class RemainingPointsToSendService {
   constructor(
     @inject('RecognitionPostsRepository')
     private recognitionPostsRepository: IRecognitionPostsRepository,
-
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
     @inject('CacheProvider')
     private cacheProvider: ICacheProvider,
   ) {}
@@ -22,9 +25,15 @@ class RemainingPointsToSendService {
   public async execute({
     user_id,
   }: IRequest): Promise<IRemainingPointsToSendDTO> {
+    const user = await this.usersRepository.findById(user_id);
+
+    if (!user) {
+      throw new AppError('User not found');
+    }
+
     const cached_remaining_points = await this.cacheProvider.recover<
       IRemainingPointsToSendDTO
-    >(`remaining_points:${user_id}`);
+    >(`remaining_points:${user.account_id}:${user_id}`);
 
     if (cached_remaining_points) {
       return cached_remaining_points;
@@ -37,7 +46,7 @@ class RemainingPointsToSendService {
       },
     );
 
-    const allowed_points_each_month = 100;
+    const allowed_points_each_month = user.position.points || 100;
 
     const remaining_points =
       allowed_points_each_month -
@@ -47,7 +56,7 @@ class RemainingPointsToSendService {
       );
 
     await this.cacheProvider.save(
-      `remaining_points:${user_id}`,
+      `remaining_points:${user.account_id}:${user_id}`,
       {
         remaining_points,
       },

@@ -11,8 +11,14 @@ export default class RedisCacheProvider implements ICacheProvider {
 
   public async save(key: string, value: any, ttl?: number): Promise<void> {
     if (ttl) {
+      console.log(
+        `Caching key '${key}' with value '${JSON.stringify(
+          value,
+        )}' and ttl '${ttl}'`,
+      );
       await this.client.set(key, JSON.stringify(value), 'EX', ttl);
     } else {
+      console.log(`Caching key '${key}' with value '${JSON.stringify(value)}'`);
       await this.client.set(key, JSON.stringify(value));
     }
   }
@@ -26,14 +32,24 @@ export default class RedisCacheProvider implements ICacheProvider {
 
     const parsedData = JSON.parse(data) as T;
 
+    console.log(
+      `Returning caching key '${key}' with value '${JSON.stringify(
+        parsedData,
+      )}'`,
+    );
+
     return parsedData;
   }
 
   public async invalidate(key: string): Promise<void> {
+    console.log(`Invalidating key '${key}'`);
+
     await this.client.del(key);
   }
 
   public async invalidatePrefix(prefix: string): Promise<void> {
+    console.log(`Invalidating prefix '${prefix}'`);
+
     const keys = await this.client.keys(`${prefix}:*`);
 
     const pipeline = this.client.pipeline();

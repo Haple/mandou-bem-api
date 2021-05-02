@@ -1,6 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import IPositionsRepository from '../../repositories/IPositionsRepository';
 
 import Position from '../../infra/typeorm/entities/Position';
@@ -17,6 +18,8 @@ class UpdatePositionService {
   constructor(
     @inject('PositionsRepository')
     private positionsRepository: IPositionsRepository,
+    @inject('CacheProvider')
+    private cacheProvider: ICacheProvider,
   ) {}
 
   public async execute({
@@ -39,6 +42,8 @@ class UpdatePositionService {
     if (positionWithSameName && positionWithSameName.id !== position_id) {
       throw new AppError('Position name already used.');
     }
+
+    await this.cacheProvider.invalidatePrefix(`remaining_points:${account_id}`);
 
     return this.positionsRepository.save({
       ...position,
