@@ -1,26 +1,26 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
-import CreateCustomRewardRequestService from '@modules/rewards/services/custom_reward_requests/CreateCustomRewardRequestService';
-import DeliverCustomRewardService from '@modules/rewards/services/custom_reward_requests/DeliverCustomRewardService';
+import CreateCustomRewardRequestService from '@modules/rewards/services/reward_requests/CreateCustomRewardRequestService';
+import DeliverCustomRewardService from '@modules/rewards/services/reward_requests/DeliverCustomRewardService';
 import CustomRewardRequestsRepository from '../../typeorm/repositories/CustomRewardRequestsRepository';
 
-export default class RewardRequestsController {
+export default class CustomRewardRequestsController {
   public async create(request: Request, response: Response): Promise<Response> {
     const { custom_reward_id } = request.body;
     const { account_id, id: user_id } = request.user;
 
-    const createRewardRequest = container.resolve(
+    const createCustomRewardRequest = container.resolve(
       CreateCustomRewardRequestService,
     );
 
-    const reward_request = await createRewardRequest.execute({
+    const custom_reward_request = await createCustomRewardRequest.execute({
       custom_reward_id,
       user_id,
       account_id,
     });
 
-    return response.json(classToClass(reward_request));
+    return response.json(classToClass(custom_reward_request));
   }
 
   public async index(request: Request, response: Response): Promise<Response> {

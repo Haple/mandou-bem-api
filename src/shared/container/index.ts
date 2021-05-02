@@ -33,6 +33,8 @@ import RemainingPointsToSendService from '@modules/recognition_posts/services/Re
 
 import IGiftCardsRepository from '@modules/rewards/repositories/IGiftCardsRepository';
 import GiftCardsRepository from '@modules/rewards/infra/typeorm/repositories/GiftCardsRepository';
+import IGiftCardRequestsRepository from '@modules/rewards/repositories/IGiftCardRequestsRepository';
+import GiftCardRequestsRepository from '@modules/rewards/infra/typeorm/repositories/GiftCardRequestsRepository';
 
 container.registerSingleton<IProviderAccountsRepository>(
   'ProviderAccountsRepository',
@@ -82,6 +84,11 @@ container.registerSingleton<IDepartmentsRepository>(
 container.registerSingleton<IGiftCardsRepository>(
   'GiftCardsRepository',
   GiftCardsRepository,
+);
+
+container.registerSingleton<IGiftCardRequestsRepository>(
+  'GiftCardRequestsRepository',
+  GiftCardRequestsRepository,
 );
 
 container.registerSingleton<RemainingPointsToSendService>(

@@ -6,22 +6,22 @@ import ensureIsAdmin from '@modules/users/infra/http/middlewares/ensureIsAdmin';
 
 import CustomRewardRequestsController from '../controllers/CustomRewardRequestsController';
 
-const rewardRequestsRouter = Router();
-const rewardRequestsController = new CustomRewardRequestsController();
+const customRewardRequestsRouter = Router();
+const customRewardRequestsController = new CustomRewardRequestsController();
 
-rewardRequestsRouter.use(ensureAuthenticaded);
+customRewardRequestsRouter.use(ensureAuthenticaded);
 
-rewardRequestsRouter.post(
+customRewardRequestsRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
       custom_reward_id: Joi.string().uuid().required(),
     },
   }),
-  rewardRequestsController.create,
+  customRewardRequestsController.create,
 );
 
-rewardRequestsRouter.get(
+customRewardRequestsRouter.get(
   '/',
   ensureIsAdmin,
   celebrate({
@@ -29,10 +29,10 @@ rewardRequestsRouter.get(
       status: Joi.string().valid('CREATED', 'DELIVERED'),
     },
   }),
-  rewardRequestsController.index,
+  customRewardRequestsController.index,
 );
 
-rewardRequestsRouter.patch(
+customRewardRequestsRouter.patch(
   '/:custom_reward_request_id/deliver',
   ensureIsAdmin,
   celebrate({
@@ -40,7 +40,7 @@ rewardRequestsRouter.patch(
       custom_reward_request_id: Joi.string().uuid().required(),
     },
   }),
-  rewardRequestsController.deliver,
+  customRewardRequestsController.deliver,
 );
 
-export default rewardRequestsRouter;
+export default customRewardRequestsRouter;

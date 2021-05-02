@@ -1,7 +1,6 @@
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
-import CustomRewardRequest from '@modules/rewards/infra/typeorm/entities/CustomRewardRequest';
 import ICustomRewardsRepository from '@modules/rewards/repositories/ICustomRewardsRepository';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import ICustomRewardRequestsRepository from '../../repositories/ICustomRewardRequestsRepository';
@@ -10,6 +9,11 @@ interface IRequest {
   custom_reward_id: string;
   user_id: string;
   account_id: string;
+}
+
+interface IResponse {
+  id: string;
+  status: string;
 }
 
 @injectable()
@@ -27,7 +31,7 @@ class CreateCustomRewardRequestService {
     custom_reward_id,
     user_id,
     account_id,
-  }: IRequest): Promise<CustomRewardRequest> {
+  }: IRequest): Promise<IResponse> {
     const user = await this.usersRepository.findById(user_id);
 
     if (!user || user.account_id !== account_id) {
@@ -46,18 +50,29 @@ class CreateCustomRewardRequestService {
       throw new AppError('Insufficient recognition points.');
     }
 
-    const reward_request = await this.customRewardRequestsRepository.create({
-      custom_reward_id,
-      user_id,
-      account_id,
-      status: 'CREATED',
-    });
+    if (custom_reward.units_available <= 0) {
+      throw new AppError('No units available.');
+    }
+
+    const custom_reward_request = await this.customRewardRequestsRepository.create(
+      {
+        custom_reward_id,
+        user_id,
+        account_id,
+        status: 'pending_approval',
+      },
+    );
 
     user.recognition_points -= custom_reward.points;
-
     this.usersRepository.save(user);
 
-    return reward_request;
+    custom_reward.units_available -= 1;
+    this.customRewardsRepository.save(custom_reward);
+
+    return {
+      id: custom_reward_request.id,
+      status: custom_reward_request.status,
+    };
   }
 }
 

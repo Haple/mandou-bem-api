@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateRewardRequests1595363128079
+export default class CreateGiftCardRequests1619889931992
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'custom_reward_requests',
+        name: 'gift_card_requests',
         columns: [
           {
             name: 'id',
@@ -15,7 +15,7 @@ export default class CreateRewardRequests1595363128079
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'custom_reward_id',
+            name: 'gift_card_id',
             type: 'uuid',
           },
           {
@@ -23,12 +23,13 @@ export default class CreateRewardRequests1595363128079
             type: 'uuid',
           },
           {
-            name: 'account_id',
-            type: 'uuid',
-          },
-          {
             name: 'status',
             type: 'varchar',
+          },
+          {
+            name: 'expire_at',
+            type: 'timestamp',
+            isNullable: true,
           },
           {
             name: 'created_at',
@@ -43,27 +44,19 @@ export default class CreateRewardRequests1595363128079
         ],
         foreignKeys: [
           {
-            name: 'FK_CustomRewardRequests_CustomRewards',
-            columnNames: ['custom_reward_id'],
+            name: 'FK_GiftCardRequests_GiftCards',
+            columnNames: ['gift_card_id'],
             referencedColumnNames: ['id'],
-            referencedTableName: 'custom_rewards',
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-          {
-            name: 'FK_CustomRewardRequests_Users',
-            columnNames: ['user_id'],
-            referencedColumnNames: ['id'],
-            referencedTableName: 'users',
+            referencedTableName: 'gift_cards',
             onDelete: 'SET NULL',
             onUpdate: 'CASCADE',
           },
           {
-            name: 'FK_CustomRewardRequests_Accounts',
-            columnNames: ['account_id'],
+            name: 'FK_GiftCardRequests_Users',
+            columnNames: ['user_id'],
             referencedColumnNames: ['id'],
-            referencedTableName: 'accounts',
-            onDelete: 'CASCADE',
+            referencedTableName: 'users',
+            onDelete: 'SET NULL',
             onUpdate: 'CASCADE',
           },
         ],
@@ -72,6 +65,6 @@ export default class CreateRewardRequests1595363128079
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('custom_reward_requests');
+    await queryRunner.dropTable('gift_card_requests');
   }
 }

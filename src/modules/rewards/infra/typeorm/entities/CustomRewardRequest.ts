@@ -39,7 +39,13 @@ class CustomRewardRequest {
   custom_reward: CustomReward;
 
   @Column()
-  status: string;
+  status: 'pending_approval' | 'use_available' | 'used' | 'reproved';
+
+  @Column()
+  reprove_reason: string;
+
+  @Column()
+  expire_at: Date;
 
   @CreateDateColumn()
   created_at: Date;

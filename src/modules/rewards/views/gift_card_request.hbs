@@ -1,0 +1,30 @@
+<style>
+  .message-content {
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 600px;
+    font-size: 18px;
+    line-height: 21px;
+  }
+</style>
+
+<div class="message-content">
+  <p>Olá, {{name}}</p>
+  <p>
+    Parabéns! Você resgatou um prêmio com sucesso.
+    O QR Code abaixo deve ser usado para usufruir da premiação de acordo
+    com a política de resgate da empresa que o ofereceu.
+  </p>
+  QR Code do prêmio: <br />
+  <img src="{{qr_code}}" alt="QR Code do vale-presente resgatado" width="200" height="200">
+  <p>
+    Título: {{title}} <br />
+    Prêmio oferecido por: {{company_name}} <br />
+    Data de expiração: {{expire_at}} <br />
+    Código: {{id}} <br />
+    Política de resgate do prêmio: {{description}} <br />
+  </p>
+  <p>
+    Aproveite!<br />
+    <strong>Equipe MandouBem</strong>
+  </p>
+</div>
