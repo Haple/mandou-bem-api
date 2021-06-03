@@ -9,6 +9,7 @@ module.exports = [
     "username": process.env.POSTGRES_USERNAME,
     "password": process.env.POSTGRES_PASS,
     "database": process.env.POSTGRES_DATABASE,
+    // Uncomment if you want to run the migrations in the production database
     // "ssl": {
     //   "rejectUnauthorized": false,
     // },
