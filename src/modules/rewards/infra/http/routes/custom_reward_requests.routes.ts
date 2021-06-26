@@ -26,21 +26,40 @@ customRewardRequestsRouter.get(
   ensureIsAdmin,
   celebrate({
     [Segments.QUERY]: {
-      status: Joi.string().valid('CREATED', 'DELIVERED'),
+      status: Joi.string().valid(
+        'pending_approval',
+        'use_available',
+        'used',
+        'reproved',
+      ),
     },
   }),
   customRewardRequestsController.index,
 );
 
 customRewardRequestsRouter.patch(
-  '/:custom_reward_request_id/deliver',
+  '/:custom_reward_request_id/approve',
   ensureIsAdmin,
   celebrate({
     [Segments.PARAMS]: {
       custom_reward_request_id: Joi.string().uuid().required(),
     },
   }),
-  customRewardRequestsController.deliver,
+  customRewardRequestsController.approve,
+);
+
+customRewardRequestsRouter.patch(
+  '/:custom_reward_request_id/reprove',
+  ensureIsAdmin,
+  celebrate({
+    [Segments.PARAMS]: {
+      custom_reward_request_id: Joi.string().uuid().required(),
+    },
+    [Segments.BODY]: {
+      reprove_reason: Joi.string().required(),
+    },
+  }),
+  customRewardRequestsController.reprove,
 );
 
 export default customRewardRequestsRouter;

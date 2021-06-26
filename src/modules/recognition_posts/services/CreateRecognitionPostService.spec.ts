@@ -41,6 +41,7 @@ describe('CreateRecognitionPost', () => {
       position_id: 'fake-position-id',
       department_id: 'fake-department-id',
     });
+    Object.assign(from_user, { position: { points: 100 } });
 
     const to_user = await fakeUsersRepository.create({
       account_id: 'fake-account-id',
@@ -73,6 +74,7 @@ describe('CreateRecognitionPost', () => {
       position_id: 'fake-position-id',
       department_id: 'fake-department-id',
     });
+    Object.assign(from_user, { position: { points: 100 } });
 
     const to_user = await fakeUsersRepository.create({
       account_id: 'fake-account-id',

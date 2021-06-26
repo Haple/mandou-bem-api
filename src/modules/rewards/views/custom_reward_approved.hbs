@@ -1,0 +1,30 @@
+<style>
+  .message-content {
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 600px;
+    font-size: 18px;
+    line-height: 21px;
+  }
+</style>
+
+<div class="message-content">
+  <p>Olá, {{name}}</p>
+  <p>
+    Parabéns! A sua solicitação de prêmio customizado foi aprovada com sucesso.
+    O QR Code abaixo deve ser usado para usufruir da premiação de acordo
+    com a política de resgate da empresa que o ofereceu.
+  </p>
+  <b>QR Code do prêmio:</b> <br />
+  <img src="{{qr_code}}" alt="QR Code do prêmio resgatado" width="200" height="200">
+  <p>
+    <b>Título:</b> {{title}} <br />
+    <b>Prêmio oferecido por:</b> {{company_name}} (sua empresa)<br />
+    <b>Data de expiração:</b> {{expire_at}} <br />
+    <b>Código:</b> {{id}} <br />
+    <b>Política de resgate do prêmio:</b> {{description}} <br />
+  </p>
+  <p>
+    Aproveite!<br />
+    <strong>Equipe MandouBem</strong>
+  </p>
+</div>

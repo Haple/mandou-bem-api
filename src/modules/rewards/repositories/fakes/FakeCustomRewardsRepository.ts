@@ -53,6 +53,11 @@ class FakeCustomRewardsRepository implements ICustomRewardsRepository {
       find_custom_reward => find_custom_reward.id === custom_reward.id,
     );
 
+    if (find_index === -1) {
+      this.custom_rewards.push(custom_reward);
+      return custom_reward;
+    }
+
     this.custom_rewards[find_index] = custom_reward;
 
     return custom_reward;

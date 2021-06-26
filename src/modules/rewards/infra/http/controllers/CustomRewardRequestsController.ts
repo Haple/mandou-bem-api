@@ -2,7 +2,8 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 import CreateCustomRewardRequestService from '@modules/rewards/services/reward_requests/CreateCustomRewardRequestService';
-import DeliverCustomRewardService from '@modules/rewards/services/reward_requests/DeliverCustomRewardService';
+import ApproveCustomRewardService from '@modules/rewards/services/reward_requests/ApproveCustomRewardService';
+import ReproveCustomRewardService from '@modules/rewards/services/reward_requests/ReproveCustomRewardService';
 import CustomRewardRequestsRepository from '../../typeorm/repositories/CustomRewardRequestsRepository';
 
 export default class CustomRewardRequestsController {
@@ -39,18 +40,37 @@ export default class CustomRewardRequestsController {
     return response.json(classToClass(custom_rewards));
   }
 
-  public async deliver(
+  public async approve(
     request: Request,
     response: Response,
   ): Promise<Response> {
-    const { reward_request_id } = request.params;
+    const { custom_reward_request_id } = request.params;
     const { account_id } = request.user;
 
-    const deliverReward = container.resolve(DeliverCustomRewardService);
+    const approveCustomReward = container.resolve(ApproveCustomRewardService);
 
-    const reward_request_updated = await deliverReward.execute({
-      reward_request_id,
+    const reward_request_updated = await approveCustomReward.execute({
+      custom_reward_request_id,
       account_id,
+    });
+
+    return response.json(classToClass(reward_request_updated));
+  }
+
+  public async reprove(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { custom_reward_request_id } = request.params;
+    const { reprove_reason } = request.body;
+    const { account_id } = request.user;
+
+    const reproveCustomReward = container.resolve(ReproveCustomRewardService);
+
+    const reward_request_updated = await reproveCustomReward.execute({
+      custom_reward_request_id,
+      account_id,
+      reprove_reason,
     });
 
     return response.json(classToClass(reward_request_updated));
