@@ -62,4 +62,26 @@ customRewardRequestsRouter.patch(
   customRewardRequestsController.reprove,
 );
 
+customRewardRequestsRouter.get(
+  '/:custom_reward_request_id',
+  ensureIsAdmin,
+  celebrate({
+    [Segments.PARAMS]: {
+      custom_reward_request_id: Joi.string().uuid().required(),
+    },
+  }),
+  customRewardRequestsController.show,
+);
+
+customRewardRequestsRouter.patch(
+  '/:custom_reward_request_id/validate',
+  ensureIsAdmin,
+  celebrate({
+    [Segments.PARAMS]: {
+      custom_reward_request_id: Joi.string().uuid().required(),
+    },
+  }),
+  customRewardRequestsController.validate,
+);
+
 export default customRewardRequestsRouter;

@@ -4,6 +4,8 @@ import { classToClass } from 'class-transformer';
 import CreateCustomRewardRequestService from '@modules/rewards/services/reward_requests/CreateCustomRewardRequestService';
 import ApproveCustomRewardService from '@modules/rewards/services/reward_requests/ApproveCustomRewardService';
 import ReproveCustomRewardService from '@modules/rewards/services/reward_requests/ReproveCustomRewardService';
+import GetCustomRewardRequestService from '@modules/rewards/services/reward_requests/GetCustomRewardRequestService';
+import ValidateCustomRewardService from '@modules/rewards/services/reward_requests/ValidateCustomRewardService';
 import CustomRewardRequestsRepository from '../../typeorm/repositories/CustomRewardRequestsRepository';
 
 export default class CustomRewardRequestsController {
@@ -71,6 +73,39 @@ export default class CustomRewardRequestsController {
       custom_reward_request_id,
       account_id,
       reprove_reason,
+    });
+
+    return response.json(classToClass(reward_request_updated));
+  }
+
+  public async show(request: Request, response: Response): Promise<Response> {
+    const { custom_reward_request_id } = request.params;
+    const { account_id } = request.user;
+
+    const getCustomRewardRequest = container.resolve(
+      GetCustomRewardRequestService,
+    );
+
+    const reward_request = await getCustomRewardRequest.execute({
+      custom_reward_request_id,
+      account_id,
+    });
+
+    return response.json(classToClass(reward_request));
+  }
+
+  public async validate(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { custom_reward_request_id } = request.params;
+    const { account_id } = request.user;
+
+    const validateCustomReward = container.resolve(ValidateCustomRewardService);
+
+    const reward_request_updated = await validateCustomReward.execute({
+      custom_reward_request_id,
+      account_id,
     });
 
     return response.json(classToClass(reward_request_updated));
