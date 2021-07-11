@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 import CreateEnpsSurveyService from '@modules/enps/services/CreateEnpsSurveyService';
+import GetEnpsSurveyService from '@modules/enps/services/GetEnpsSurveyService';
 import EnpsSurveysRepository from '../../typeorm/repositories/EnpsSurveysRepository';
 
 export default class EnpsSurveysController {
@@ -32,5 +33,19 @@ export default class EnpsSurveysController {
     );
 
     return response.json(classToClass(enps_surveys));
+  }
+
+  public async show(request: Request, response: Response): Promise<Response> {
+    const { enps_survey_id } = request.params;
+    const { account_id } = request.user;
+
+    const getEnpsSurvey = container.resolve(GetEnpsSurveyService);
+
+    const enps_survey = await getEnpsSurvey.execute({
+      enps_survey_id,
+      account_id,
+    });
+
+    return response.json(classToClass(enps_survey));
   }
 }

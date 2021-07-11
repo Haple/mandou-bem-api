@@ -11,6 +11,17 @@ const enpsSurveysController = new EnpsSurveysController();
 
 enpsSurveysRouter.use(ensureAuthenticaded);
 
+enpsSurveysRouter.get(
+  '/:enps_survey_id',
+  ensureIsAdmin,
+  celebrate({
+    [Segments.PARAMS]: {
+      enps_survey_id: Joi.string().uuid().required(),
+    },
+  }),
+  enpsSurveysController.show,
+);
+
 enpsSurveysRouter.get('/', enpsSurveysController.index);
 
 enpsSurveysRouter.post(

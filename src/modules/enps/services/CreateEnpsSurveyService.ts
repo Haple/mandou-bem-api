@@ -34,7 +34,7 @@ class CreateEnpsSurveyService {
       throw new AppError('End date should be after today');
     }
 
-    const enps_survey = this.enpsSurveysRepository.create({
+    const enps_survey = await this.enpsSurveysRepository.create({
       account_id,
       question: question || DEFAULT_QUESTION,
       end_date,
