@@ -18,6 +18,7 @@ import giftCardRequestsRouter from '@modules/rewards/infra/http/routes/gift_card
 import remainingPointsToSendRouter from '@modules/recognition_posts/infra/http/routes/remaining_points_to_send.routes';
 import recognitionPostsRouter from '@modules/recognition_posts/infra/http/routes/recognition_posts.routes';
 import recognitionRankingRouter from '@modules/recognition_posts/infra/http/routes/recognition_ranking.routes';
+import enpsSurveysRouter from '@modules/enps/infra/http/routes/enps_surveys.routes';
 
 const routes = Router();
 
@@ -40,5 +41,6 @@ routes.use('/gift-card-requests', giftCardRequestsRouter);
 routes.use('/remaining-points', remainingPointsToSendRouter);
 routes.use('/recognition-posts', recognitionPostsRouter);
 routes.use('/recognition-ranking', recognitionRankingRouter);
+routes.use('/enps-surveys', enpsSurveysRouter);
 
 export default routes;

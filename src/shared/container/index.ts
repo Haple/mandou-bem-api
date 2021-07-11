@@ -29,6 +29,9 @@ import PositionsRepository from '@modules/users/infra/typeorm/repositories/Posit
 import IDepartmentsRepository from '@modules/users/repositories/IDepartmentsRepository';
 import DepartmentsRepository from '@modules/users/infra/typeorm/repositories/DepartmentsRepository';
 
+import IEnpsSurveysRepository from '@modules/enps/repositories/IEnpsSurveysRepository';
+import EnpsSurveysRepository from '@modules/enps/infra/typeorm/repositories/EnpsSurveysRepository';
+
 import RemainingPointsToSendService from '@modules/recognition_posts/services/RemainingPointsToSendService';
 
 import IGiftCardsRepository from '@modules/rewards/repositories/IGiftCardsRepository';
@@ -94,4 +97,9 @@ container.registerSingleton<IGiftCardRequestsRepository>(
 container.registerSingleton<RemainingPointsToSendService>(
   'RemainingPointsToSendService',
   RemainingPointsToSendService,
+);
+
+container.registerSingleton<IEnpsSurveysRepository>(
+  'EnpsSurveysRepository',
+  EnpsSurveysRepository,
 );
