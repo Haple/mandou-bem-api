@@ -11,7 +11,7 @@ import {
 import User from '@modules/users/infra/typeorm/entities/User';
 import EnpsSurvey from './EnpsSurvey';
 
-@Entity('enps_surveys')
+@Entity('enps_answers')
 class EnpsAnswer {
   @PrimaryGeneratedColumn('uuid')
   id: string;

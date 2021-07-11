@@ -12,6 +12,11 @@ const enpsSurveysController = new EnpsSurveysController();
 enpsSurveysRouter.use(ensureAuthenticaded);
 
 enpsSurveysRouter.get(
+  '/answers/available',
+  enpsSurveysController.showAvailable,
+);
+
+enpsSurveysRouter.get(
   '/:enps_survey_id',
   ensureIsAdmin,
   celebrate({
@@ -33,7 +38,7 @@ enpsSurveysRouter.patch(
   enpsSurveysController.end,
 );
 
-enpsSurveysRouter.get('/', enpsSurveysController.index);
+enpsSurveysRouter.get('/', ensureIsAdmin, enpsSurveysController.index);
 
 enpsSurveysRouter.post(
   '/',

@@ -1,6 +1,16 @@
 import ICreateEnpsSurveyDTO from '@modules/enps/dtos/ICreateEnpsSurveyDTO';
+import IFindAvailableEnpsSurveysDTO from '@modules/enps/dtos/IFindAvailableEnpsSurveysDTO';
 import IEnpsSurveysRepository from '@modules/enps/repositories/IEnpsSurveysRepository';
-import { getRepository, Repository } from 'typeorm';
+import {
+  Any,
+  Between,
+  getRepository,
+  In,
+  IsNull,
+  LessThanOrEqual,
+  MoreThanOrEqual,
+  Repository,
+} from 'typeorm';
 
 import EnpsSurvey from '../entities/EnpsSurvey';
 
@@ -9,6 +19,28 @@ class EnpsSurveysRepository implements IEnpsSurveysRepository {
 
   constructor() {
     this.ormRepository = getRepository(EnpsSurvey);
+  }
+
+  public async findAllAvailable({
+    account_id,
+    department_id,
+    position_id,
+  }: IFindAvailableEnpsSurveysDTO): Promise<EnpsSurvey[]> {
+    const enps_surveys = await this.ormRepository
+      .createQueryBuilder()
+      .select()
+      .where('account_id = :account_id', { account_id })
+      .where('end_date >= :end_date', { end_date: new Date() })
+      .where('ended_at IS NULL')
+      .where('department_id = :department_id OR department_id IS NULL', {
+        department_id,
+      })
+      .where('position_id = :position_id OR position_id IS NULL', {
+        position_id,
+      })
+      .getMany();
+
+    return enps_surveys;
   }
 
   public async findAllFromAccount(account_id: string): Promise<EnpsSurvey[]> {

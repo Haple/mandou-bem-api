@@ -4,6 +4,7 @@ import { classToClass } from 'class-transformer';
 import CreateEnpsSurveyService from '@modules/enps/services/CreateEnpsSurveyService';
 import GetEnpsSurveyService from '@modules/enps/services/GetEnpsSurveyService';
 import EndEnpsSurveyService from '@modules/enps/services/EndEnpsSurveyService';
+import GetAvailableEnpsSurveysService from '@modules/enps/services/GetAvailableEnpsSurveysService';
 import EnpsSurveysRepository from '../../typeorm/repositories/EnpsSurveysRepository';
 
 export default class EnpsSurveysController {
@@ -58,6 +59,24 @@ export default class EnpsSurveysController {
 
     const enps_survey = await endEnpsSurvey.execute({
       enps_survey_id,
+      account_id,
+    });
+
+    return response.json(classToClass(enps_survey));
+  }
+
+  public async showAvailable(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { account_id, id: user_id } = request.user;
+
+    const getAvailableEnpsSurveys = container.resolve(
+      GetAvailableEnpsSurveysService,
+    );
+
+    const enps_survey = await getAvailableEnpsSurveys.execute({
+      user_id,
       account_id,
     });
 
