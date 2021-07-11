@@ -6,6 +6,12 @@ import IEnpsSurveysRepository from '../IEnpsSurveysRepository';
 class FakeEnpsSurveyRepository implements IEnpsSurveysRepository {
   private enps_surveys: EnpsSurvey[] = [];
 
+  public async findAllFromAccount(account_id: string): Promise<EnpsSurvey[]> {
+    return this.enps_surveys.filter(
+      enps_survey => enps_survey.account_id === account_id,
+    );
+  }
+
   public async findById(id: string): Promise<EnpsSurvey | undefined> {
     const findUser = this.enps_surveys.find(user => user.id === id);
     return findUser;

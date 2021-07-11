@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 import CreateEnpsSurveyService from '@modules/enps/services/CreateEnpsSurveyService';
+import EnpsSurveysRepository from '../../typeorm/repositories/EnpsSurveysRepository';
 
 export default class EnpsSurveysController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -19,5 +20,17 @@ export default class EnpsSurveysController {
     });
 
     return response.json(classToClass(enps_survey));
+  }
+
+  public async index(request: Request, response: Response): Promise<Response> {
+    const { account_id } = request.user;
+
+    const enpsSurveysRepository = container.resolve(EnpsSurveysRepository);
+
+    const enps_surveys = await enpsSurveysRepository.findAllFromAccount(
+      account_id,
+    );
+
+    return response.json(classToClass(enps_surveys));
   }
 }

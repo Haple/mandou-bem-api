@@ -11,6 +11,16 @@ class EnpsSurveysRepository implements IEnpsSurveysRepository {
     this.ormRepository = getRepository(EnpsSurvey);
   }
 
+  public async findAllFromAccount(account_id: string): Promise<EnpsSurvey[]> {
+    const enps_surveys = await this.ormRepository.find({
+      where: {
+        account_id,
+      },
+    });
+
+    return enps_surveys;
+  }
+
   public async findById(id: string): Promise<EnpsSurvey | undefined> {
     const enps_survey = await this.ormRepository.findOne(id);
 

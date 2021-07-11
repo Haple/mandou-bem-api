@@ -11,6 +11,8 @@ const enpsSurveysController = new EnpsSurveysController();
 
 enpsSurveysRouter.use(ensureAuthenticaded);
 
+enpsSurveysRouter.get('/', enpsSurveysController.index);
+
 enpsSurveysRouter.post(
   '/',
   ensureIsAdmin,
