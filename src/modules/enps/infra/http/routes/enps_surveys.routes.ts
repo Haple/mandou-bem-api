@@ -22,6 +22,17 @@ enpsSurveysRouter.get(
   enpsSurveysController.show,
 );
 
+enpsSurveysRouter.patch(
+  '/:enps_survey_id/end',
+  ensureIsAdmin,
+  celebrate({
+    [Segments.PARAMS]: {
+      enps_survey_id: Joi.string().uuid().required(),
+    },
+  }),
+  enpsSurveysController.end,
+);
+
 enpsSurveysRouter.get('/', enpsSurveysController.index);
 
 enpsSurveysRouter.post(
