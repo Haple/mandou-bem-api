@@ -29,6 +29,29 @@ describe('GetEnpsSurvey', () => {
     expect(enps_survey).toHaveProperty('id');
   });
 
+  it('should be able to get ENPS Survey score and total responses', async () => {
+    const saved_enps_survey = await fakeEnpsSurveyRepository.create({
+      account_id: 'fake-account-id',
+      end_date: new Date(),
+      question: 'fake question',
+    });
+
+    await fakeEnpsSurveyRepository.save({
+      ...saved_enps_survey,
+      promoters: 10,
+      passives: 4,
+      detractors: 5,
+    });
+
+    const enps_survey = await getEnpsSurvey.execute({
+      account_id: 'fake-account-id',
+      enps_survey_id: saved_enps_survey.id,
+    });
+
+    expect(enps_survey.enps_score).toBe(26);
+    expect(enps_survey.total_responses).toBe(19);
+  });
+
   it('should not be able to get ENPS Survey from another account', async () => {
     const saved_enps_survey = await fakeEnpsSurveyRepository.create({
       account_id: 'fake-account-id',
