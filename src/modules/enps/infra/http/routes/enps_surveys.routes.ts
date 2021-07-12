@@ -5,9 +5,11 @@ import ensureAuthenticaded from '@modules/users/infra/http/middlewares/ensureAut
 import ensureIsAdmin from '@modules/users/infra/http/middlewares/ensureIsAdmin';
 
 import EnpsSurveysController from '../controllers/EnpsSurveysController';
+import EnpsAnswersController from '../controllers/EnpsAnswersController';
 
 const enpsSurveysRouter = Router();
 const enpsSurveysController = new EnpsSurveysController();
+const enpsAnswersController = new EnpsAnswersController();
 
 enpsSurveysRouter.use(ensureAuthenticaded);
 
@@ -52,6 +54,20 @@ enpsSurveysRouter.post(
     },
   }),
   enpsSurveysController.create,
+);
+
+enpsSurveysRouter.post(
+  '/:enps_survey_id/answers',
+  celebrate({
+    [Segments.PARAMS]: {
+      enps_survey_id: Joi.string().uuid().required(),
+    },
+    [Segments.BODY]: {
+      answer: Joi.string().required(),
+      score: Joi.number().positive().required(),
+    },
+  }),
+  enpsAnswersController.create,
 );
 
 export default enpsSurveysRouter;

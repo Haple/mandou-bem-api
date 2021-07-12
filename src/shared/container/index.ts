@@ -41,6 +41,7 @@ import IGiftCardsRepository from '@modules/rewards/repositories/IGiftCardsReposi
 import GiftCardsRepository from '@modules/rewards/infra/typeorm/repositories/GiftCardsRepository';
 import IGiftCardRequestsRepository from '@modules/rewards/repositories/IGiftCardRequestsRepository';
 import GiftCardRequestsRepository from '@modules/rewards/infra/typeorm/repositories/GiftCardRequestsRepository';
+import GetAvailableEnpsSurveyService from '@modules/enps/services/GetAvailableEnpsSurveysService';
 
 container.registerSingleton<IProviderAccountsRepository>(
   'ProviderAccountsRepository',
@@ -100,6 +101,11 @@ container.registerSingleton<IGiftCardRequestsRepository>(
 container.registerSingleton<RemainingPointsToSendService>(
   'RemainingPointsToSendService',
   RemainingPointsToSendService,
+);
+
+container.registerSingleton<GetAvailableEnpsSurveyService>(
+  'GetAvailableEnpsSurveyService',
+  GetAvailableEnpsSurveyService,
 );
 
 container.registerSingleton<IEnpsSurveysRepository>(

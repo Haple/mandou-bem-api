@@ -12,7 +12,7 @@ interface IRequest {
 }
 
 @injectable()
-class GetEnpsSurveyService {
+class GetAvailableEnpsSurveyService {
   constructor(
     @inject('EnpsSurveysRepository')
     private enpsSurveysRepository: IEnpsSurveysRepository,
@@ -56,11 +56,11 @@ class GetEnpsSurveyService {
     );
 
     if (surveys_available.length === 0) {
-      throw new AppError('All surveys available are already answered.', 404);
+      throw new AppError('All surveys available are already answered.', 409);
     }
 
     return surveys_available;
   }
 }
 
-export default GetEnpsSurveyService;
+export default GetAvailableEnpsSurveyService;

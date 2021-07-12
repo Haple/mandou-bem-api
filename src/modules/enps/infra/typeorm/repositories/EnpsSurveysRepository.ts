@@ -1,16 +1,7 @@
 import ICreateEnpsSurveyDTO from '@modules/enps/dtos/ICreateEnpsSurveyDTO';
 import IFindAvailableEnpsSurveysDTO from '@modules/enps/dtos/IFindAvailableEnpsSurveysDTO';
 import IEnpsSurveysRepository from '@modules/enps/repositories/IEnpsSurveysRepository';
-import {
-  Any,
-  Between,
-  getRepository,
-  In,
-  IsNull,
-  LessThanOrEqual,
-  MoreThanOrEqual,
-  Repository,
-} from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 
 import EnpsSurvey from '../entities/EnpsSurvey';
 

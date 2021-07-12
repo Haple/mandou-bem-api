@@ -41,7 +41,11 @@ class FakeEnpsSurveyRepository implements IEnpsSurveysRepository {
   ): Promise<EnpsSurvey> {
     const enps_survey = new EnpsSurvey();
 
-    Object.assign(enps_survey, { id: uuid() }, enpsSurveyData);
+    Object.assign(
+      enps_survey,
+      { id: uuid(), promoters: 0, passives: 0, detractors: 0 },
+      enpsSurveyData,
+    );
 
     this.enps_surveys.push(enps_survey);
 
