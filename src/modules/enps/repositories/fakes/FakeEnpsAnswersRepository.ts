@@ -1,10 +1,30 @@
 import ICreateEnpsAnswerDTO from '@modules/enps/dtos/ICreateEnpsAnswerDTO';
+import IPaginationDTO from '@modules/enps/dtos/IPaginationDTO';
 import EnpsAnswer from '@modules/enps/infra/typeorm/entities/EnpsAnswer';
 import { uuid } from 'uuidv4';
 import IEnpsAnswersRepository from '../IEnpsAnswersRepository';
 
 class FakeEnpsAnswersRepository implements IEnpsAnswersRepository {
   private enps_answers: EnpsAnswer[] = [];
+
+  public async findAllFromSurvey(
+    enps_survey_id: string,
+    page: number,
+    size: number,
+  ): Promise<IPaginationDTO<EnpsAnswer>> {
+    const indexMin = page * size;
+    const indexMax = indexMin + size;
+    const enps_answers = this.enps_answers.filter(
+      (recognition_post, index) =>
+        index >= indexMin &&
+        index < indexMax &&
+        recognition_post.enps_survey_id === enps_survey_id,
+    );
+    return {
+      total: enps_answers.length,
+      result: enps_answers,
+    };
+  }
 
   public async findAllFromUserAndSurveys(
     user_id: string,

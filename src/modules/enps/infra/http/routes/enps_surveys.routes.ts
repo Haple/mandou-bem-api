@@ -70,4 +70,14 @@ enpsSurveysRouter.post(
   enpsAnswersController.create,
 );
 
+enpsSurveysRouter.get(
+  '/:enps_survey_id/answers',
+  celebrate({
+    [Segments.PARAMS]: {
+      enps_survey_id: Joi.string().uuid().required(),
+    },
+  }),
+  enpsAnswersController.index,
+);
+
 export default enpsSurveysRouter;

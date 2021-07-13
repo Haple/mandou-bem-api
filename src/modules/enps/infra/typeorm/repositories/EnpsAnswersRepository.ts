@@ -1,4 +1,5 @@
 import ICreateEnpsAnswerDTO from '@modules/enps/dtos/ICreateEnpsAnswerDTO';
+import IPaginationDTO from '@modules/enps/dtos/IPaginationDTO';
 import IEnpsAnswersRepository from '@modules/enps/repositories/IEnpsAnswersRepository';
 import { getRepository, Repository, In } from 'typeorm';
 
@@ -9,6 +10,27 @@ class EnpsAnswersRepository implements IEnpsAnswersRepository {
 
   constructor() {
     this.ormRepository = getRepository(EnpsAnswer);
+  }
+
+  public async findAllFromSurvey(
+    enps_survey_id: string,
+    page: number,
+    size: number,
+  ): Promise<IPaginationDTO<EnpsAnswer>> {
+    const [enps_answers, total] = await this.ormRepository.findAndCount({
+      where: {
+        enps_survey_id,
+      },
+      order: {
+        created_at: 'DESC',
+      },
+      skip: page * size,
+      take: size,
+    });
+    return {
+      total,
+      result: enps_answers,
+    };
   }
 
   public async findAllFromUserAndSurveys(
