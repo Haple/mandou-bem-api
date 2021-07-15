@@ -1,6 +1,5 @@
 import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
-import AppError from '@shared/errors/AppError';
 import FakeRecognitionPostsRepository from '../repositories/fakes/FakeRecognitionPostsRepository';
 import CreateCommentService from './CreateCommentService';
 
@@ -41,7 +40,7 @@ describe('CreateComment', () => {
       email: 'johndoe@corp.com',
       password: '1234',
       position_id: 'fake-position-id',
-      department_id: 'fake-department-id'
+      department_id: 'fake-department-id',
     });
 
     const post = await fakeRecognitionPostsRepository.create(

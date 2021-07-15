@@ -5,6 +5,7 @@ import AppError from '@shared/errors/AppError';
 import IEnpsSurveysRepository from '../repositories/IEnpsSurveysRepository';
 import GetAvailableEnpsSurveyService from './GetAvailableEnpsSurveysService';
 import EnpsAnswer from '../infra/typeorm/entities/EnpsAnswer';
+import EnpsSurvey from '../infra/typeorm/entities/EnpsSurvey';
 
 interface IRequest {
   account_id: string;
@@ -69,7 +70,7 @@ class CreateEnpsAnswerService {
           : enps_survey.passives,
       detractors:
         score <= 6 ? enps_survey.detractors + 1 : enps_survey.detractors,
-    });
+    } as EnpsSurvey);
 
     return enps_answer;
   }

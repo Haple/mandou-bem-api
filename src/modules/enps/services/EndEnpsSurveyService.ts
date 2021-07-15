@@ -31,7 +31,7 @@ class EndEnpsSurveyService {
     const enps_survey_updated = await this.enpsSurveysRepository.save({
       ...enps_survey,
       ended_at: new Date(),
-    });
+    } as EnpsSurvey);
 
     return enps_survey_updated;
   }

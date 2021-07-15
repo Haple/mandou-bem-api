@@ -8,6 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 
+import { Expose } from 'class-transformer';
 import Account from '@modules/users/infra/typeorm/entities/Account';
 import Position from '@modules/users/infra/typeorm/entities/Position';
 import Department from '@modules/users/infra/typeorm/entities/Department';
@@ -61,6 +62,18 @@ class EnpsSurvey {
 
   @Column()
   ended_at: Date;
+
+  @Expose({ name: 'enps_score' })
+  getEnpScore(): number {
+    const enps_score =
+      ((this.promoters - this.detractors) / this.getTotaResponses()) * 100;
+    return Math.trunc(enps_score);
+  }
+
+  @Expose({ name: 'total_responses' })
+  getTotaResponses(): number {
+    return this.promoters + this.passives + this.detractors;
+  }
 }
 
 export default EnpsSurvey;

@@ -106,10 +106,12 @@ describe('GetAvailableEnpsSurveys', () => {
       question: 'fake question',
       position_id: 'another-position-id',
     });
-    await fakeEnpsSurveyRepository.save({
-      ...saved_enps_survey,
+
+    Object.assign(saved_enps_survey, {
       ended_at: subDays(new Date(), 1),
     });
+
+    await fakeEnpsSurveyRepository.save(saved_enps_survey);
 
     const user = await fakeUsersRepository.create({
       account_id: 'fake-account-id',
