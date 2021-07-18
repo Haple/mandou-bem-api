@@ -47,10 +47,10 @@ enpsSurveysRouter.post(
   ensureIsAdmin,
   celebrate({
     [Segments.BODY]: {
-      question: Joi.string(),
+      question: Joi.string().allow(null),
       end_date: Joi.date().greater(new Date()).iso().required(),
-      position_id: Joi.string().uuid(),
-      department_id: Joi.string().uuid(),
+      position_id: Joi.string().uuid().allow(null),
+      department_id: Joi.string().uuid().allow(null),
     },
   }),
   enpsSurveysController.create,
