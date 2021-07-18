@@ -8,6 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 
+import { isAfter } from 'date-fns';
 import { Expose } from 'class-transformer';
 import Account from '@modules/users/infra/typeorm/entities/Account';
 import Position from '@modules/users/infra/typeorm/entities/Position';
@@ -73,6 +74,14 @@ class EnpsSurvey {
   @Expose({ name: 'total_responses' })
   getTotaResponses(): number {
     return this.promoters + this.passives + this.detractors;
+  }
+
+  @Expose({ name: 'ended' })
+  isEnded(): boolean {
+    if (isAfter(new Date(), this.end_date) || this.ended_at) {
+      return true;
+    }
+    return false;
   }
 }
 
