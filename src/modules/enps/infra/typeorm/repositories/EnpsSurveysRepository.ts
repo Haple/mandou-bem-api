@@ -39,6 +39,9 @@ class EnpsSurveysRepository implements IEnpsSurveysRepository {
       where: {
         account_id,
       },
+      order: {
+        created_at: 'DESC',
+      },
     });
 
     return enps_surveys;
