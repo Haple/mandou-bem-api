@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "@sendgrid/mail": "^7.2.4",
+    "@types/html-pdf": "^2.2.1",
     "@types/mongodb": "^3.5.22",
     "@types/qrcode": "^1.4.0",
     "bcryptjs": "^2.4.3",
@@ -61,6 +62,7 @@
     "express-async-errors": "^3.1.1",
     "generate-password": "^1.5.1",
     "handlebars": "^4.7.6",
+    "html-pdf": "^3.0.1",
     "ioredis": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "mime": "^2.4.6",

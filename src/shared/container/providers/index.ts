@@ -1,5 +1,6 @@
 import './StorageProvider';
-import './MailTemplateProvider';
+import './PDFProvider';
+import './TemplateProvider';
 import './MailProvider';
 import './CacheProvider';
 import './HashProvider';

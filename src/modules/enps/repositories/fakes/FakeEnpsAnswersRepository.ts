@@ -7,7 +7,7 @@ import IEnpsAnswersRepository from '../IEnpsAnswersRepository';
 class FakeEnpsAnswersRepository implements IEnpsAnswersRepository {
   private enps_answers: EnpsAnswer[] = [];
 
-  public async findAllFromSurvey(
+  public async findAllFromSurveyPaginated(
     enps_survey_id: string,
     page: number,
     size: number,
@@ -24,6 +24,15 @@ class FakeEnpsAnswersRepository implements IEnpsAnswersRepository {
       total: enps_answers.length,
       result: enps_answers,
     };
+  }
+
+  public async findAllFromSurvey(
+    enps_survey_id: string,
+  ): Promise<EnpsAnswer[]> {
+    const enps_answers = this.enps_answers.filter(
+      recognition_post => recognition_post.enps_survey_id === enps_survey_id,
+    );
+    return enps_answers;
   }
 
   public async findAllFromUserAndSurveys(

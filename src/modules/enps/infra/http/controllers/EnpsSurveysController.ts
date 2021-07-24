@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 import CreateEnpsSurveyService from '@modules/enps/services/CreateEnpsSurveyService';
 import GetEnpsSurveyService from '@modules/enps/services/GetEnpsSurveyService';
+import EnpsSurveyToPDFService from '@modules/enps/services/EnpsSurveyToPDFService';
 import EndEnpsSurveyService from '@modules/enps/services/EndEnpsSurveyService';
 import GetAvailableEnpsSurveysService from '@modules/enps/services/GetAvailableEnpsSurveysService';
 import EnpsSurveysRepository from '../../typeorm/repositories/EnpsSurveysRepository';
@@ -49,6 +50,27 @@ export default class EnpsSurveysController {
     });
 
     return response.json(classToClass(enps_survey));
+  }
+
+  public async downloadPDF(
+    request: Request,
+    response: Response,
+  ): Promise<void> {
+    const { enps_survey_id } = request.params;
+    const { account_id } = request.user;
+
+    const enpsSurveyToPDF = container.resolve(EnpsSurveyToPDFService);
+
+    const pdf = await enpsSurveyToPDF.execute({
+      enps_survey_id,
+      account_id,
+    });
+
+    response.set({
+      'Content-Type': 'application/pdf',
+      'Content-Length': pdf.length,
+    });
+    response.send(pdf);
   }
 
   public async end(request: Request, response: Response): Promise<Response> {

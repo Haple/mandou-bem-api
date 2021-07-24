@@ -22,7 +22,7 @@ class ListEnpsAnswersService {
     page,
     size,
   }: IRequest): Promise<IPaginationDTO<EnpsAnswer>> {
-    const enps_answers = await this.enpsAnswersRepository.findAllFromSurvey(
+    const enps_answers = await this.enpsAnswersRepository.findAllFromSurveyPaginated(
       enps_survey_id,
       page,
       size,

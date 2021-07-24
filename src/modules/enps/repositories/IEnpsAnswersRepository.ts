@@ -3,7 +3,8 @@ import ICreateEnpsAnswerDTO from '../dtos/ICreateEnpsAnswerDTO';
 import IPaginationDTO from '../dtos/IPaginationDTO';
 
 export default interface IEnpsAnswersRepository {
-  findAllFromSurvey(
+  findAllFromSurvey(enps_survey_id: string): Promise<EnpsAnswer[]>;
+  findAllFromSurveyPaginated(
     enps_survey_id: string,
     page: number,
     size: number,

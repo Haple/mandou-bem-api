@@ -12,7 +12,7 @@ class EnpsAnswersRepository implements IEnpsAnswersRepository {
     this.ormRepository = getRepository(EnpsAnswer);
   }
 
-  public async findAllFromSurvey(
+  public async findAllFromSurveyPaginated(
     enps_survey_id: string,
     page: number,
     size: number,
@@ -31,6 +31,20 @@ class EnpsAnswersRepository implements IEnpsAnswersRepository {
       total,
       result: enps_answers,
     };
+  }
+
+  public async findAllFromSurvey(
+    enps_survey_id: string,
+  ): Promise<EnpsAnswer[]> {
+    const enps_answers = await this.ormRepository.find({
+      where: {
+        enps_survey_id,
+      },
+      order: {
+        created_at: 'DESC',
+      },
+    });
+    return enps_answers;
   }
 
   public async findAllFromUserAndSurveys(

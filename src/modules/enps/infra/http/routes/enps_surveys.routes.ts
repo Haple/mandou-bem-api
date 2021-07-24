@@ -80,4 +80,14 @@ enpsSurveysRouter.get(
   enpsAnswersController.index,
 );
 
+enpsSurveysRouter.get(
+  '/:enps_survey_id/pdf',
+  celebrate({
+    [Segments.PARAMS]: {
+      enps_survey_id: Joi.string().uuid().required(),
+    },
+  }),
+  enpsSurveysController.downloadPDF,
+);
+
 export default enpsSurveysRouter;

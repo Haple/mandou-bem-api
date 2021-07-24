@@ -1,0 +1,77 @@
+<style>
+
+  .content {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+  }
+
+  .answers{
+    width: 100%;
+    text-align: left;
+    font-size: 12px;
+    border: 1px solid #000;
+    border-collapse: collapse;
+  }
+
+  td,th {
+    border: 1px solid #000;
+    padding: 8px;
+  }
+
+  label{
+    font-weight: bold;
+  }
+
+  h3{
+    text-align: center;
+  }
+</style>
+
+<div class="content">
+  <h3> Relatório da pesquisa de E-NPS</h3>
+  <div>
+    <label>Pergunta realizada: </label>
+    <span>{{enps_survey.question}}</span><br/>
+    <label>E-NPS: </label>
+    <span>{{enps_survey.enps_score}}</span><br/>
+    <label>Detratores: </label>
+    <span>{{enps_survey.detractors}}</span><br/>
+    <label>Neutros: </label>
+    <span>{{enps_survey.passives}}</span><br/>
+    <label>Promotores: </label>
+    <span>{{enps_survey.promoters}}</span><br/>
+
+    <label>Data de início: </label>
+    <span>{{enps_survey.created_at_formatted}}</span><br/>
+    <label>Data de término prevista: </label>
+    <span>{{enps_survey.end_date_formatted}}</span><br/>
+    {{#if enps_survey.ended_at_formatted}}
+      <label>Data de término: </label>
+      <span>{{enps_survey.ended_at_formatted}}</span><br/>
+    {{/if}}
+    <label>Departamento: </label>
+    <span>{{enps_survey.department_name}}</span><br/>
+    <label>Cargo: </label>
+    <span>{{enps_survey.position_name}}</span><br/>
+  </div>
+
+  <hr/>
+
+  <label>Respostas individuais:</label>
+  <table class="answers">
+    <thead>
+      <th>Data</th>
+      <th>Nota</th>
+      <th>Resposta</th>
+    </thead>
+    <tbody>
+      {{#enps_answers}}
+          <tr>
+              <td>{{created_at_formatted}}</td>
+              <td>{{score}}</td>
+              <td>{{answer}}</td>
+          </tr>
+      {{/enps_answers}}
+    </tbody>
+  </table>
+</div>
