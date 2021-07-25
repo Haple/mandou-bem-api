@@ -20,15 +20,19 @@ class EnpsSurveysRepository implements IEnpsSurveysRepository {
     const enps_surveys = await this.ormRepository
       .createQueryBuilder()
       .select()
-      .where('account_id = :account_id', { account_id })
-      .where('end_date >= :end_date', { end_date: new Date() })
-      .where('ended_at IS NULL')
-      .where('department_id = :department_id OR department_id IS NULL', {
-        department_id,
-      })
-      .where('position_id = :position_id OR position_id IS NULL', {
-        position_id,
-      })
+      .where(
+        'account_id = :account_id' +
+          ' AND end_date >= :end_date' +
+          ' AND ended_at IS NULL' +
+          ' AND (department_id = :department_id OR department_id IS NULL)' +
+          ' AND (position_id = :position_id OR position_id IS NULL)',
+        {
+          account_id,
+          end_date: new Date(),
+          department_id,
+          position_id,
+        },
+      )
       .getMany();
 
     return enps_surveys;
