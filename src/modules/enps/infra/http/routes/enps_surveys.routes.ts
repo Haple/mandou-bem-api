@@ -76,6 +76,10 @@ enpsSurveysRouter.get(
     [Segments.PARAMS]: {
       enps_survey_id: Joi.string().uuid().required(),
     },
+    [Segments.QUERY]: {
+      page: Joi.number().default(0).min(0),
+      size: Joi.number().positive().default(10).min(1),
+    },
   }),
   enpsAnswersController.index,
 );

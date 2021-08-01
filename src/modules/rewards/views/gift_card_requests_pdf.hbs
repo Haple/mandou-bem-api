@@ -1,0 +1,55 @@
+<style>
+
+  .content {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+  }
+
+  .answers{
+    width: 100%;
+    text-align: left;
+    font-size: 12px;
+    border: 1px solid #000;
+    border-collapse: collapse;
+  }
+
+  td,th {
+    border: 1px solid #000;
+    padding: 8px;
+  }
+
+  label{
+    font-weight: bold;
+  }
+
+  h3{
+    text-align: center;
+  }
+</style>
+
+<div class="content">
+  <h3>Relatório de Resgates de Vales-Presente</h3>
+
+  <table class="answers">
+    <thead>
+      <th>Data</th>
+      <th>Colaborador(a)</th>
+      <th>Vale-Presente</th>
+      <th>Status</th>
+      <th>Cargo</th>
+      <th>Departamento</th>
+    </thead>
+    <tbody>
+      {{#gift_card_requests}}
+          <tr>
+              <td>{{created_at}}</td>
+              <td>{{user_name}}</td>
+              <td>{{reward_title}}</td>
+              <td>{{status}}</td>
+              <td>{{position_name}}</td>
+              <td>{{department_name}}</td>
+          </tr>
+      {{/gift_card_requests}}
+    </tbody>
+  </table>
+</div>

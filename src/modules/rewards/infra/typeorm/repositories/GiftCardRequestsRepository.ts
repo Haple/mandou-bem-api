@@ -2,6 +2,8 @@ import { getRepository, Repository } from 'typeorm';
 
 import IGiftCardRequestsRepository from '@modules/rewards/repositories/IGiftCardRequestsRepository';
 import ICreateGiftCardRequestDTO from '@modules/rewards/dtos/ICreateGiftCardRequestDTO';
+import IPaginationDTO from '@modules/rewards/dtos/IPaginationDTO';
+import { endOfDay, startOfDay } from 'date-fns';
 import GiftCardRequest from '../entities/GiftCardRequest';
 
 class GiftCardRequestsRepository implements IGiftCardRequestsRepository {
@@ -9,6 +11,77 @@ class GiftCardRequestsRepository implements IGiftCardRequestsRepository {
 
   constructor() {
     this.ormRepository = getRepository(GiftCardRequest);
+  }
+
+  public async findByAccountAndDatePaginated(
+    account_id: string,
+    startDate: Date,
+    endDate: Date,
+    page: number,
+    size: number,
+    department_id?: string,
+    position_id?: string,
+  ): Promise<IPaginationDTO<GiftCardRequest>> {
+    const [gift_card_requests, total] = await this.ormRepository
+      .createQueryBuilder('gcr')
+      .innerJoinAndSelect('gcr.user', 'user')
+      .innerJoinAndSelect('user.department', 'department')
+      .innerJoinAndSelect('user.position', 'position')
+      .innerJoinAndSelect('gcr.gift_card', 'gift_card')
+      .innerJoinAndSelect('gift_card.provider', 'provider')
+      .where(
+        'user.account_id = :account_id' +
+          ' AND gcr.created_at >= :start AND gcr.created_at < :end' +
+          ' AND (:department_id::text is null OR user.department_id = :department_id)' +
+          ' AND (:position_id::text is null OR user.position_id = :position_id)',
+        {
+          account_id,
+          start: startOfDay(startDate).toISOString(),
+          end: endOfDay(endDate).toISOString(),
+          department_id,
+          position_id,
+        },
+      )
+      .orderBy('gcr.created_at', 'DESC')
+      .skip(page * size)
+      .take(size)
+      .getManyAndCount();
+    return {
+      total,
+      result: gift_card_requests,
+    };
+  }
+
+  public async findByAccountAndDate(
+    account_id: string,
+    startDate: Date,
+    endDate: Date,
+    department_id?: string,
+    position_id?: string,
+  ): Promise<GiftCardRequest[]> {
+    const gift_card_requests = await this.ormRepository
+      .createQueryBuilder('gcr')
+      .innerJoinAndSelect('gcr.user', 'user')
+      .innerJoinAndSelect('user.department', 'department')
+      .innerJoinAndSelect('user.position', 'position')
+      .innerJoinAndSelect('gcr.gift_card', 'gift_card')
+      .innerJoinAndSelect('gift_card.provider', 'provider')
+      .where(
+        'user.account_id = :account_id' +
+          ' AND gcr.created_at >= :start AND gcr.created_at < :end' +
+          ' AND (:department_id::text is null OR user.department_id = :department_id)' +
+          ' AND (:position_id::text is null OR user.position_id = :position_id)',
+        {
+          account_id,
+          start: startOfDay(startDate).toISOString(),
+          end: endOfDay(endDate).toISOString(),
+          department_id,
+          position_id,
+        },
+      )
+      .orderBy('gcr.created_at', 'DESC')
+      .getMany();
+    return gift_card_requests;
   }
 
   public async findById(id: string): Promise<GiftCardRequest | undefined> {
