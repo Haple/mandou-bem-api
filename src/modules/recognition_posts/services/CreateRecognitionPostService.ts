@@ -3,6 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import AppError from '@shared/errors/AppError';
+import { classToClass } from 'class-transformer';
 import IRecognitionPostsRepository from '../repositories/IRecognitionPostsRepository';
 import RecognitionPost from '../infra/typeorm/schemas/RecognitionPost';
 import RemainingPointsToSendService from './RemainingPointsToSendService';
@@ -70,6 +71,8 @@ class CreateRecognitionPostService {
       to_avatar: to_user.avatar,
       content,
       recognition_points,
+      from_user: classToClass(from_user),
+      to_user: classToClass(to_user),
     });
 
     to_user.recognition_points += recognition_points;

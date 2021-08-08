@@ -1,3 +1,4 @@
+import User from '@modules/users/infra/typeorm/entities/User';
 import {
   ObjectID,
   Entity,
@@ -38,6 +39,12 @@ class RecognitionPost {
 
   @Column()
   recognition_points: number;
+
+  @Column()
+  from_user: User;
+
+  @Column()
+  to_user: User;
 
   @Column()
   comments: {

@@ -43,7 +43,13 @@ class FakeEnpsSurveyRepository implements IEnpsSurveysRepository {
 
     Object.assign(
       enps_survey,
-      { id: uuid(), promoters: 0, passives: 0, detractors: 0 },
+      {
+        id: uuid(),
+        promoters: 0,
+        passives: 0,
+        detractors: 0,
+        created_at: new Date(),
+      },
       enpsSurveyData,
     );
 

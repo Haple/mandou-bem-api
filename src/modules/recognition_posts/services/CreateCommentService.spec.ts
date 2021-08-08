@@ -1,5 +1,6 @@
 import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
+import User from '@modules/users/infra/typeorm/entities/User';
 import FakeRecognitionPostsRepository from '../repositories/fakes/FakeRecognitionPostsRepository';
 import CreateCommentService from './CreateCommentService';
 
@@ -18,6 +19,30 @@ const recognition_post_dto = {
   to_avatar: 'fake-to-avatar',
   content: 'fake-content',
   recognition_points: 30,
+  from_user: {
+    name: 'Fake Name',
+    account_id: 'fake-account-id',
+    department_id: 'fake-department-id',
+    position_id: 'fake-position-id',
+    department: {
+      department_name: 'Fake Department',
+    },
+    position: {
+      position_name: 'Fake Position',
+    },
+  } as User,
+  to_user: {
+    name: 'Fake Name 2',
+    account_id: 'fake-account-id',
+    department_id: 'fake-department-id',
+    position_id: 'fake-position-id',
+    department: {
+      department_name: 'Fake Department',
+    },
+    position: {
+      position_name: 'Fake Position',
+    },
+  } as User,
 };
 
 describe('CreateComment', () => {

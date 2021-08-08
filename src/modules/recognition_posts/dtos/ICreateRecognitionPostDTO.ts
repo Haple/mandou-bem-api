@@ -1,3 +1,5 @@
+import User from '@modules/users/infra/typeorm/entities/User';
+
 export default interface ICreateRecognitionPostDTO {
   account_id: string;
   from_user_id: string;
@@ -8,4 +10,6 @@ export default interface ICreateRecognitionPostDTO {
   to_avatar: string;
   content: string;
   recognition_points: number;
+  from_user: User;
+  to_user: User;
 }
