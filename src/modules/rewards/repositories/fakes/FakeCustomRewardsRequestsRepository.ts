@@ -10,6 +10,29 @@ class FakeCustomRewardsRequestsRepository
   implements ICustomRewardRequestsRepository {
   private custom_reward_requests: CustomRewardRequest[] = [];
 
+  public async findByUserAndDatePaginated(
+    user_id: string,
+    startDate: Date,
+    endDate: Date,
+    page: number,
+    size: number,
+  ): Promise<IPaginationDTO<CustomRewardRequest>> {
+    const indexMin = page * size;
+    const indexMax = indexMin + size;
+    const custom_reward_requests = this.custom_reward_requests.filter(
+      (crr, index) =>
+        index >= indexMin &&
+        index < indexMax &&
+        crr.user_id === user_id &&
+        isAfter(crr.created_at, startDate) &&
+        isBefore(crr.created_at, endDate),
+    );
+    return {
+      total: custom_reward_requests.length,
+      result: custom_reward_requests,
+    };
+  }
+
   public async findByAccountAndDatePaginated(
     account_id: string,
     startDate: Date,

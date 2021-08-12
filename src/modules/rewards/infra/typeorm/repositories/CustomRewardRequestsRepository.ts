@@ -14,6 +14,36 @@ class CustomRewardRequestsRepository
     this.ormRepository = getRepository(CustomRewardRequest);
   }
 
+  public async findByUserAndDatePaginated(
+    user_id: string,
+    startDate: Date,
+    endDate: Date,
+    page: number,
+    size: number,
+  ): Promise<IPaginationDTO<CustomRewardRequest>> {
+    const [reward_requests, total] = await this.ormRepository
+      .createQueryBuilder('crr')
+      .innerJoinAndSelect('crr.custom_reward', 'custom_reward')
+      .where(
+        'crr.user_id = :user_id' +
+          ' AND crr.created_at >= :start AND crr.created_at < :end',
+        {
+          user_id,
+          start: startOfDay(startDate).toISOString(),
+          end: endOfDay(endDate).toISOString(),
+        },
+      )
+      .orderBy('crr.created_at', 'DESC')
+      .skip(page * size)
+      .take(size)
+      .getManyAndCount();
+
+    return {
+      total,
+      result: reward_requests,
+    };
+  }
+
   public async findByAccountAndDatePaginated(
     account_id: string,
     startDate: Date,

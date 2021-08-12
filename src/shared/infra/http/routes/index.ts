@@ -20,6 +20,7 @@ import recognitionPostsRouter from '@modules/recognition_posts/infra/http/routes
 import recognitionRankingRouter from '@modules/recognition_posts/infra/http/routes/recognition_ranking.routes';
 import enpsSurveysRouter from '@modules/enps/infra/http/routes/enps_surveys.routes';
 import rewardRequestsReportRouter from '@modules/rewards/infra/http/routes/reward_requests_reports.routes';
+import myRewardRequestsRouter from '@modules/rewards/infra/http/routes/my_reward_requests.routes';
 
 const routes = Router();
 
@@ -44,5 +45,6 @@ routes.use('/recognition-posts', recognitionPostsRouter);
 routes.use('/recognition-ranking', recognitionRankingRouter);
 routes.use('/enps-surveys', enpsSurveysRouter);
 routes.use('/reward-requests-report', rewardRequestsReportRouter);
+routes.use('/my-reward-requests', myRewardRequestsRouter);
 
 export default routes;

@@ -12,6 +12,13 @@ export default interface ICustomRewardRequestsRepository {
     department_id?: string,
     position_id?: string,
   ): Promise<IPaginationDTO<CustomRewardRequest>>;
+  findByUserAndDatePaginated(
+    account_id: string,
+    startDate: Date,
+    endDate: Date,
+    page: number,
+    size: number,
+  ): Promise<IPaginationDTO<CustomRewardRequest>>;
   findByAccountAndDate(
     account_id: string,
     startDate: Date,

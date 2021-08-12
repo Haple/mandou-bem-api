@@ -12,6 +12,13 @@ export default interface IGiftCardRequestsRepository {
     department_id?: string,
     position_id?: string,
   ): Promise<IPaginationDTO<GiftCardRequest>>;
+  findByUserAndDatePaginated(
+    user_id: string,
+    startDate: Date,
+    endDate: Date,
+    page: number,
+    size: number,
+  ): Promise<IPaginationDTO<GiftCardRequest>>;
   findByAccountAndDate(
     account_id: string,
     startDate: Date,
