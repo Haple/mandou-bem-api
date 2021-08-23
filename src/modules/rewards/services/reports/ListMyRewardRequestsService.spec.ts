@@ -2,10 +2,12 @@ import { uuid } from 'uuidv4';
 import CustomRewardRequest from '@modules/rewards/infra/typeorm/entities/CustomRewardRequest';
 import { addDays, subDays } from 'date-fns';
 import GiftCardRequest from '@modules/rewards/infra/typeorm/entities/GiftCardRequest';
+import FakeQRCodeProvider from '@shared/container/providers/QRCodeProvider/fakes/FakeQRCodeProvider';
 import FakeGiftCardRequestsRepository from '../../repositories/fakes/FakeGiftCardRequestsRepository';
 import FakeCustomRewardsRequestsRepository from '../../repositories/fakes/FakeCustomRewardsRequestsRepository';
 import ListMyRewardRequestsService from './ListMyRewardRequestsService';
 
+let fakeQRCodeProvider: FakeQRCodeProvider;
 let fakeGiftCardRequestsRepository: FakeGiftCardRequestsRepository;
 let fakeCustomRewardsRequestsRepository: FakeCustomRewardsRequestsRepository;
 let listRewardRequests: ListMyRewardRequestsService;
@@ -63,10 +65,12 @@ const gift_card_request = {
 
 describe('ListMyRewardRequests', () => {
   beforeEach(() => {
+    fakeQRCodeProvider = new FakeQRCodeProvider();
     fakeGiftCardRequestsRepository = new FakeGiftCardRequestsRepository();
     fakeCustomRewardsRequestsRepository = new FakeCustomRewardsRequestsRepository();
 
     listRewardRequests = new ListMyRewardRequestsService(
+      fakeQRCodeProvider,
       fakeGiftCardRequestsRepository,
       fakeCustomRewardsRequestsRepository,
     );

@@ -1,6 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 
 import IPaginationDTO from '@modules/enps/dtos/IPaginationDTO';
+import IQRCodeProvider from '@shared/container/providers/QRCodeProvider/models/IQRCodeProvider';
 import IGiftCardRequestsRepository from '../../repositories/IGiftCardRequestsRepository';
 import ICustomRewardRequestsRepository from '../../repositories/ICustomRewardRequestsRepository';
 
@@ -25,6 +26,7 @@ interface IResponse {
   expire_at: Date;
   description: string;
   image_url: string;
+  qr_code: string;
   reprove_reason?: string;
 }
 
@@ -38,6 +40,8 @@ const status_format = {
 @injectable()
 class ListMyRewardRequestsService {
   constructor(
+    @inject('QRCodeProvider')
+    private qrCodeProvider: IQRCodeProvider,
     @inject('GiftCardRequestsRepository')
     private giftCardRequestsRepository: IGiftCardRequestsRepository,
     @inject('CustomRewardRequestsRepository')
@@ -89,21 +93,24 @@ class ListMyRewardRequestsService {
       size,
     );
 
-    const gift_card_requests = result.map(
-      r =>
-        ({
-          id: r.id,
-          reward_title: r.gift_card.title,
-          provider_name: r.gift_card.provider.company_name,
-          points: r.gift_card.points,
-          reward_type: 'gift_card',
-          status: status_format[r.status],
-          created_at: r.created_at,
-          updated_at: r.updated_at,
-          expire_at: r.expire_at,
-          description: r.gift_card.description,
-          image_url: r.gift_card.image_url,
-        } as IResponse),
+    const gift_card_requests = await Promise.all(
+      result.map(
+        async r =>
+          ({
+            id: r.id,
+            reward_title: r.gift_card.title,
+            provider_name: r.gift_card.provider.company_name,
+            points: r.gift_card.points,
+            reward_type: 'gift_card',
+            status: status_format[r.status],
+            created_at: r.created_at,
+            updated_at: r.updated_at,
+            expire_at: r.expire_at,
+            description: r.gift_card.description,
+            image_url: r.gift_card.image_url,
+            qr_code: (await this.qrCodeProvider.generateQRCode(r.id)).qr_code,
+          } as IResponse),
+      ),
     );
 
     return {
@@ -130,21 +137,24 @@ class ListMyRewardRequestsService {
       size,
     );
 
-    const custom_reward_requests = result.map(
-      r =>
-        ({
-          id: r.id,
-          reward_title: r.custom_reward.title,
-          provider_name: '(sua empresa)',
-          points: r.custom_reward.points,
-          reward_type: 'custom_reward',
-          status: status_format[r.status],
-          created_at: r.created_at,
-          updated_at: r.updated_at,
-          expire_at: r.expire_at,
-          image_url: r.custom_reward.image_url,
-          description: r.custom_reward.description,
-        } as IResponse),
+    const custom_reward_requests = await Promise.all(
+      result.map(
+        async r =>
+          ({
+            id: r.id,
+            reward_title: r.custom_reward.title,
+            provider_name: '(sua empresa)',
+            points: r.custom_reward.points,
+            reward_type: 'custom_reward',
+            status: status_format[r.status],
+            created_at: r.created_at,
+            updated_at: r.updated_at,
+            expire_at: r.expire_at,
+            image_url: r.custom_reward.image_url,
+            qr_code: (await this.qrCodeProvider.generateQRCode(r.id)).qr_code,
+            description: r.custom_reward.description,
+          } as IResponse),
+      ),
     );
 
     return {
