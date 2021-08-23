@@ -24,6 +24,7 @@ interface IResponse {
   updated_at: Date;
   expire_at: Date;
   description: string;
+  image_url: string;
   reprove_reason?: string;
 }
 
@@ -101,6 +102,7 @@ class ListMyRewardRequestsService {
           updated_at: r.updated_at,
           expire_at: r.expire_at,
           description: r.gift_card.description,
+          image_url: r.gift_card.image_url,
         } as IResponse),
     );
 
@@ -140,6 +142,7 @@ class ListMyRewardRequestsService {
           created_at: r.created_at,
           updated_at: r.updated_at,
           expire_at: r.expire_at,
+          image_url: r.custom_reward.image_url,
           description: r.custom_reward.description,
         } as IResponse),
     );
