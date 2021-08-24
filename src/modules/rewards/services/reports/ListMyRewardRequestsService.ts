@@ -30,13 +30,6 @@ interface IResponse {
   reprove_reason?: string;
 }
 
-const status_format = {
-  pending_approval: 'Pendente de aprovação',
-  use_available: 'Disponível para utilização',
-  used: 'Utilizado',
-  reproved: 'Recusado',
-};
-
 @injectable()
 class ListMyRewardRequestsService {
   constructor(
@@ -102,7 +95,7 @@ class ListMyRewardRequestsService {
             provider_name: r.gift_card.provider.company_name,
             points: r.gift_card.points,
             reward_type: 'gift_card',
-            status: status_format[r.status],
+            status: r.status,
             created_at: r.created_at,
             updated_at: r.updated_at,
             expire_at: r.expire_at,
@@ -146,7 +139,7 @@ class ListMyRewardRequestsService {
             provider_name: '(sua empresa)',
             points: r.custom_reward.points,
             reward_type: 'custom_reward',
-            status: status_format[r.status],
+            status: r.status,
             created_at: r.created_at,
             updated_at: r.updated_at,
             expire_at: r.expire_at,
