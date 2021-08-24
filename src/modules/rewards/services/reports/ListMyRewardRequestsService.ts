@@ -146,6 +146,7 @@ class ListMyRewardRequestsService {
             image_url: r.custom_reward.image_url,
             qr_code: (await this.qrCodeProvider.generateQRCode(r.id)).qr_code,
             description: r.custom_reward.description,
+            reprove_reason: r.reprove_reason,
           } as IResponse),
       ),
     );
