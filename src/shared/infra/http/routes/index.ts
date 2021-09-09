@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import providersRouter from '@modules/provider_accounts/infra/http/routes/providers.routes';
 import providerAccountsRouter from '@modules/provider_accounts/infra/http/routes/provider_accounts.routes';
 import accountsRouter from '@modules/users/infra/http/routes/accounts.routes';
 import usersRouter from '@modules/users/infra/http/routes/users.routes';
@@ -24,6 +25,7 @@ import myRewardRequestsRouter from '@modules/rewards/infra/http/routes/my_reward
 
 const routes = Router();
 
+routes.use('/providers', providersRouter);
 routes.use('/provider/accounts', providerAccountsRouter);
 routes.use('/provider/sessions', providerSessionsRouter);
 routes.use('/accounts', accountsRouter);

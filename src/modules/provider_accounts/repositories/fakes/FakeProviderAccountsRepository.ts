@@ -7,6 +7,10 @@ import IProviderAccountsRepository from '../IProviderAccountsRepository';
 class FakeProviderAccountsRepository implements IProviderAccountsRepository {
   private providers: ProviderAccount[] = [];
 
+  public async findAll(): Promise<ProviderAccount[]> {
+    return this.providers;
+  }
+
   public async findByEmail(
     email: string,
   ): Promise<ProviderAccount | undefined> {

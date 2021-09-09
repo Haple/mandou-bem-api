@@ -11,6 +11,12 @@ class ProviderAccountsRepository implements IProviderAccountsRepository {
     this.ormRepository = getRepository(ProviderAccount);
   }
 
+  public async findAll(): Promise<ProviderAccount[]> {
+    const providers = await this.ormRepository.find();
+
+    return providers;
+  }
+
   public async findByEmail(
     email: string,
   ): Promise<ProviderAccount | undefined> {
