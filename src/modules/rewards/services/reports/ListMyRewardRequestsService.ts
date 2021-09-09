@@ -12,6 +12,7 @@ interface IRequest {
   end_date: Date;
   page: number;
   size: number;
+  status?: string;
 }
 
 interface IResponse {
@@ -48,6 +49,7 @@ class ListMyRewardRequestsService {
     end_date,
     page,
     size,
+    status,
   }: IRequest): Promise<IPaginationDTO<IResponse>> {
     if (reward_type === 'gift_card') {
       return this.getGiftCardRequests({
@@ -56,6 +58,7 @@ class ListMyRewardRequestsService {
         end_date,
         page,
         size,
+        status,
       });
     }
 
@@ -65,6 +68,7 @@ class ListMyRewardRequestsService {
       end_date,
       page,
       size,
+      status,
     });
   }
 
@@ -74,6 +78,7 @@ class ListMyRewardRequestsService {
     end_date,
     page,
     size,
+    status,
   }: Omit<IRequest, 'reward_type'>): Promise<IPaginationDTO<IResponse>> {
     const {
       result,
@@ -84,6 +89,7 @@ class ListMyRewardRequestsService {
       end_date,
       page,
       size,
+      status,
     );
 
     const gift_card_requests = await Promise.all(
@@ -118,6 +124,7 @@ class ListMyRewardRequestsService {
     end_date,
     page,
     size,
+    status,
   }: Omit<IRequest, 'reward_type'>): Promise<IPaginationDTO<IResponse>> {
     const {
       result,
@@ -128,6 +135,7 @@ class ListMyRewardRequestsService {
       end_date,
       page,
       size,
+      status,
     );
 
     const custom_reward_requests = await Promise.all(

@@ -13,6 +13,8 @@ interface IRequest {
   end_date: Date;
   department_id?: string;
   position_id?: string;
+  provider_id?: string;
+  status?: string;
 }
 
 interface IResponse {
@@ -53,6 +55,8 @@ class RewardRequestsToPDFService {
     end_date,
     department_id,
     position_id,
+    provider_id,
+    status,
   }: IRequest): Promise<Buffer> {
     if (reward_type === 'gift_card') {
       const gift_card_requests = await this.getGiftCardRequests({
@@ -61,6 +65,8 @@ class RewardRequestsToPDFService {
         end_date,
         department_id,
         position_id,
+        provider_id,
+        status,
       });
 
       const gift_card_template = path.resolve(
@@ -87,6 +93,7 @@ class RewardRequestsToPDFService {
       end_date,
       department_id,
       position_id,
+      status,
     });
 
     const custom_reward_template = path.resolve(
@@ -113,14 +120,17 @@ class RewardRequestsToPDFService {
     end_date,
     department_id,
     position_id,
+    provider_id,
+    status,
   }: Omit<IRequest, 'reward_type'>): Promise<IResponse[]> {
     const result = await this.giftCardRequestsRepository.findByAccountAndDate(
       account_id,
       start_date,
       end_date,
-
       department_id,
       position_id,
+      provider_id,
+      status,
     );
 
     return result.map(
@@ -144,9 +154,9 @@ class RewardRequestsToPDFService {
     account_id,
     start_date,
     end_date,
-
     department_id,
     position_id,
+    status,
   }: Omit<IRequest, 'reward_type'>): Promise<IResponse[]> {
     const result = await this.customRewardRequestsRepository.findByAccountAndDate(
       account_id,
@@ -154,6 +164,7 @@ class RewardRequestsToPDFService {
       end_date,
       department_id,
       position_id,
+      status,
     );
 
     return result.map(

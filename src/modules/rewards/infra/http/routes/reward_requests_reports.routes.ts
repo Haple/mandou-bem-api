@@ -26,6 +26,10 @@ rewardRequestsReportRouter.get(
       size: Joi.number().positive().default(10).min(1),
       position_id: Joi.string().uuid().allow(null),
       department_id: Joi.string().uuid().allow(null),
+      provider_id: Joi.string().uuid().allow(null),
+      status: Joi.string()
+        .valid('pending_approval', 'use_available', 'used', 'reproved')
+        .allow(null),
     },
   }),
   rewardRequestsReportController.index,
@@ -43,6 +47,10 @@ rewardRequestsReportRouter.get(
         .required(),
       position_id: Joi.string().uuid().allow(null),
       department_id: Joi.string().uuid().allow(null),
+      provider_id: Joi.string().uuid().allow(null),
+      status: Joi.string()
+        .valid('pending_approval', 'use_available', 'used', 'reproved')
+        .allow(null),
     },
   }),
   rewardRequestsReportController.downloadPDF,

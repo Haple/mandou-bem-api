@@ -13,6 +13,7 @@ export default class RewardRequestsReportController {
     const end_date = (request.query.end_date as unknown) as Date;
     const page = (request.query.page as unknown) as number;
     const size = (request.query.size as unknown) as number;
+    const status = (request.query.status as unknown) as string;
 
     const listMyRewardRequests = container.resolve(ListMyRewardRequestsService);
 
@@ -23,6 +24,7 @@ export default class RewardRequestsReportController {
       end_date,
       page,
       size,
+      status,
     });
 
     return response.json(classToClass(my_reward_requests));

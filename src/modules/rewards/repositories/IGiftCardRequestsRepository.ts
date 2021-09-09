@@ -11,6 +11,8 @@ export default interface IGiftCardRequestsRepository {
     size: number,
     department_id?: string,
     position_id?: string,
+    provider_id?: string,
+    status?: string,
   ): Promise<IPaginationDTO<GiftCardRequest>>;
   findByUserAndDatePaginated(
     user_id: string,
@@ -18,6 +20,7 @@ export default interface IGiftCardRequestsRepository {
     endDate: Date,
     page: number,
     size: number,
+    status?: string,
   ): Promise<IPaginationDTO<GiftCardRequest>>;
   findByAccountAndDate(
     account_id: string,
@@ -25,6 +28,8 @@ export default interface IGiftCardRequestsRepository {
     endDate: Date,
     department_id?: string,
     position_id?: string,
+    provider_id?: string,
+    status?: string,
   ): Promise<GiftCardRequest[]>;
   findById(id: string): Promise<GiftCardRequest | undefined>;
   create(data: ICreateGiftCardRequestDTO): Promise<GiftCardRequest>;

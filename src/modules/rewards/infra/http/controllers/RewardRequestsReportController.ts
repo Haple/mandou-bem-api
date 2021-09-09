@@ -16,6 +16,8 @@ export default class RewardRequestsReportController {
     const size = (request.query.size as unknown) as number;
     const department_id = (request.query.department_id as unknown) as string;
     const position_id = (request.query.position_id as unknown) as string;
+    const provider_id = (request.query.provider_id as unknown) as string;
+    const status = (request.query.status as unknown) as string;
 
     const listRewardRequests = container.resolve(ListRewardRequestsService);
 
@@ -28,6 +30,8 @@ export default class RewardRequestsReportController {
       size,
       department_id,
       position_id,
+      provider_id,
+      status,
     });
 
     return response.json(classToClass(custom_rewards));
@@ -45,6 +49,8 @@ export default class RewardRequestsReportController {
     const end_date = (request.query.end_date as unknown) as Date;
     const department_id = (request.query.department_id as unknown) as string;
     const position_id = (request.query.position_id as unknown) as string;
+    const provider_id = (request.query.provider_id as unknown) as string;
+    const status = (request.query.status as unknown) as string;
 
     const rewardRequestsToPDF = container.resolve(RewardRequestsToPDFService);
 
@@ -55,6 +61,8 @@ export default class RewardRequestsReportController {
       end_date,
       department_id,
       position_id,
+      provider_id,
+      status,
     });
 
     response.set({

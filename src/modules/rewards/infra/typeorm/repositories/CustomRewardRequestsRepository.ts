@@ -20,17 +20,20 @@ class CustomRewardRequestsRepository
     endDate: Date,
     page: number,
     size: number,
+    status?: string,
   ): Promise<IPaginationDTO<CustomRewardRequest>> {
     const [reward_requests, total] = await this.ormRepository
       .createQueryBuilder('crr')
       .innerJoinAndSelect('crr.custom_reward', 'custom_reward')
       .where(
         'crr.user_id = :user_id' +
-          ' AND crr.created_at >= :start AND crr.created_at < :end',
+          ' AND crr.created_at >= :start AND crr.created_at < :end' +
+          ' AND (:status::text is null OR crr.status = :status)',
         {
           user_id,
           start: startOfDay(startDate).toISOString(),
           end: endOfDay(endDate).toISOString(),
+          status,
         },
       )
       .orderBy('crr.created_at', 'DESC')
@@ -52,6 +55,7 @@ class CustomRewardRequestsRepository
     size: number,
     department_id?: string,
     position_id?: string,
+    status?: string,
   ): Promise<IPaginationDTO<CustomRewardRequest>> {
     const [reward_requests, total] = await this.ormRepository
       .createQueryBuilder('crr')
@@ -63,13 +67,15 @@ class CustomRewardRequestsRepository
         'crr.account_id = :account_id' +
           ' AND crr.created_at >= :start AND crr.created_at < :end' +
           ' AND (:department_id::text is null OR user.department_id = :department_id)' +
-          ' AND (:position_id::text is null OR user.position_id = :position_id)',
+          ' AND (:position_id::text is null OR user.position_id = :position_id)' +
+          ' AND (:status::text is null OR crr.status = :status)',
         {
           account_id,
           start: startOfDay(startDate).toISOString(),
           end: endOfDay(endDate).toISOString(),
           department_id,
           position_id,
+          status,
         },
       )
       .orderBy('crr.created_at', 'DESC')
@@ -89,6 +95,7 @@ class CustomRewardRequestsRepository
     endDate: Date,
     department_id?: string,
     position_id?: string,
+    status?: string,
   ): Promise<CustomRewardRequest[]> {
     const reward_requests = await this.ormRepository
       .createQueryBuilder('crr')
@@ -100,13 +107,15 @@ class CustomRewardRequestsRepository
         'crr.account_id = :account_id' +
           ' AND crr.created_at >= :start AND crr.created_at < :end' +
           ' AND (:department_id::text is null OR user.department_id = :department_id)' +
-          ' AND (:position_id::text is null OR user.position_id = :position_id)',
+          ' AND (:position_id::text is null OR user.position_id = :position_id)' +
+          ' AND (:status::text is null OR crr.status = :status)',
         {
           account_id,
           start: startOfDay(startDate).toISOString(),
           end: endOfDay(endDate).toISOString(),
           department_id,
           position_id,
+          status,
         },
       )
       .orderBy('crr.created_at', 'DESC')

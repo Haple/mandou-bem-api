@@ -15,6 +15,7 @@ class FakeGiftCardRequestsRepository implements IGiftCardRequestsRepository {
     endDate: Date,
     page: number,
     size: number,
+    status?: string,
   ): Promise<IPaginationDTO<GiftCardRequest>> {
     const indexMin = page * size;
     const indexMax = indexMin + size;
@@ -24,7 +25,8 @@ class FakeGiftCardRequestsRepository implements IGiftCardRequestsRepository {
         index < indexMax &&
         crr.user_id === user_id &&
         isAfter(crr.created_at, startDate) &&
-        isBefore(crr.created_at, endDate),
+        isBefore(crr.created_at, endDate) &&
+        (status ? crr.status === status : true),
     );
     return {
       total: custom_reward_requests.length,
@@ -40,6 +42,8 @@ class FakeGiftCardRequestsRepository implements IGiftCardRequestsRepository {
     size: number,
     department_id?: string,
     position_id?: string,
+    provider_id?: string,
+    status?: string,
   ): Promise<IPaginationDTO<GiftCardRequest>> {
     const indexMin = page * size;
     const indexMax = indexMin + size;
@@ -51,7 +55,9 @@ class FakeGiftCardRequestsRepository implements IGiftCardRequestsRepository {
         isAfter(crr.created_at, startDate) &&
         isBefore(crr.created_at, endDate) &&
         (department_id ? crr.user.department_id === department_id : true) &&
-        (position_id ? crr.user.position_id === position_id : true),
+        (position_id ? crr.user.position_id === position_id : true) &&
+        (provider_id ? crr.gift_card.provider_id === provider_id : true) &&
+        (status ? crr.status === status : true),
     );
     return {
       total: custom_reward_requests.length,
@@ -65,6 +71,8 @@ class FakeGiftCardRequestsRepository implements IGiftCardRequestsRepository {
     endDate: Date,
     department_id?: string,
     position_id?: string,
+    provider_id?: string,
+    status?: string,
   ): Promise<GiftCardRequest[]> {
     const custom_reward_requests = this.gift_card_requests.filter(
       crr =>
@@ -72,7 +80,9 @@ class FakeGiftCardRequestsRepository implements IGiftCardRequestsRepository {
         isAfter(crr.created_at, startDate) &&
         isBefore(crr.created_at, endDate) &&
         (department_id ? crr.user.department_id === department_id : true) &&
-        (position_id ? crr.user.position_id === position_id : true),
+        (position_id ? crr.user.position_id === position_id : true) &&
+        (provider_id ? crr.gift_card.provider_id === provider_id : true) &&
+        (status ? crr.status === status : true),
     );
     return custom_reward_requests;
   }

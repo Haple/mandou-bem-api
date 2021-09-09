@@ -22,6 +22,9 @@ myRewardRequestsRouter.get(
         .required(),
       page: Joi.number().default(0).min(0),
       size: Joi.number().positive().default(10).min(1),
+      status: Joi.string()
+        .valid('pending_approval', 'use_available', 'used', 'reproved')
+        .allow(null),
     },
   }),
   myRewardRequestsController.index,

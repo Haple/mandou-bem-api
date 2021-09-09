@@ -13,6 +13,8 @@ interface IRequest {
   size: number;
   department_id?: string;
   position_id?: string;
+  provider_id?: string;
+  status?: string;
 }
 
 interface IResponse {
@@ -46,6 +48,8 @@ class ListRewardRequestsService {
     size,
     department_id,
     position_id,
+    provider_id,
+    status,
   }: IRequest): Promise<IPaginationDTO<IResponse>> {
     if (reward_type === 'gift_card') {
       return this.getGiftCardRequests({
@@ -56,6 +60,8 @@ class ListRewardRequestsService {
         size,
         department_id,
         position_id,
+        provider_id,
+        status,
       });
     }
 
@@ -67,6 +73,7 @@ class ListRewardRequestsService {
       size,
       department_id,
       position_id,
+      status,
     });
   }
 
@@ -78,6 +85,8 @@ class ListRewardRequestsService {
     size,
     department_id,
     position_id,
+    provider_id,
+    status,
   }: Omit<IRequest, 'reward_type'>): Promise<IPaginationDTO<IResponse>> {
     const {
       result,
@@ -90,6 +99,8 @@ class ListRewardRequestsService {
       size,
       department_id,
       position_id,
+      provider_id,
+      status,
     );
 
     const gift_card_requests = result.map(
@@ -122,6 +133,7 @@ class ListRewardRequestsService {
     size,
     department_id,
     position_id,
+    status,
   }: Omit<IRequest, 'reward_type'>): Promise<IPaginationDTO<IResponse>> {
     const {
       result,
@@ -134,6 +146,7 @@ class ListRewardRequestsService {
       size,
       department_id,
       position_id,
+      status,
     );
 
     const custom_reward_requests = result.map(

@@ -19,6 +19,7 @@ class GiftCardRequestsRepository implements IGiftCardRequestsRepository {
     endDate: Date,
     page: number,
     size: number,
+    status?: string,
   ): Promise<IPaginationDTO<GiftCardRequest>> {
     const [gift_card_requests, total] = await this.ormRepository
       .createQueryBuilder('gcr')
@@ -26,11 +27,13 @@ class GiftCardRequestsRepository implements IGiftCardRequestsRepository {
       .innerJoinAndSelect('gift_card.provider', 'provider')
       .where(
         'gcr.user_id = :user_id' +
-          ' AND gcr.created_at >= :start AND gcr.created_at < :end',
+          ' AND gcr.created_at >= :start AND gcr.created_at < :end' +
+          ' AND (:status::text is null OR gcr.status = :status)',
         {
           user_id,
           start: startOfDay(startDate).toISOString(),
           end: endOfDay(endDate).toISOString(),
+          status,
         },
       )
       .orderBy('gcr.created_at', 'DESC')
@@ -51,6 +54,8 @@ class GiftCardRequestsRepository implements IGiftCardRequestsRepository {
     size: number,
     department_id?: string,
     position_id?: string,
+    provider_id?: string,
+    status?: string,
   ): Promise<IPaginationDTO<GiftCardRequest>> {
     const [gift_card_requests, total] = await this.ormRepository
       .createQueryBuilder('gcr')
@@ -63,13 +68,17 @@ class GiftCardRequestsRepository implements IGiftCardRequestsRepository {
         'user.account_id = :account_id' +
           ' AND gcr.created_at >= :start AND gcr.created_at < :end' +
           ' AND (:department_id::text is null OR user.department_id = :department_id)' +
-          ' AND (:position_id::text is null OR user.position_id = :position_id)',
+          ' AND (:position_id::text is null OR user.position_id = :position_id)' +
+          ' AND (:provider_id::text is null OR gift_card.provider_id = :provider_id)' +
+          ' AND (:status::text is null OR gcr.status = :status)',
         {
           account_id,
           start: startOfDay(startDate).toISOString(),
           end: endOfDay(endDate).toISOString(),
           department_id,
           position_id,
+          provider_id,
+          status,
         },
       )
       .orderBy('gcr.created_at', 'DESC')
@@ -88,6 +97,8 @@ class GiftCardRequestsRepository implements IGiftCardRequestsRepository {
     endDate: Date,
     department_id?: string,
     position_id?: string,
+    provider_id?: string,
+    status?: string,
   ): Promise<GiftCardRequest[]> {
     const gift_card_requests = await this.ormRepository
       .createQueryBuilder('gcr')
@@ -100,13 +111,17 @@ class GiftCardRequestsRepository implements IGiftCardRequestsRepository {
         'user.account_id = :account_id' +
           ' AND gcr.created_at >= :start AND gcr.created_at < :end' +
           ' AND (:department_id::text is null OR user.department_id = :department_id)' +
-          ' AND (:position_id::text is null OR user.position_id = :position_id)',
+          ' AND (:position_id::text is null OR user.position_id = :position_id)' +
+          ' AND (:provider_id::text is null OR gift_card.provider_id = :provider_id)' +
+          ' AND (:status::text is null OR gcr.status = :status)',
         {
           account_id,
           start: startOfDay(startDate).toISOString(),
           end: endOfDay(endDate).toISOString(),
           department_id,
           position_id,
+          provider_id,
+          status,
         },
       )
       .orderBy('gcr.created_at', 'DESC')

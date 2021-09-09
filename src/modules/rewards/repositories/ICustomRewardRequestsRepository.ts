@@ -11,6 +11,7 @@ export default interface ICustomRewardRequestsRepository {
     size: number,
     department_id?: string,
     position_id?: string,
+    status?: string,
   ): Promise<IPaginationDTO<CustomRewardRequest>>;
   findByUserAndDatePaginated(
     account_id: string,
@@ -18,6 +19,7 @@ export default interface ICustomRewardRequestsRepository {
     endDate: Date,
     page: number,
     size: number,
+    status?: string,
   ): Promise<IPaginationDTO<CustomRewardRequest>>;
   findByAccountAndDate(
     account_id: string,
@@ -25,6 +27,7 @@ export default interface ICustomRewardRequestsRepository {
     endDate: Date,
     department_id?: string,
     position_id?: string,
+    status?: string,
   ): Promise<CustomRewardRequest[]>;
   findAllFromAccount(account_id: string): Promise<CustomRewardRequest[]>;
   findById(id: string): Promise<CustomRewardRequest | undefined>;

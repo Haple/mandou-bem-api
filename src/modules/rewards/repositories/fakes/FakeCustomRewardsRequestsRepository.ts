@@ -16,6 +16,7 @@ class FakeCustomRewardsRequestsRepository
     endDate: Date,
     page: number,
     size: number,
+    status?: string,
   ): Promise<IPaginationDTO<CustomRewardRequest>> {
     const indexMin = page * size;
     const indexMax = indexMin + size;
@@ -25,7 +26,8 @@ class FakeCustomRewardsRequestsRepository
         index < indexMax &&
         crr.user_id === user_id &&
         isAfter(crr.created_at, startDate) &&
-        isBefore(crr.created_at, endDate),
+        isBefore(crr.created_at, endDate) &&
+        (status ? crr.status === status : true),
     );
     return {
       total: custom_reward_requests.length,
@@ -41,6 +43,7 @@ class FakeCustomRewardsRequestsRepository
     size: number,
     department_id?: string,
     position_id?: string,
+    status?: string,
   ): Promise<IPaginationDTO<CustomRewardRequest>> {
     const indexMin = page * size;
     const indexMax = indexMin + size;
@@ -52,7 +55,8 @@ class FakeCustomRewardsRequestsRepository
         isAfter(crr.created_at, startDate) &&
         isBefore(crr.created_at, endDate) &&
         (department_id ? crr.user.department_id === department_id : true) &&
-        (position_id ? crr.user.position_id === position_id : true),
+        (position_id ? crr.user.position_id === position_id : true) &&
+        (status ? crr.status === status : true),
     );
     return {
       total: custom_reward_requests.length,
@@ -66,6 +70,7 @@ class FakeCustomRewardsRequestsRepository
     endDate: Date,
     department_id?: string,
     position_id?: string,
+    status?: string,
   ): Promise<CustomRewardRequest[]> {
     const custom_reward_requests = this.custom_reward_requests.filter(
       crr =>
@@ -73,7 +78,8 @@ class FakeCustomRewardsRequestsRepository
         isAfter(crr.created_at, startDate) &&
         isBefore(crr.created_at, endDate) &&
         (department_id ? crr.user.department_id === department_id : true) &&
-        (position_id ? crr.user.position_id === position_id : true),
+        (position_id ? crr.user.position_id === position_id : true) &&
+        (status ? crr.status === status : true),
     );
     return custom_reward_requests;
   }
