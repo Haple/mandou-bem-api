@@ -1,8 +1,8 @@
 import { injectable, inject } from 'tsyringe';
 
 import IPaginationDTO from '@modules/enps/dtos/IPaginationDTO';
-import IGiftCardRequestsRepository from '../../repositories/IGiftCardRequestsRepository';
-import ICustomRewardRequestsRepository from '../../repositories/ICustomRewardRequestsRepository';
+import IGiftCardRequestsRepository from '../../../repositories/IGiftCardRequestsRepository';
+import ICustomRewardRequestsRepository from '../../../repositories/ICustomRewardRequestsRepository';
 
 interface IRequest {
   reward_type: 'gift_card' | 'custom_reward';

@@ -2,15 +2,16 @@ import { uuid } from 'uuidv4';
 import CustomRewardRequest from '@modules/rewards/infra/typeorm/entities/CustomRewardRequest';
 import { addDays, subDays } from 'date-fns';
 import GiftCardRequest from '@modules/rewards/infra/typeorm/entities/GiftCardRequest';
-import FakeQRCodeProvider from '@shared/container/providers/QRCodeProvider/fakes/FakeQRCodeProvider';
-import FakeGiftCardRequestsRepository from '../../repositories/fakes/FakeGiftCardRequestsRepository';
-import FakeCustomRewardsRequestsRepository from '../../repositories/fakes/FakeCustomRewardsRequestsRepository';
-import ListMyRewardRequestsService from './ListMyRewardRequestsService';
+import FakePDFProvider from '@shared/container/providers/PDFProvider/fakes/FakePDFProvider';
+import FakeGiftCardRequestsRepository from '../../../repositories/fakes/FakeGiftCardRequestsRepository';
+import FakeCustomRewardsRequestsRepository from '../../../repositories/fakes/FakeCustomRewardsRequestsRepository';
+import RewardRequestsToPDFService from './RewardRequestsToPDFService';
 
-let fakeQRCodeProvider: FakeQRCodeProvider;
 let fakeGiftCardRequestsRepository: FakeGiftCardRequestsRepository;
 let fakeCustomRewardsRequestsRepository: FakeCustomRewardsRequestsRepository;
-let listRewardRequests: ListMyRewardRequestsService;
+let fakePDFProvider: FakePDFProvider;
+
+let rewardRequestsToPDF: RewardRequestsToPDFService;
 
 const custom_reward_request = {
   id: uuid(),
@@ -63,56 +64,46 @@ const gift_card_request = {
   updated_at: new Date(),
 } as GiftCardRequest;
 
-describe('ListMyRewardRequests', () => {
+describe('RewardRequestsToPDF', () => {
   beforeEach(() => {
-    fakeQRCodeProvider = new FakeQRCodeProvider();
     fakeGiftCardRequestsRepository = new FakeGiftCardRequestsRepository();
     fakeCustomRewardsRequestsRepository = new FakeCustomRewardsRequestsRepository();
+    fakePDFProvider = new FakePDFProvider();
 
-    listRewardRequests = new ListMyRewardRequestsService(
-      fakeQRCodeProvider,
+    rewardRequestsToPDF = new RewardRequestsToPDFService(
       fakeGiftCardRequestsRepository,
       fakeCustomRewardsRequestsRepository,
+      fakePDFProvider,
     );
   });
 
-  it('should be able to list my custom reward requests', async () => {
+  it('should be able to generate custom reward requests PDF', async () => {
     await fakeCustomRewardsRequestsRepository.save(custom_reward_request);
-    await fakeCustomRewardsRequestsRepository.save({
-      ...custom_reward_request,
-      id: uuid(),
-      user_id: 'another-user-id',
-    });
 
-    const rewards = await listRewardRequests.execute({
+    const rewards = await rewardRequestsToPDF.execute({
       reward_type: 'custom_reward',
-      user_id: custom_reward_request.user_id,
+      account_id: custom_reward_request.account_id,
       start_date: subDays(new Date(), 1),
       end_date: addDays(new Date(), 1),
-      page: 0,
-      size: 2,
+      department_id: custom_reward_request.user.department_id,
+      position_id: custom_reward_request.user.position_id,
     });
 
-    expect(rewards.total).toBe(1);
+    expect(rewards).toBeTruthy();
   });
 
-  it('should be able to list my gift card requests', async () => {
+  it('should be able to genrate gift card requests PDF', async () => {
     await fakeGiftCardRequestsRepository.save(gift_card_request);
-    await fakeGiftCardRequestsRepository.save({
-      ...gift_card_request,
-      id: uuid(),
-      user_id: 'another-user-id',
-    });
 
-    const rewards = await listRewardRequests.execute({
+    const rewards = await rewardRequestsToPDF.execute({
       reward_type: 'gift_card',
-      user_id: gift_card_request.user_id,
+      account_id: gift_card_request.user.account_id,
       start_date: subDays(new Date(), 1),
       end_date: addDays(new Date(), 1),
-      page: 0,
-      size: 2,
+      department_id: gift_card_request.user.department_id,
+      position_id: gift_card_request.user.position_id,
     });
 
-    expect(rewards.total).toBe(1);
+    expect(rewards).toBeTruthy();
   });
 });

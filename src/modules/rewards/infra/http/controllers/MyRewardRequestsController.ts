@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
-import ListMyRewardRequestsService from '@modules/rewards/services/reports/ListMyRewardRequestsService';
+import ListMyRewardRequestsService from '@modules/rewards/services/reports/user/ListMyRewardRequestsService';
 
 export default class RewardRequestsReportController {
   public async index(request: Request, response: Response): Promise<Response> {

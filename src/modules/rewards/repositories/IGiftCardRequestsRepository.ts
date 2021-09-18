@@ -3,6 +3,23 @@ import ICreateGiftCardRequestDTO from '../dtos/ICreateGiftCardRequestDTO';
 import IPaginationDTO from '../dtos/IPaginationDTO';
 
 export default interface IGiftCardRequestsRepository {
+  findByProviderAndDatePaginated(
+    provider_id: string,
+    startDate: Date,
+    endDate: Date,
+    page: number,
+    size: number,
+    gift_card_id?: string,
+    status?: string,
+  ): Promise<IPaginationDTO<GiftCardRequest>>;
+  findByProviderAndDate(
+    provider_id: string,
+    startDate: Date,
+    endDate: Date,
+    gift_card_id?: string,
+    status?: string,
+  ): Promise<GiftCardRequest[]>;
+
   findByAccountAndDatePaginated(
     account_id: string,
     startDate: Date,

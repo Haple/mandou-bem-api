@@ -3,8 +3,8 @@ import { injectable, inject } from 'tsyringe';
 import path from 'path';
 import IPDFProvider from '@shared/container/providers/PDFProvider/models/IPDFProvider';
 import { format } from 'date-fns';
-import IGiftCardRequestsRepository from '../../repositories/IGiftCardRequestsRepository';
-import ICustomRewardRequestsRepository from '../../repositories/ICustomRewardRequestsRepository';
+import IGiftCardRequestsRepository from '../../../repositories/IGiftCardRequestsRepository';
+import ICustomRewardRequestsRepository from '../../../repositories/ICustomRewardRequestsRepository';
 
 interface IRequest {
   reward_type: 'gift_card' | 'custom_reward';
@@ -98,6 +98,7 @@ class RewardRequestsToPDFService {
 
     const custom_reward_template = path.resolve(
       __dirname,
+      '..',
       '..',
       '..',
       'views',

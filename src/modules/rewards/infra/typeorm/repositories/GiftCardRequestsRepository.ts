@@ -13,6 +13,73 @@ class GiftCardRequestsRepository implements IGiftCardRequestsRepository {
     this.ormRepository = getRepository(GiftCardRequest);
   }
 
+  public async findByProviderAndDate(
+    provider_id: string,
+    startDate: Date,
+    endDate: Date,
+    gift_card_id?: string,
+    status?: string,
+  ): Promise<GiftCardRequest[]> {
+    const gift_card_requests = await this.ormRepository
+      .createQueryBuilder('gcr')
+      .innerJoinAndSelect('gcr.user', 'user')
+      .innerJoinAndSelect('gcr.gift_card', 'gift_card')
+      .innerJoinAndSelect('gift_card.provider', 'provider')
+      .where(
+        'gift_card.provider_id = :provider_id' +
+          ' AND gcr.created_at >= :start AND gcr.created_at < :end' +
+          ' AND (:gift_card_id::text is null OR gcr.gift_card_id = :gift_card_id)' +
+          ' AND (:status::text is null OR gcr.status = :status)',
+        {
+          provider_id,
+          start: startOfDay(startDate).toISOString(),
+          end: endOfDay(endDate).toISOString(),
+          gift_card_id,
+          status,
+        },
+      )
+      .orderBy('gcr.created_at', 'DESC')
+      .getMany();
+    return gift_card_requests;
+  }
+
+  public async findByProviderAndDatePaginated(
+    provider_id: string,
+    startDate: Date,
+    endDate: Date,
+    page: number,
+    size: number,
+    gift_card_id?: string,
+    status?: string,
+  ): Promise<IPaginationDTO<GiftCardRequest>> {
+    const [gift_card_requests, total] = await this.ormRepository
+      .createQueryBuilder('gcr')
+      .innerJoinAndSelect('gcr.user', 'user')
+      .innerJoinAndSelect('gcr.gift_card', 'gift_card')
+      .innerJoinAndSelect('gift_card.provider', 'provider')
+      .where(
+        'gift_card.provider_id = :provider_id' +
+          ' AND gcr.created_at >= :start AND gcr.created_at < :end' +
+          ' AND (:gift_card_id::text is null OR gcr.gift_card_id = :gift_card_id)' +
+          ' AND (:status::text is null OR gcr.status = :status)',
+        {
+          provider_id,
+          start: startOfDay(startDate).toISOString(),
+          end: endOfDay(endDate).toISOString(),
+          gift_card_id,
+          status,
+        },
+      )
+      .orderBy('gcr.created_at', 'DESC')
+      .skip(page * size)
+      .take(size)
+      .getManyAndCount();
+    return {
+      total,
+      result: gift_card_requests,
+    };
+  }
+
   public async findByUserAndDatePaginated(
     user_id: string,
     startDate: Date,
