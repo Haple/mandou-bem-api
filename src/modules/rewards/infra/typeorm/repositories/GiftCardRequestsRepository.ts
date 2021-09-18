@@ -4,6 +4,8 @@ import IGiftCardRequestsRepository from '@modules/rewards/repositories/IGiftCard
 import ICreateGiftCardRequestDTO from '@modules/rewards/dtos/ICreateGiftCardRequestDTO';
 import IPaginationDTO from '@modules/rewards/dtos/IPaginationDTO';
 import { endOfDay, startOfDay } from 'date-fns';
+import ICountByWeekDTO from '@modules/rewards/dtos/ICountByWeekDTO';
+import ICountByGiftCardDTO from '@modules/rewards/dtos/ICountByGiftCardDTO';
 import GiftCardRequest from '../entities/GiftCardRequest';
 
 class GiftCardRequestsRepository implements IGiftCardRequestsRepository {
@@ -11,6 +13,64 @@ class GiftCardRequestsRepository implements IGiftCardRequestsRepository {
 
   constructor() {
     this.ormRepository = getRepository(GiftCardRequest);
+  }
+
+  public async countWeeklyRequests(
+    provider_id: string,
+  ): Promise<ICountByWeekDTO[]> {
+    const result = await this.ormRepository
+      .createQueryBuilder('gcr')
+      .select('count(*)', 'count')
+      .addSelect("date_trunc('week', gcr.created_at)", 'week_date')
+      .innerJoinAndSelect('gcr.gift_card', 'gift_card')
+      .where(
+        'gift_card.provider_id = :provider_id' +
+          " AND gcr.created_at >= current_date - interval '30' day",
+        { provider_id },
+      )
+      .groupBy('week_date')
+      .addGroupBy('gift_card.id')
+      .getRawMany();
+    return result;
+  }
+
+  public async countWeeklyValidations(
+    provider_id: string,
+  ): Promise<ICountByWeekDTO[]> {
+    const result = await this.ormRepository
+      .createQueryBuilder('gcr')
+      .select('count(*)', 'count')
+      .addSelect("date_trunc('week', gcr.updated_at)", 'week_date')
+      .innerJoinAndSelect('gcr.gift_card', 'gift_card')
+      .where(
+        'gift_card.provider_id = :provider_id' +
+          " AND gcr.updated_at >= current_date - interval '30' day" +
+          " AND gcr.status = 'used'",
+        { provider_id },
+      )
+      .groupBy('week_date')
+      .addGroupBy('gift_card.id')
+      .getRawMany();
+    return result;
+  }
+
+  public async countLastGiftCardRequests(
+    provider_id: string,
+  ): Promise<ICountByGiftCardDTO[]> {
+    const result = await this.ormRepository
+      .createQueryBuilder('gcr')
+      .select('count(*)', 'count')
+      .addSelect('gift_card.title', 'title')
+      .innerJoinAndSelect('gcr.gift_card', 'gift_card')
+      .where(
+        'gift_card.provider_id = :provider_id' +
+          " AND gcr.created_at >= current_date - interval '30' day",
+        { provider_id },
+      )
+      .groupBy('title')
+      .addGroupBy('gift_card.id')
+      .getRawMany();
+    return result;
   }
 
   public async findByProviderAndDate(

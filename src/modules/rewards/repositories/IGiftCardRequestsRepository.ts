@@ -1,8 +1,15 @@
 import GiftCardRequest from '../infra/typeorm/entities/GiftCardRequest';
 import ICreateGiftCardRequestDTO from '../dtos/ICreateGiftCardRequestDTO';
 import IPaginationDTO from '../dtos/IPaginationDTO';
+import ICountByWeekDTO from '../dtos/ICountByWeekDTO';
+import ICountByGiftCardDTO from '../dtos/ICountByGiftCardDTO';
 
 export default interface IGiftCardRequestsRepository {
+  countWeeklyRequests(provider_id: string): Promise<ICountByWeekDTO[]>;
+  countWeeklyValidations(provider_id: string): Promise<ICountByWeekDTO[]>;
+  countLastGiftCardRequests(
+    provider_id: string,
+  ): Promise<ICountByGiftCardDTO[]>;
   findByProviderAndDatePaginated(
     provider_id: string,
     startDate: Date,

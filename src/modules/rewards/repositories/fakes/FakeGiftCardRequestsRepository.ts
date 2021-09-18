@@ -3,11 +3,46 @@ import { uuid } from 'uuidv4';
 import ICreateGiftCardRequestDTO from '@modules/rewards/dtos/ICreateGiftCardRequestDTO';
 import IPaginationDTO from '@modules/rewards/dtos/IPaginationDTO';
 import { isAfter, isBefore } from 'date-fns';
+import ICountByGiftCardDTO from '@modules/rewards/dtos/ICountByGiftCardDTO';
+import ICountByWeekDTO from '@modules/rewards/dtos/ICountByWeekDTO';
 import GiftCardRequest from '../../infra/typeorm/entities/GiftCardRequest';
 import IGiftCardRequestsRepository from '../IGiftCardRequestsRepository';
 
 class FakeGiftCardRequestsRepository implements IGiftCardRequestsRepository {
   private gift_card_requests: GiftCardRequest[] = [];
+
+  public async countWeeklyRequests(
+    provider_id: string,
+  ): Promise<ICountByWeekDTO[]> {
+    return [
+      {
+        count: 1,
+        week_date: '2021-09-13T00:0:00Z',
+      },
+    ];
+  }
+
+  public async countWeeklyValidations(
+    provider_id: string,
+  ): Promise<ICountByWeekDTO[]> {
+    return [
+      {
+        count: 1,
+        week_date: '2021-09-13T00:0:00Z',
+      },
+    ];
+  }
+
+  public async countLastGiftCardRequests(
+    provider_id: string,
+  ): Promise<ICountByGiftCardDTO[]> {
+    return [
+      {
+        count: 1,
+        title: 'Fake title',
+      },
+    ];
+  }
 
   public async findByProviderAndDatePaginated(
     provider_id: string,

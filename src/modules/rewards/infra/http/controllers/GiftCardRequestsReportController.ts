@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 import ListGiftCardRequestsService from '@modules/rewards/services/reports/provider/ListGiftCardRequestsService';
 import GiftCardRequestsToPDFService from '@modules/rewards/services/reports/provider/GiftCardRequestsToPDFService';
+import GiftCardSummaryService from '@modules/rewards/services/reports/provider/GiftCardSummaryService';
 
 export default class GiftCardRequestsReportController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -56,5 +57,20 @@ export default class GiftCardRequestsReportController {
       'Content-Length': pdf.length,
     });
     response.send(pdf);
+  }
+
+  public async summary(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { id: provider_id } = request.provider;
+
+    const giftCardSummary = container.resolve(GiftCardSummaryService);
+
+    const result = await giftCardSummary.execute({
+      provider_id,
+    });
+
+    return response.json(classToClass(result));
   }
 }

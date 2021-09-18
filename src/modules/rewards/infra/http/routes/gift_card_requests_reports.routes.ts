@@ -44,4 +44,9 @@ giftCardRequestsReportRouter.get(
   giftCardRequestsReportController.downloadPDF,
 );
 
+giftCardRequestsReportRouter.get(
+  '/summary',
+  giftCardRequestsReportController.summary,
+);
+
 export default giftCardRequestsReportRouter;
