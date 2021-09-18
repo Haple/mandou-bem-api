@@ -22,14 +22,13 @@ class GiftCardRequestsRepository implements IGiftCardRequestsRepository {
       .createQueryBuilder('gcr')
       .select('count(*)', 'count')
       .addSelect("date_trunc('week', gcr.created_at)", 'week_date')
-      .innerJoinAndSelect('gcr.gift_card', 'gift_card')
+      .innerJoin('gcr.gift_card', 'gift_card')
       .where(
         'gift_card.provider_id = :provider_id' +
           " AND gcr.created_at >= current_date - interval '30' day",
         { provider_id },
       )
       .groupBy('week_date')
-      .addGroupBy('gift_card.id')
       .getRawMany();
     return result;
   }
@@ -41,7 +40,7 @@ class GiftCardRequestsRepository implements IGiftCardRequestsRepository {
       .createQueryBuilder('gcr')
       .select('count(*)', 'count')
       .addSelect("date_trunc('week', gcr.updated_at)", 'week_date')
-      .innerJoinAndSelect('gcr.gift_card', 'gift_card')
+      .innerJoin('gcr.gift_card', 'gift_card')
       .where(
         'gift_card.provider_id = :provider_id' +
           " AND gcr.updated_at >= current_date - interval '30' day" +
@@ -49,7 +48,6 @@ class GiftCardRequestsRepository implements IGiftCardRequestsRepository {
         { provider_id },
       )
       .groupBy('week_date')
-      .addGroupBy('gift_card.id')
       .getRawMany();
     return result;
   }
@@ -61,7 +59,7 @@ class GiftCardRequestsRepository implements IGiftCardRequestsRepository {
       .createQueryBuilder('gcr')
       .select('count(*)', 'count')
       .addSelect('gift_card.title', 'title')
-      .innerJoinAndSelect('gcr.gift_card', 'gift_card')
+      .innerJoin('gcr.gift_card', 'gift_card')
       .where(
         'gift_card.provider_id = :provider_id' +
           " AND gcr.created_at >= current_date - interval '30' day",
