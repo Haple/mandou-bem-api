@@ -32,6 +32,28 @@ class FakeProviderAccountsRepository implements IProviderAccountsRepository {
 
     return provider;
   }
+
+  public async save(
+    provider_account: ProviderAccount,
+  ): Promise<ProviderAccount> {
+    const findIndex = this.providers.findIndex(
+      p => p.id === provider_account.id,
+    );
+
+    if (findIndex === -1) {
+      this.providers.push(provider_account);
+      return provider_account;
+    }
+
+    this.providers[findIndex] = provider_account;
+
+    return provider_account;
+  }
+
+  public async findById(id: string): Promise<ProviderAccount | undefined> {
+    const provider = this.providers.find(p => p.id === id);
+    return provider;
+  }
 }
 
 export default FakeProviderAccountsRepository;

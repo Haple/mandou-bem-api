@@ -36,6 +36,18 @@ class ProviderAccountsRepository implements IProviderAccountsRepository {
 
     return provider;
   }
+
+  public async save(
+    provider_account: ProviderAccount,
+  ): Promise<ProviderAccount> {
+    return this.ormRepository.save(provider_account);
+  }
+
+  public async findById(id: string): Promise<ProviderAccount | undefined> {
+    const provider = await this.ormRepository.findOne(id);
+
+    return provider;
+  }
 }
 
 export default ProviderAccountsRepository;

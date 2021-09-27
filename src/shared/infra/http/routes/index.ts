@@ -23,12 +23,17 @@ import enpsSurveysRouter from '@modules/enps/infra/http/routes/enps_surveys.rout
 import rewardRequestsReportRouter from '@modules/rewards/infra/http/routes/reward_requests_reports.routes';
 import giftCardRequestsReportRouter from '@modules/rewards/infra/http/routes/gift_card_requests_reports.routes';
 import myRewardRequestsRouter from '@modules/rewards/infra/http/routes/my_reward_requests.routes';
+import providerProfileRouter from '@modules/provider_accounts/infra/http/routes/profile.routes';
+import providerPasswordRouter from '@modules/provider_accounts/infra/http/routes/password.routes';
 
 const routes = Router();
 
 routes.use('/providers', providersRouter);
 routes.use('/provider/accounts', providerAccountsRouter);
 routes.use('/provider/sessions', providerSessionsRouter);
+routes.use('/provider/profile', providerProfileRouter);
+routes.use('/provider/password', providerPasswordRouter);
+
 routes.use('/accounts', accountsRouter);
 routes.use('/positions', positionsRouter);
 routes.use('/departments', departmentsRouter);

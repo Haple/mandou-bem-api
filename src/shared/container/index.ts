@@ -39,9 +39,14 @@ import RemainingPointsToSendService from '@modules/recognition_posts/services/Re
 
 import IGiftCardsRepository from '@modules/rewards/repositories/IGiftCardsRepository';
 import GiftCardsRepository from '@modules/rewards/infra/typeorm/repositories/GiftCardsRepository';
+
 import IGiftCardRequestsRepository from '@modules/rewards/repositories/IGiftCardRequestsRepository';
 import GiftCardRequestsRepository from '@modules/rewards/infra/typeorm/repositories/GiftCardRequestsRepository';
+
 import GetAvailableEnpsSurveyService from '@modules/enps/services/GetAvailableEnpsSurveysService';
+
+import IProviderTokensRepository from '@modules/provider_accounts/repositories/IProviderTokensRepository';
+import ProviderTokensRepository from '@modules/provider_accounts/infra/typeorm/repositories/ProviderTokensRepository';
 
 container.registerSingleton<IProviderAccountsRepository>(
   'ProviderAccountsRepository',
@@ -116,4 +121,9 @@ container.registerSingleton<IEnpsSurveysRepository>(
 container.registerSingleton<IEnpsAnswersRepository>(
   'EnpsAnswersRepository',
   EnpsAnswersRepository,
+);
+
+container.registerSingleton<IProviderTokensRepository>(
+  'ProviderTokensRepository',
+  ProviderTokensRepository,
 );
