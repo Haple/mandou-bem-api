@@ -25,7 +25,7 @@ class GiftCardRequestsRepository implements IGiftCardRequestsRepository {
       .innerJoin('gcr.gift_card', 'gift_card')
       .where(
         'gift_card.provider_id = :provider_id' +
-          " AND gcr.created_at >= current_date - interval '30' day",
+          " AND gcr.created_at >= current_date - interval '60' day",
         { provider_id },
       )
       .groupBy('week_date')
@@ -43,7 +43,7 @@ class GiftCardRequestsRepository implements IGiftCardRequestsRepository {
       .innerJoin('gcr.gift_card', 'gift_card')
       .where(
         'gift_card.provider_id = :provider_id' +
-          " AND gcr.updated_at >= current_date - interval '30' day" +
+          " AND gcr.updated_at >= current_date - interval '60' day" +
           " AND gcr.status = 'used'",
         { provider_id },
       )
