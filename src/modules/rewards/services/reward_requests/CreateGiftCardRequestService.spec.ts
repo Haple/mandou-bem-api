@@ -4,10 +4,12 @@ import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepo
 import FakeQRCodeProvider from '@shared/container/providers/QRCodeProvider/fakes/FakeQRCodeProvider';
 import FakeMailProvider from '@shared/container/providers/MailProvider/fakes/FakeMailProvider';
 import { addDays } from 'date-fns';
+import FakeAccountGiftCardsRepository from '@modules/rewards/repositories/fakes/FakeAccountGiftCardsRepository';
 import FakeGiftCardsRepository from '../../repositories/fakes/FakeGiftCardsRepository';
 import FakeGiftCardRequestsRepository from '../../repositories/fakes/FakeGiftCardRequestsRepository';
 import CreateGiftCardRequestService from './CreateGiftCardRequestService';
 
+let fakeAccountGiftCardsRepository: FakeAccountGiftCardsRepository;
 let fakeGiftCardsRepository: FakeGiftCardsRepository;
 let fakeGiftCardRequestsRepository: FakeGiftCardRequestsRepository;
 let fakeUsersRepository: FakeUsersRepository;
@@ -17,6 +19,7 @@ let creatGiftCardRequest: CreateGiftCardRequestService;
 
 describe('CreateGiftCardRequest', () => {
   beforeEach(() => {
+    fakeAccountGiftCardsRepository = new FakeAccountGiftCardsRepository();
     fakeGiftCardsRepository = new FakeGiftCardsRepository();
     fakeGiftCardRequestsRepository = new FakeGiftCardRequestsRepository();
     fakeQRCodeProvider = new FakeQRCodeProvider();
@@ -24,6 +27,7 @@ describe('CreateGiftCardRequest', () => {
     fakeUsersRepository = new FakeUsersRepository();
 
     creatGiftCardRequest = new CreateGiftCardRequestService(
+      fakeAccountGiftCardsRepository,
       fakeGiftCardRequestsRepository,
       fakeGiftCardsRepository,
       fakeUsersRepository,
@@ -55,6 +59,8 @@ describe('CreateGiftCardRequest', () => {
       expiration_days: 100,
       description: 'fake description',
     });
+
+    await fakeAccountGiftCardsRepository.create('fake-account-1', gift_card.id);
 
     const gift_card_request = await creatGiftCardRequest.execute({
       account_id: 'fake-account-1',
@@ -98,6 +104,8 @@ describe('CreateGiftCardRequest', () => {
       description: 'fake description',
     });
 
+    await fakeAccountGiftCardsRepository.create('fake-account-1', gift_card.id);
+
     await expect(
       creatGiftCardRequest.execute({
         account_id: 'fake-account-1',
@@ -128,6 +136,8 @@ describe('CreateGiftCardRequest', () => {
       expiration_days: 100,
       description: 'fake description',
     });
+
+    await fakeAccountGiftCardsRepository.create('fake-account-1', gift_card.id);
 
     await expect(
       creatGiftCardRequest.execute({
@@ -165,6 +175,37 @@ describe('CreateGiftCardRequest', () => {
         account_id: 'fake-account-1',
         user_id: 'not-found-user-id',
         gift_card_id: 'not-found-id',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to request gift card when it is disabled', async () => {
+    const user = await fakeUsersRepository.create({
+      account_id: 'fake-account-1',
+      name: 'John Doe',
+      email: 'johndoe@corp.com',
+      password: '1234',
+      position_id: 'fake-position-id',
+      department_id: 'fake-department-id',
+    });
+    user.recognition_points = 1000;
+    await fakeUsersRepository.save(user);
+
+    const gift_card = await fakeGiftCardsRepository.create({
+      provider_id: 'fake-provider-1',
+      title: 'Netflix',
+      image_url: 'https://google.com',
+      points: 50,
+      units_available: 0,
+      expiration_days: 100,
+      description: 'fake description',
+    });
+
+    await expect(
+      creatGiftCardRequest.execute({
+        account_id: 'fake-account-1',
+        user_id: user.id,
+        gift_card_id: gift_card.id,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

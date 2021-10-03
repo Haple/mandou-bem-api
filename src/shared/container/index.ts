@@ -48,6 +48,9 @@ import GetAvailableEnpsSurveyService from '@modules/enps/services/GetAvailableEn
 import IProviderTokensRepository from '@modules/provider_accounts/repositories/IProviderTokensRepository';
 import ProviderTokensRepository from '@modules/provider_accounts/infra/typeorm/repositories/ProviderTokensRepository';
 
+import AccountGiftCardsRepository from '@modules/rewards/infra/typeorm/repositories/AccountGiftCardsRepository';
+import IAccountGiftCardsRepository from '@modules/rewards/repositories/IAccountGiftCardsRepository';
+
 container.registerSingleton<IProviderAccountsRepository>(
   'ProviderAccountsRepository',
   ProviderAccountsRepository,
@@ -126,4 +129,9 @@ container.registerSingleton<IEnpsAnswersRepository>(
 container.registerSingleton<IProviderTokensRepository>(
   'ProviderTokensRepository',
   ProviderTokensRepository,
+);
+
+container.registerSingleton<IAccountGiftCardsRepository>(
+  'AccountGiftCardsRepository',
+  AccountGiftCardsRepository,
 );

@@ -9,6 +9,7 @@ import path from 'path';
 
 import IQRCodeProvider from '@shared/container/providers/QRCodeProvider/models/IQRCodeProvider';
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
+import IAccountGiftCardsRepository from '@modules/rewards/repositories/IAccountGiftCardsRepository';
 
 interface IRequest {
   gift_card_id: string;
@@ -25,6 +26,8 @@ interface IResponse {
 @injectable()
 class CreateGiftCardRequestService {
   constructor(
+    @inject('AccountGiftCardsRepository')
+    private accountGiftCardsRepository: IAccountGiftCardsRepository,
     @inject('GiftCardRequestsRepository')
     private giftCardRequestsRepository: IGiftCardRequestsRepository,
     @inject('GiftCardsRepository')
@@ -52,6 +55,15 @@ class CreateGiftCardRequestService {
 
     if (!gift_card) {
       throw new AppError('Gift card not found.');
+    }
+
+    const gift_card_enabled = await this.accountGiftCardsRepository.findById(
+      account_id,
+      gift_card.id,
+    );
+
+    if (!gift_card_enabled) {
+      throw new AppError('Gift card is not enabled.');
     }
 
     if (user.recognition_points < gift_card.points) {
