@@ -37,20 +37,26 @@ export default class EtherealMailProvider implements IMailProvider {
     subject,
     templateData,
   }: ISendMailDTO): Promise<void> {
-    const message = await this.client.sendMail({
-      from: {
-        name: from?.name || 'Equipe MandouBem',
-        address: from?.email || 'equipe@mandoubem.com.br',
-      },
-      to: {
-        name: to.name,
-        address: to.email,
-      },
-      subject,
-      html: await this.mailTemplateProvider.parse(templateData),
-    });
+    try {
+      const message = await this.client.sendMail({
+        from: {
+          name: from?.name || 'Equipe MandouBem',
+          address: from?.email || 'equipe@mandoubem.com.br',
+        },
+        to: {
+          name: to.name,
+          address: to.email,
+        },
+        subject,
+        html: await this.mailTemplateProvider.parse(templateData),
+      });
 
-    console.log('Message sent: %s', message.messageId);
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(message));
+      console.log('Message sent with Ethereal: %s', message.messageId);
+      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(message));
+    } catch (error) {
+      console.log(
+        `Error sending e-mail with Ethereal: ${JSON.stringify(error)}`,
+      );
+    }
   }
 }
