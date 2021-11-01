@@ -34,7 +34,7 @@ export default class SendGridMailProvider implements IMailProvider {
         },
         to: {
           name: to.name,
-          email: to.email,
+          email: 'mandoubem2020@gmail.com',
         },
         subject,
         html: await this.mailTemplateProvider.parse(templateData),
